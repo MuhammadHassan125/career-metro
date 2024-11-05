@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import MapContext from '../context/mapContext';
+import MapContext from '../context/MapContext';
 
 const MapProvider = ({children}) => {
 
@@ -7,6 +7,8 @@ const MapProvider = ({children}) => {
     const [getTitle, setGetTitle] = useState(null);
     const [getDescription, setGetDescription] = useState(null);
     const [nextRole, setNextRole] = useState(null);
+
+    const [checkSubscription, setCheckSubscription] = useState(null);
 
   return (
 
@@ -19,7 +21,9 @@ const MapProvider = ({children}) => {
         getDescription,
         setGetDescription,
         setNextRole,
-        nextRole
+        nextRole,
+        checkSubscription, 
+        setCheckSubscription
       }}
     >
         {children}

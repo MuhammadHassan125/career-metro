@@ -1,11 +1,15 @@
+:root {
+  --primary-btn-color: #879aad;
+  --secondary-color: #2ecc71;
+  --text-color: #333;
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* overflow-x: hidden; */
+  overflow-x: visible;
 }
-
 
 .nunito-sans {
   font-family: "Nunito Sans", sans-serif;
@@ -69,8 +73,8 @@ h5{
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 10px !important;
+  width: 5px;
+  height: 6px !important;
 }
 
 /* Track */
@@ -93,8 +97,23 @@ h5{
 }
 
 .active {
-  background-color: #3749A6;
+  background-color: var(--primary-btn-color);
   color: white !important;
+  font-weight: 400 !important;
   transition: 0.3s all ease;
-  font-weight: 500 !important;
+}
+
+@media only screen and (max-width: 768px) {
+  svg {
+      overflow-x: auto !important;
+  }
+
+  .scrollable-container {
+    scrollbar-width: none;  /* For Firefox */
+  }
+
+  /* Hide scrollbar for Chrome, Safari, and Edge */
+  .scrollable-container::-webkit-scrollbar {
+    display: none;
+  }
 }

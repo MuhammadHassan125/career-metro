@@ -137,10 +137,14 @@ const UploadDataGrid = ({ heading, dropdown }) => {
   };
 
   useEffect(() => {
-    if (!loading) {
+    getUploadDataList();
+  
+    const pollInterval = setInterval(() => {
       getUploadDataList();
-    }
-  }, [loading]);
+    }, 20000);
+  
+    return () => clearInterval(pollInterval);
+  }, []);
 
   return (
     <>

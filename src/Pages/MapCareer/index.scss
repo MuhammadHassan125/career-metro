@@ -118,7 +118,7 @@
         transition: all 0.3s ease;
 
             &.minimized {
-                height: 50px; // adjust height as needed
+                height: 50px; 
                 overflow: hidden;
         
                 .gpt-section__content {
@@ -161,7 +161,8 @@
             bottom: 0;
             width: 95%;
             margin: 0 auto;
-            // overflow-y: auto;
+            height:100%;
+            font-size: 12px;
             // padding: 10px 20px ;
             .innder-right__txt{
                 display: flex;
@@ -169,7 +170,7 @@
                 width: 100%;
                 gap: 5px;
                 align-items: center;
-                font-size: 14px;
+                font-size: 12px;
                 img{
                     width: 20px;
                 }

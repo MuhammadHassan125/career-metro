@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { baseURL } from '../../Fire/useFire';
+import { baseURL } from '../../Utils/contants';
 import { Snackbar } from '../../Utils/SnackbarUtils';
 import { GoNorthStar } from "react-icons/go";
 import { loadStripe } from '@stripe/stripe-js';
@@ -39,24 +39,24 @@ const PaymentCheckout = () => {
             });
 
             const data = await response.json();
-            Snackbar(data.message, { variant: 'success' });
+            console.log(data, 'data')
             if (data.status && data.data?.sessionId) {
                 const stripe = await stripePromise;
                 const result = await stripe.redirectToCheckout({ sessionId: data.data.sessionId });
 
                 if (result.error) {
-                    alert(result.error.message);
-                } else {
-                    alert(data.message);
+                    alert(result?.error?.message);
                 }
             } else {
-                alert(data.message || 'Failed to create checkout session');
+                Snackbar('Failed to create checkout session', {variant:'error'});
+
             }
         } catch (error) {
             console.error('Error:', error);
-            // alert('Error occurred during checkout');
+            alert('Error occurred during checkout');
         } 
     };
+
 
     useEffect(() => {
         getCheckoutPlans();

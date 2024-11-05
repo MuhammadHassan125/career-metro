@@ -1,123 +1,138 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from "react";
 import { BiExport } from "react-icons/bi";
-import { MdOutlineClose } from "react-icons/md";
-import { IoIosArrowDown } from "react-icons/io";
-import './index.scss'
-import { useNavigate } from 'react-router-dom';
-import { GrAttachment } from "react-icons/gr";
-import { MdOutlineKeyboardVoice } from "react-icons/md";
-import SinglePathMap from './SinglePathMap';
-import AddPathComponent from '../../Components/AddPathComponent';
-import MapContext from '../../context/mapContext';
+import SinglePathMap from "./SinglePathMap";
+import AddPathComponent from "../../Components/AddPathComponent";
+import GPTComponent from "../../Components/DashboardComponents/DataGrid/GptComponent";
+import "./index.scss";
+import { useParams } from "react-router-dom";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
+import MapContext from "../../context/MapContext";
+import useFetch from "point-fetch-react";
+
 const MapSinglePath = () => {
+  const [selectedPathId, setSelectedPathId] = useState(null);
+  const [checkoutUrl, setCheckoutUrl] = useState(null);
+  const [open, setOpen] = useState(false);
+  const { getTitle } = useContext(MapContext);
+  const params = useParams();
 
-  return (
-    <React.Fragment>
-      <main className='map-section'>
-        {/* heading div  */}
-        <div className='main__heading'>
-          <div>
-            <h2>Individual Path</h2>
-          </div>
-          <div className='map-section__btn-div'>
-            <p><strong>Sales Rep </strong>/ 19 Paths</p>
-            <button className='map-section__btn'>
-              <BiExport style={{ fontSize: "18px" }} />
-              Export your Training PDF
-            </button>
-            <AddPathComponent/>
-          </div>
-        </div>
+  const { post, Data, setData, Errors, processing } = useFetch({
+    state: {
+      branchId: params.id || "", 
+    },
+  });
 
-        <div className='map-section__map-div'>
-          <SinglePathMap/>
-        </div>
+  useEffect(() => {
+    setData("branchId", params.id);
+  }, [params.id, setData]);
 
-        <GPTComponent />
+  const handleIdFromChild = (id) => {
+    setSelectedPathId(id);
+  };
 
-      </main>
-    </React.Fragment>
-  )
-}
+  const handleNavigate = () => {
+    window.open(`/get-pdf/${params.id}`, "_blank");
+  };
 
-const GPTComponent = () => {
-  const navigate = useNavigate();
-  const [isMinimized, setIsMinimized] = useState(false);
+  const redirectToStripe = () => {
+    if (!Data.branchId) {
+      alert("Branch ID is not available");
+      return;
+    }
 
-  const { gettingSkillsData, getTitle, getDescription } = useContext(MapContext);
-  const skillsId = localStorage.getItem('singlePathId');
-
-
-  const handleToggle = () => {
-      setIsMinimized(!isMinimized);
+    post({
+      endPoint: `/redirect-subscription`,
+      data: { branchId: Data.branchId }, 
+      onSuccess: (res) => {
+        setCheckoutUrl(res?.data?.data?.url);
+        setOpen(true);
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    });
   };
 
   return (
-      <main className='gpt-section'>
-          {/* left sales executive  */}
-          <div className='gpt-section__left'>
-              <h5>Details</h5>
-                  <h2>{getTitle}</h2> 
-             
-              <div className='gpt-section__skills-div'>
-                  {Array.isArray(gettingSkillsData) && gettingSkillsData.length > 0 ? (
-                      gettingSkillsData.map((skills, i) => <button key={i}>{skills.title}</button>)
-                  ) : (
-                      <p>No details available</p>
-                  )}
-
-              </div>
-                  <p>{getDescription}</p> 
-            
-              <div className='gpt-section__btn-div'>
-                  <div>
-                      <button className='gpt-section__btn' onClick={() => navigate(`/list-career-path/${skillsId}`)}>Get Started</button>
-                  </div>
-                  <div>
-                      <p><strong>Next Role:</strong>Sales Team Lead</p>
-                  </div>
-              </div>
+    <React.Fragment>
+      <main className="map-section">
+        {/* heading div  */}
+        <div className="main__heading">
+          <div>
+            <h2>Individual Path</h2>
           </div>
-
-          {/* right cpt section  */}
-
-
-          <div className={`gpt-section__right ${isMinimized ? 'minimized' : ''}`}>
-              <div className='gpt-section__heading'>
-                  <div>
-                      <img src="/images/gpt.png" alt='gpt' />
-                      <h2>Chat GPT</h2>
-                  </div>
-
-                  <div className='gpt-section__close' onClick={handleToggle}>
-                      {isMinimized ? <IoIosArrowDown style={{ fontSize: "20px" }} /> : <MdOutlineClose style={{ fontSize: "20px" }} />}
-                  </div>
-              </div>
-
-              {!isMinimized && (
-                  <div className='gpt-section__content'>
-                      <div className='content__inner'>
-                          <div className='innder-right__txt'>
-                              <img src='/images/clear.png' alt='clear' />
-                              New dialog
-                          </div>
-
-                          <div className='search__box'>
-                              <div>
-                                  <GrAttachment style={{ fontSize: "20px" }} />
-                                  <input type='text' placeholder='Search' />
-                                  <MdOutlineKeyboardVoice style={{ fontSize: "25px" }} />
-                                  <button>
-                                      <img src='/images/sent.png' alt='sent' />
-                                  </button>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              )}
+          <div className="map-section__btn-div">
+            <p>
+              <strong>{getTitle} </strong>/ 19 Paths
+            </p>
+            <button className="map-section__btn" onClick={redirectToStripe} disabled={processing}>
+              <BiExport style={{ fontSize: "18px" }} />
+              Export your Training PDF
+            </button>
+            <AddPathComponent />
           </div>
+        </div>
+
+        <div className="map-section__map-div">
+          <SinglePathMap onSelectId={handleIdFromChild} />
+        </div>
+
+        <GPTComponent selectedPathId={selectedPathId} />
       </main>
-  )
-}
 
-export default MapSinglePath
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ color: "var(--primary-btn-color)" }}>
+          Proceed to Checkout
+        </DialogTitle>
+        <DialogContent>
+          <p>
+            You will be redirected to Stripe to complete your payment. Do you
+            want to continue?
+          </p>
+        </DialogContent>
+        <DialogActions sx={{ display: "flex", gap: "15px" }}>
+          <button
+            onClick={() => setOpen(false)}
+            style={{
+              color: "var(--primary-btn-color)",
+              fontSize: "13px",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => {
+              window.open(checkoutUrl, "_blank");
+              setOpen(false);
+            }}
+            style={{
+              backgroundColor: "var(--primary-btn-color)",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+              borderRadius: "8px",
+              outline: "none",
+              padding: "10px 20px",
+            }}
+          >
+            Yes, Proceed
+          </button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+};
+
+export default MapSinglePath;

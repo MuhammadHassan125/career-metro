@@ -24,6 +24,8 @@ import CancelCheckout from "../Pages/PaymentCheckout/CancelCheckout"
 import Success from "../Pages/PaymentCheckout/SuccessCheckout"
 import EditPath from "../Pages/UploadDocuments/EditPath"
 import FullPageFormLayout from "../Layouts/FullPageFormLayout"
+import ExportPdf from '../Pages/ExportPdf'
+
 const Router = () => {
   return (
     <Routes>
@@ -54,6 +56,8 @@ const Router = () => {
           <Route path='/cancel' element={<CancelCheckout />} />
           <Route path='/success' element={<Success />} />
         </Route>
+
+        <Route path='get-pdf/:id' element={<ExportPdf/>} target='_blank'/>
 
         <Route element={<ProfileLayout />}>
           <Route path='profile' element={<Profile />} index={true} />

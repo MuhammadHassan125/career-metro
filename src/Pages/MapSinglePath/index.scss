@@ -64,6 +64,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 12px;
 
             button {
                 border-radius: 20px;
@@ -80,7 +81,7 @@
         }
 
         h2 {
-            color: #3749A6;
+            color:'var(--primary-btn-color)';
             font-size: 30px;
         }
 
@@ -197,4 +198,19 @@
             }
         }
     }
+}
+
+.scrollable {
+    overflow-y: auto; 
+    -webkit-overflow-scrolling: touch; 
+    height: 100%; 
+}
+
+.scrollable::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollable {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
 }
