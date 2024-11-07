@@ -18,6 +18,7 @@ const MapSinglePath = () => {
   const [selectedPathId, setSelectedPathId] = useState(null);
   const [checkoutUrl, setCheckoutUrl] = useState(null);
   const [open, setOpen] = useState(false);
+  const [trainingExceed, setTrainingExceed] = useState(false);
   const { getTitle } = useContext(MapContext);
   const params = useParams();
 
@@ -65,21 +66,19 @@ const MapSinglePath = () => {
     get({
       endPoint: `/check-training-plan-subscription-limit`,
       onSuccess: (res) => {
-        console.log(res, 'training plan')
-        if (res?.data?.Subscription_Status === false) {
-          localStorage.setItem('subscription', false);
-          redirectToStripe();
+        console.log(res, 'training plan');
+        if (res?.data?.Subscription_Status === true) {
+          setTrainingExceed(true);
         } else {
-          localStorage.removeItem('subscription'); 
+          redirectToStripe();  
         }
-        return;
       },
-
       onError: (err) => {
-        console.log(err)
+        console.log(err);
       }
-    })
+    });
   };
+  
 
   return (
     <React.Fragment>
@@ -108,6 +107,7 @@ const MapSinglePath = () => {
         <GPTComponent selectedPathId={selectedPathId} />
       </main>
 
+    {/* proceed to training plan  */}
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
@@ -154,6 +154,39 @@ const MapSinglePath = () => {
           </button>
         </DialogActions>
       </Dialog>
+
+    {/* will show the training exceed  */}
+      <Dialog
+        open={trainingExceed}
+        onClose={() => setTrainingExceed(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ color: "var(--primary-btn-color)" }}>
+          Limit Exceed
+        </DialogTitle>
+        <DialogContent>
+          <p>
+            Your Training Plan Limit has been exceeded.
+          </p>
+        </DialogContent>
+        <DialogActions sx={{ display: "flex", gap: "15px" }}>
+          <button
+            onClick={() => setTrainingExceed(false)}
+            style={{
+              color: "var(--primary-btn-color)",
+              fontSize: "14px",
+              border: "none",
+              cursor: "pointer",
+              padding:'5px 10px',
+              borderRadius: "8px",
+            }}
+          >
+            Cancel
+          </button>
+        </DialogActions>
+      </Dialog>
+
     </React.Fragment>
   );
 };
