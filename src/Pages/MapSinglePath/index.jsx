@@ -67,7 +67,7 @@ const MapSinglePath = () => {
       endPoint: `/check-training-plan-subscription-limit`,
       onSuccess: (res) => {
         console.log(res, 'training plan');
-        if (res?.data?.Subscription_Status === true) {
+        if (res?.data?.Subscription_Status === false) {
           setTrainingExceed(true);
         } else {
           redirectToStripe();  
