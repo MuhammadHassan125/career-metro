@@ -4,8 +4,7 @@ import { AnalyzeURL, baseURL } from "../../Fire/useFire";
 import Fire from "../../Fire/Fire";
 import { useParams, useLocation } from "react-router-dom";
 import { Snackbar } from "../../Utils/SnackbarUtils";
-import PaymentSuccessModal from '../../Components/DashboardComponents/DataGrid/PaymentSuccessModal';
-import useFetch from "point-fetch-react";
+import PaymentSuccessModal from '../../Components/DashboardComponents/PaymentSuccessModal'
 
 const ExportPdf = () => {
   const [branchId, setBranchId] = useState(null);
@@ -16,12 +15,6 @@ const ExportPdf = () => {
   const params = useParams();
   const location = useLocation();
 
-  const {post} = useFetch({
-    state:{
-      sessionId:'',
-      branchId: params.id
-    }
-  })
   useEffect(() => {
     setBranchId(params.id);
   }, [params.id]);
@@ -41,14 +34,22 @@ const ExportPdf = () => {
   }, [location.search]);
 
   const confirmSubscription = () => {
-    post({
-      endPoint: `/confirm-model-subscription`,
+    Fire.post({
+      url: `${baseURL}/confirm-model-subscription`,
+      data: {
+        sessionId,
+        branchId,
+      },
       onSuccess: (res) => {
+        // Snackbar("Subscription confirmed successfully!", {
+        //   variant: "success",
+        //   style: { backgroundColor:'var(--primary-btn-color)' }
+        // });
         setOpen(false);
       },
       onError: (err) => {
         console.log(err);
-        alert(err.message);
+        Snackbar(err.message, { variant: "error" });
       },
     });
   };
@@ -83,7 +84,7 @@ const ExportPdf = () => {
     <div  style={{backgroundColor: '#f5f6fa', display:'flex', height:'100vh', alignItems:'center', justifyContent:'center'}}>
             {generate === true ? 
         <PaymentSuccessModal/>
-        : <p>Something went wrong!</p>
+        : <p>Loading....</p>
       }
       
     </div>
