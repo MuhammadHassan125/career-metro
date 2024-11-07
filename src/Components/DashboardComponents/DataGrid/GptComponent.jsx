@@ -6,13 +6,15 @@ import { IoIosArrowDown } from "react-icons/io";
 import { GrAttachment } from "react-icons/gr";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
 import useFetch from "point-fetch-react";
+import { BiSolidSend } from "react-icons/bi";
+
 
 const GPTComponent = ({ selectedPathId }) => {
   const navigate = useNavigate();
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [getGPTResponse, setGetGPTResponse] = useState([]);
-  const { gettingSkillsData, getTitle, getDescription } =
-    useContext(MapContext);
+  const { gettingSkillsData, getTitle, getDescription } = useContext(MapContext);
   const skillsId = localStorage.getItem("singlePathId");
 
   const { post, get, Data, setData, Errors, validate } = useFetch({
@@ -38,34 +40,22 @@ const GPTComponent = ({ selectedPathId }) => {
   useEffect(() => {
     setData({ step_id: selectedPathId, message: "" });
   }, [selectedPathId]);
+
   const handleSendMessage = () => {
+    setIsSending(true); 
     post({
       endPoint: `/send-message`,
       onSuccess: (res) => {
         console.log(res, "gpt response");
         handleGetMessage(selectedPathId);
         setData("message", "");
+        setIsSending(false); 
       },
-
       onError: (err) => {
         console.log(err);
+        setIsSending(false);
       },
     });
-    return;
-    if (validate() && selectedPathId) {
-      post({
-        endPoint: `/send-message`,
-        onSuccess: (res) => {
-          console.log(res, "gpt response");
-          handleGetMessage(selectedPathId);
-          setData("message", "");
-        },
-
-        onError: (err) => {
-          console.log(err);
-        },
-      });
-    }
   };
 
   const handleGetMessage = (stepId) => {
@@ -75,7 +65,6 @@ const GPTComponent = ({ selectedPathId }) => {
         console.log(res?.data?.data);
         setGetGPTResponse(res?.data?.data);
       },
-
       onError: (err) => {
         console.log(err);
       },
@@ -90,7 +79,7 @@ const GPTComponent = ({ selectedPathId }) => {
     <main className="gpt-section">
       {/* left sales executive  */}
       <div className="gpt-section__left">
-        <h5>Details</h5>
+        <h5>Key Skills</h5>
         <h2>{getTitle}</h2>
 
         <div className="gpt-section__skills-div">
@@ -121,8 +110,7 @@ const GPTComponent = ({ selectedPathId }) => {
         </div>
       </div>
 
-      {/* right cpt section  */}
-
+      {/* right gpt section  */}
       <div className={`gpt-section__right ${isMinimized ? "minimized" : ""}`}>
         <div className="gpt-section__heading">
           <div>
@@ -142,41 +130,18 @@ const GPTComponent = ({ selectedPathId }) => {
         {!isMinimized && (
           <div className="gpt-section__content">
             <div className="content__inner">
-              <div
-                style={{
-                  overflowY: "auto",
-                  height: "66%",
-                  padding: "12px 5px",
-                }}
-              >
-                {getGPTResponse?.length > 0
-                  ? getGPTResponse.map((item, index) => (
-                    <>
-                    <div style={{
-                        backgroundColor:'#f5f6fa', 
-                        padding:'10px', 
-                        borderRadius:'10px',
-                        marginBottom:'10px',
-                        fontSize:'12px',
-                        fontWeight:'bold',
-                        color:"#5B708B",
-                        width:'60%'
-                    }}
-                        >
-                        
+              <div style={{ overflowY: "auto", height: "66%", padding: "12px 5px" }}>
+                {getGPTResponse?.length > 0 &&
+                  getGPTResponse.map((item, index) => (
+                    <div key={index} style={{ marginBottom: "20px" }}>
+                      <div style={{ backgroundColor: '#f5f6fa', padding: '10px', borderRadius: '10px', marginBottom: '10px', fontSize: '12px', fontWeight: 'bold', color: "#5B708B", width: '60%' }}>
                         <span>{item.prompt}</span>
+                      </div>
+                      <p style={{ background: '#E8E8E8', padding: '10px', fontSize: '11px', width: '80%' }}>
+                        {item.result}
+                      </p>
                     </div>
-                   <p style={{ marginBottom: "20px", 
-                    background:'#E8E8E8',
-                    padding:'10px',
-                    fontSize:'11px',
-                    width:'80%',
-                    }} key={index}>
-                     {item.result}
-                   </p>
-                </>
-                    ))
-                  : null}
+                  ))}
                 <div className="innder-right__txt">
                   <img src="/images/clear.png" alt="clear" />
                   New dialog
@@ -193,12 +158,20 @@ const GPTComponent = ({ selectedPathId }) => {
                     value={Data.message}
                     onChange={handleInputChange}
                   />
-                  <MdOutlineKeyboardVoice style={{ fontSize: "25px" }} />
+                  {/* <MdOutlineKeyboardVoice style={{ fontSize: "25px" }} /> */}
                   <button
                     onClick={handleSendMessage}
-                    style={{ cursor: "pointer" }}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    disabled={isSending}
                   >
-                    <img src="/images/sent.png" alt="sent" />
+                    <BiSolidSend 
+                      style={{
+                        fontSize: "16px",
+                        color: isSending ? "#cccccc" : "#000000"
+                      }}
+                    />
                   </button>
                 </div>
                 {Errors.message && <p className="error">{Errors.message}</p>}

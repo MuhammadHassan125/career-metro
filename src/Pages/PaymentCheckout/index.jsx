@@ -65,18 +65,18 @@ const PaymentCheckout = () => {
     return (
         <React.Fragment>
             <main className='path-section'>
-                <h2>Choose Your Subscription Plan</h2>
 
+                <h2 style={{textAlign:'center', marginTop:'25px', marginBottom:'-10px'}}>Choose Your Subscription Plan</h2>
                 <div className="plans-container">
                     {subscriptionPlans?.map((plan) => (
                         <div key={plan?.id} className="plan-card">
                             <h3>{plan?.name}</h3>
                             <h2>{plan?.price}$</h2>
 
+                            <h5>{plan?.points}</h5>
+
                             <ul>
-                                <li><GoNorthStar style={{ color: "rgb(61, 66, 223)" }} /> Lorem ipsum dolor sit.</li>
-                                <li><GoNorthStar style={{ color: "rgb(61, 66, 223)" }} /> Lorem ipsum dolor sit.</li>
-                                <li><GoNorthStar style={{ color: "rgb(61, 66, 223)" }} /> Lorem ipsum dolor sit.</li>
+                                <li style={{marginTop:'10px'}}>{plan?.description} </li>
                             </ul>
 
                             <button onClick={() => handlePlanSelection(plan?.id)}>Proceed to Checkout</button>

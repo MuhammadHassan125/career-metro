@@ -21,15 +21,17 @@ const MapSinglePath = () => {
   const { getTitle } = useContext(MapContext);
   const params = useParams();
 
-  const { post, Data, setData, Errors, processing } = useFetch({
+  const { post, get, Data, setData, Errors, processing } = useFetch({
     state: {
       branchId: params.id || "", 
     },
   });
 
   useEffect(() => {
-    setData("branchId", params.id);
-  }, [params.id, setData]);
+    if (params.id && Data.branchId !== params.id) {
+      setData("branchId", params.id);
+    }
+  }, [params.id, Data.branchId, setData]);
 
   const handleIdFromChild = (id) => {
     setSelectedPathId(id);
@@ -58,6 +60,27 @@ const MapSinglePath = () => {
     });
   };
 
+  
+  const checkTrainingPlanSubscription = () => {
+    get({
+      endPoint: `/check-training-plan-subscription-limit`,
+      onSuccess: (res) => {
+        console.log(res, 'training plan')
+        if (res?.data?.Subscription_Status === false) {
+          localStorage.setItem('subscription', false);
+          redirectToStripe();
+        } else {
+          localStorage.removeItem('subscription'); 
+        }
+        return;
+      },
+
+      onError: (err) => {
+        console.log(err)
+      }
+    })
+  };
+
   return (
     <React.Fragment>
       <main className="map-section">
@@ -68,9 +91,9 @@ const MapSinglePath = () => {
           </div>
           <div className="map-section__btn-div">
             <p>
-              <strong>{getTitle} </strong>/ 19 Paths
+              <strong>{getTitle} </strong>/ 1 Path
             </p>
-            <button className="map-section__btn" onClick={redirectToStripe} disabled={processing}>
+            <button className="map-section__btn" onClick={checkTrainingPlanSubscription} disabled={processing}>
               <BiExport style={{ fontSize: "18px" }} />
               Export your Training PDF
             </button>

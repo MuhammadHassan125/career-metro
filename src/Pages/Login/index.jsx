@@ -5,9 +5,13 @@ import Form from '../../Components/Auth/Form';
 import SocialLinkComponent from '../../Components/Auth/SocialLinks/SocialLinksComponent';
 import FormBtn from '../../Components/Auth/FormBtn';
 import useFetch from 'point-fetch-react';
+import { useContext } from 'react';
+import UserContext from '../../context/UserContext';
 
 const Login = () => {
   const navigate = useNavigate();
+  const {gettingProfileInfo} = useContext(UserContext);
+
   const { Data, setData, Errors, post, Processing, validate } = useFetch({
     state:{
       email: '', 
@@ -31,6 +35,7 @@ const Login = () => {
         onSuccess: (res) => {
           localStorage.setItem('user-visited-dashboard', res.data.data.AuthToken);
           navigate('/');
+          gettingProfileInfo();
         },
       });
     }

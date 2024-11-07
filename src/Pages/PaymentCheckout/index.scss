@@ -1,4 +1,4 @@
-.plans-container{
+.plans-container {
     width: 80%;
     margin: 0 auto;
     display: flex;
@@ -6,19 +6,28 @@
     justify-content: space-between;
     padding: 30px 0;
 
-    div{
+    div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         background-color: white;
         padding: 45px 20px;
-        border-radius:15px;
+        border-radius: 15px;
         width: 32%;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        h2{
-            color:rgb(61, 66, 223);
+        min-height: 320px;
+
+        h2 {
+            color: rgb(61, 66, 223);
             font-size: 30px;
             margin-top: 4px;
         }
 
-        ul li{
+        ul {
+            flex-grow: 1; // Makes the list grow to fill available space
+        }
+
+        ul li {
             list-style: none;
             display: flex;
             align-items: center;
@@ -27,16 +36,17 @@
             font-size: 15px;
         }
 
-        button{
+        button {
             background-color: rgb(61, 66, 223);
             padding: 10px 40px;
             color: white;
-            margin-top: 40px;
             outline: none;
             border: none;
             border-radius: 10px;
+            margin-top: auto; // Positions button at the bottom of the card
+            align-self: center;
 
-            &:hover{
+            &:hover {
                 opacity: 0.9;
                 cursor: pointer;
             }
@@ -44,22 +54,23 @@
     }
 }
 
-@media screen and (max-width: 500px)  {
-    .plans-container{
+@media screen and (max-width: 500px) {
+    .plans-container {
         gap: 20px;
         width: 95%;
-        div{
+        
+        div {
             width: 100%;
         }
     }
 }
 
-
 @media screen and (min-width: 500px) and (max-width: 900px) {
-    .plans-container{
+    .plans-container {
         gap: 20px;
         width: 95%;
-        div{
+        
+        div {
             width: 46%;
         }
     }

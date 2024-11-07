@@ -100,10 +100,7 @@ const ListCareerPath = () => {
         <div className="main__heading">
           <div>
             <h2>
-              <span style={{ color: "var(--primary-btn-color)" }}>
-                Sales Rep
-              </span>{" "}
-              Completed Skills
+              Skill Tracker
             </h2>
           </div>
 

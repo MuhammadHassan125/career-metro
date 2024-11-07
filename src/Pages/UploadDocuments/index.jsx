@@ -113,13 +113,15 @@ import MapContext from '../../context/MapContext';
 
     const checkSubscription = () => {
       get({
-        endPoint: `/check-user-subscription`,
-
+        endPoint: `/check-path-subscription-limit`,
         onSuccess: (res) => {
           if (res?.data?.Subscription_Status === false) {
             setCheckSubscription(false);
-            navigate(-1);
-            }
+            navigate('/path');
+            localStorage.setItem('subscription', false);
+          } else {
+            localStorage.removeItem('subscription'); 
+          }
           return;
         },
 
@@ -175,6 +177,7 @@ import MapContext from '../../context/MapContext';
             console.log(res);
             setData({ title: '', prompt: '' });
             handleClose();
+            navigate('/path')
           },
 
           onError: (err) => {

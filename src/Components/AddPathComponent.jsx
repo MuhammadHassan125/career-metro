@@ -22,9 +22,10 @@ const AddPathComponent = () => {
 
   useEffect(() => {
       if (checkSubscription === false) {
-          handleOpen();
+          // handleOpen();
+          // navigate('/payment-checkout')
       } else {
-          handleClose();
+          null;
       }
   }, [checkSubscription]);
 

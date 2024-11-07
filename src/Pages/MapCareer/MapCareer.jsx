@@ -29,7 +29,7 @@ const MapCareer = () => {
                         <h2>Map Career Path</h2>
                     </div>
                     <div className='map-section__btn-div'>
-                        <p><strong>Sales Rep </strong>/ 19 Paths</p>
+                        {/* <p>19 Paths</p> */}
                        
                         <AddPathComponent />
                     </div>
