@@ -4,8 +4,7 @@ import { AnalyzeURL, baseURL } from "../../Fire/useFire";
 import Fire from "../../Fire/Fire";
 import { useParams, useLocation } from "react-router-dom";
 import { Snackbar } from "../../Utils/SnackbarUtils";
-import PaymentSuccessModal from '../../Components/DashboardComponents/PaymentSuccessModal'
-
+import PaymentSuccessModal from "../../Components/DashboardComponents/DataGrid/PaymentSuccessModal";
 const ExportPdf = () => {
   const [branchId, setBranchId] = useState(null);
   const [open, setOpen] = useState(false);
