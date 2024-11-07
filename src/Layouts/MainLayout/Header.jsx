@@ -207,13 +207,16 @@ const Header = () => {
         <div className="header-icons-right">
           <Badge
             onClick={handleToggle}
-            color="error"
+            color="primary"
             badgeContent={unseenCount || 0}
             sx={{ position: "relative", zIndex: 999 }}
           >
             <IoMdNotifications
-              style={{ fontSize: "23px", color: "#3D42DF", cursor: "pointer" }}
-            />
+  style={{
+    fontSize: "23px",
+    color: "var(--primary-btn-color)",
+    cursor: "pointer",
+  }}            />
             {openNotification && (
               <React.Fragment>
                 <Box

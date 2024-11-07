@@ -162,7 +162,9 @@ const Profile = () => {
                             <p>Your profile details.</p>
                             <Button
                                 variant='contained'
-                                sx={{ height: '24px', width: 'auto', fontSize: '14px', padding: '5px', textTransform:'capitalize', backgroundColor:"rgb(55, 73, 166)" }}
+                                sx={{ 
+                                    backgroundColor: '#879aad',
+                                    height: '24px', width: 'auto', fontSize: '14px', padding: '5px', textTransform:'capitalize' }}
                                 onClick={handleOpen}
                             >Update Username
                             </Button>

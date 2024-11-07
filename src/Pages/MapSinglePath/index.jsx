@@ -131,6 +131,8 @@ const MapSinglePath = () => {
               fontSize: "13px",
               border: "none",
               cursor: "pointer",
+              padding:'10px 15px',
+              borderRadius:'10px'
             }}
           >
             Cancel

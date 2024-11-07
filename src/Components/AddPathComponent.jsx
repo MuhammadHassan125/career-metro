@@ -22,8 +22,6 @@ const AddPathComponent = () => {
 
   useEffect(() => {
       if (checkSubscription === false) {
-          // handleOpen();
-          // navigate('/payment-checkout')
       } else {
           null;
       }

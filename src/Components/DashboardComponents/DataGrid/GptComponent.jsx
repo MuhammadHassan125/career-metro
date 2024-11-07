@@ -80,12 +80,12 @@ const GPTComponent = ({ selectedPathId }) => {
       {/* left sales executive  */}
       <div className="gpt-section__left">
         <h5>Key Skills</h5>
-        <h2>{getTitle}</h2>
+        <h2 style={{color:'var(--primary-btn-color)', fontSize:'10px'}}>{getTitle}</h2>
 
         <div className="gpt-section__skills-div">
           {Array.isArray(gettingSkillsData) && gettingSkillsData.length > 0 ? (
             gettingSkillsData.map((skills, i) => (
-              <button key={i}>{skills.title}</button>
+              <button key={i} style={{color:'var(--primary-btn-color)'}}>{skills.title}</button>
             ))
           ) : (
             <p>No details available</p>
@@ -97,13 +97,14 @@ const GPTComponent = ({ selectedPathId }) => {
           <div>
             <button
               className="gpt-section__btn"
+              style={{ backgroundColor:'var(--primary-btn-color)', color:'white'}}
               onClick={() => navigate(`/list-career-path/${skillsId}`)}
             >
               Get Started
             </button>
           </div>
           <div>
-            <p>
+            <p style={{marginTop:'10px'}}>
               <strong>Next Role:</strong>Sales Team Lead
             </p>
           </div>

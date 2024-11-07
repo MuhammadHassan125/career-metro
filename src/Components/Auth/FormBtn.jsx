@@ -10,7 +10,7 @@ const FormBtn = ({processing, text}) => {
       style={{
         width: '100%',
         borderRadius: '10px',
-        backgroundColor: '#3749A6', 
+        backgroundColor: '#879aad', 
         border: 'none',
         padding: '10px 20px',
         color: 'white',
