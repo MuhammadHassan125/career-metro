@@ -77,7 +77,7 @@ const EditPath = () => {
 
 
   const navigate = useNavigate();
-  const { Data, setData, Errors, post, put, validate } = useFetch(
+  const { Data, setData, Errors, post, put, validate, get } = useFetch(
     {
       state: {
         title: location.state?.title || '',
@@ -112,15 +112,15 @@ const EditPath = () => {
 
   const checkSubscription = () => {
     get({
-      endPoint: `/check-user-subscription`,
-
+      endPoint: `/check-path-subscription-limit`,
       onSuccess: (res) => {
-        data();
-        getUploadDataList();
         if (res?.data?.Subscription_Status === false) {
-          // navigate(-1, { state: setCheckSubscription(true)  });
-        } return;
-
+          navigate('/path');
+          localStorage.setItem('subscription', false);
+        } else {
+          localStorage.removeItem('subscription'); 
+        }
+        return;
       },
 
       onError: (err) => {

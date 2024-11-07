@@ -5,6 +5,7 @@ import Fire from "../../Fire/Fire";
 import { useParams, useLocation } from "react-router-dom";
 import { Snackbar } from "../../Utils/SnackbarUtils";
 import PaymentSuccessModal from '../../Components/DashboardComponents/DataGrid/PaymentSuccessModal';
+import useFetch from "point-fetch-react";
 
 const ExportPdf = () => {
   const [branchId, setBranchId] = useState(null);
@@ -15,6 +16,12 @@ const ExportPdf = () => {
   const params = useParams();
   const location = useLocation();
 
+  const {post} = useFetch({
+    state:{
+      sessionId:'',
+      branchId: params.id
+    }
+  })
   useEffect(() => {
     setBranchId(params.id);
   }, [params.id]);
@@ -34,22 +41,14 @@ const ExportPdf = () => {
   }, [location.search]);
 
   const confirmSubscription = () => {
-    Fire.post({
-      url: `${baseURL}/confirm-model-subscription`,
-      data: {
-        sessionId,
-        branchId,
-      },
+    post({
+      endPoint: `/confirm-model-subscription`,
       onSuccess: (res) => {
-        // Snackbar("Subscription confirmed successfully!", {
-        //   variant: "success",
-        //   style: { backgroundColor:'var(--primary-btn-color)' }
-        // });
         setOpen(false);
       },
       onError: (err) => {
         console.log(err);
-        Snackbar(err.message, { variant: "error" });
+        alert(err.message);
       },
     });
   };
