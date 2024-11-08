@@ -240,8 +240,8 @@ import MapContext from '../../context/MapContext';
 
                 <TabList onChange={handleChange} aria-label="lab API tabs example" sx={{ padding: '0 25px' }}>
 
-                  <Tab label="Add Path" value="1" sx={{ fontWeight: 700, fontFamily: "Nunito Sans, sans-serif" }} />
-                  <Tab label="Upload CV" value="2" sx={{ fontWeight: 700, fontFamily: "Nunito Sans, sans-serif" }} />
+                  <Tab label="Add Path" value="1" sx={{ fontWeight: 700, fontFamily: "Nunito Sans, sans-serif", color:'#879aad' }} />
+                  <Tab label="Upload CV" value="2" sx={{ fontWeight: 700, fontFamily: "Nunito Sans, sans-serif", color:'#879aad' }} />
 
                 </TabList>
               </Box>
@@ -269,7 +269,7 @@ import MapContext from '../../context/MapContext';
                             right: 5,
                             fontSize: '10px',
                             padding: "3px 5px",
-                            backgroundColor: "rgb(55, 73, 166)"
+                            backgroundColor: "#879aad"
                           }}
                           onClick={handleCreatePath}
                         >Submit</Button>
@@ -284,7 +284,7 @@ import MapContext from '../../context/MapContext';
                 {/* <FileUpload onUploadSuccess={handleSuccess}/> */}
                 <div className='file-upload__section'>
                   <img src='/images/upload.png' alt='upload' />
-                  <label style={{ padding: '5px 10px', borderBottom: '1px solid #3749A6', cursor: 'pointer', color: '#3749A6' }}>
+                  <label style={{ padding: '5px 10px', borderBottom: '1px solid #3749A6', cursor: 'pointer', color: '#879aad' }}>
                     <input
                       type="file"
                       onChange={handleFileChange}
@@ -302,7 +302,7 @@ import MapContext from '../../context/MapContext';
                     position: "absolute",
                     bottom: 20,
                     right: 25,
-                    backgroundColor: "rgb(55, 73, 166)"
+                    backgroundColor: "#879aad"
                   }}
                   onClick={handleFileUpload}
                 >
