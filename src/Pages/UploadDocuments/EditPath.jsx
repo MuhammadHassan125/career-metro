@@ -268,7 +268,7 @@ const EditPath = () => {
                   right: 25,
                   fontSize: '10px',
                   padding: "3px 5px",
-                  backgroundColor: "rgb(55, 73, 166)"
+                  backgroundColor: "#879aad"
                 }}
                 onClick={handleUpdatePathWithPrompt}
               >Submit</Button>
@@ -278,7 +278,7 @@ const EditPath = () => {
               {/* <FileUpload onUploadSuccess={handleSuccess}/> */}
               <div className='file-upload__section' >
                 <img src='/images/upload.png' alt='upload' />
-                <label style={{ padding: '5px 10px', borderBottom: '1px solid #3749A6', cursor: 'pointer', color: '#3749A6' }}>
+                <label style={{ padding: '5px 10px', borderBottom: '1px solid #3749A6', cursor: 'pointer', color: '#879aad' }}>
                   <input
                     type="file"
                     onChange={handleFileChange}
@@ -299,7 +299,7 @@ const EditPath = () => {
                   position: "absolute",
                   bottom: 15,
                   right: 25,
-                  backgroundColor: "rgb(55, 73, 166)"
+                  backgroundColor: "#879aad"
                 }}
                 onClick={handleFileUpdate}
               >
