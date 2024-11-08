@@ -3,10 +3,11 @@ import './index.scss'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import { Outlet } from 'react-router-dom'
+import LayoutWrapper from '../LayoutWrapper'
 // import Outlet from 'react-router-dom'
 const Layout = () => {
   return (
-    <React.Fragment>
+    <LayoutWrapper>
       <main className='layout-section'>
         <div className='dashboard-sidebar'>
           <Sidebar />
@@ -18,14 +19,13 @@ const Layout = () => {
           </div>
 
           <div className='dashboard-content'>
-            {/* <Outlet/> */}
             <Outlet />
           </div>
         </div>
 
 
       </main>
-    </React.Fragment>
+    </LayoutWrapper>
   )
 }
 

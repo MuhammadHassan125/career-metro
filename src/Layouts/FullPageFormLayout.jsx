@@ -1,13 +1,16 @@
 import '../Pages/Login/index.scss'
 import { Outlet } from 'react-router-dom'
+import LayoutWrapper from './LayoutWrapper'
 
 const FullPageFormLayout = () => {
   return (
-        <main className="login-section">
+    <LayoutWrapper>
+      <main className="login-section">
         <div className="login-form">
             <Outlet />
         </div>
         </main>
+    </LayoutWrapper>
   )
 }
 

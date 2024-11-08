@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserContext from "../context/UserContext";
 import MapProvider from "./MapProvider";
-import useFetch from "point-fetch-react";
 import Fire from "../Fire/Fire";
 import { baseURL } from "../Utils/contants";
 

@@ -5,6 +5,8 @@ import Loading from "../../Components/Loading";
 import DrawBranch from "../../Utils/DrawBranch";
 import { Typography } from "@mui/material";
 import useFetch from "point-fetch-react";
+import Fire from "../../Fire/Fire";
+import { baseURL } from "../../Utils/contants";
 
 const UserDetailsMap = () => {
   const [pathDetailsArray, setPathDetailsArray] = React.useState([]);
@@ -13,10 +15,12 @@ const UserDetailsMap = () => {
 
   const {get} = useFetch({ state: {} });
 
+  // const token = localStorage.getItem('user-visited-dashboard');
+  // console.log(token, 'ffffffff')
+
 useEffect(() => {
   get({
     endPoint:`/get-details-with-path`,
-
     onSuccess: (res) => {
       console.log(res.data, 'pathDetailsArray')
       setPathDetailsArray(res.data.data || []);

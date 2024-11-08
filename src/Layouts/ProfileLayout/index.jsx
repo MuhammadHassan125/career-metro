@@ -1,10 +1,11 @@
 import React from 'react'
 import Header from '../MainLayout/Header'
 import { Outlet } from 'react-router-dom'
+import LayoutWrapper from '../LayoutWrapper'
 
 const ProfileLayout = () => {
     return (
-        <React.Fragment>
+        <LayoutWrapper>
             <main className='layout-section'>
                     <div className='dashboard-header'>
                         <Header />
@@ -14,7 +15,7 @@ const ProfileLayout = () => {
                         <Outlet />
                     </div>
             </main>
-        </React.Fragment>
+        </LayoutWrapper>
     )
 }
 
