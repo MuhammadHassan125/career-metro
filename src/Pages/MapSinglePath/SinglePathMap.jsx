@@ -12,7 +12,7 @@ const SinglePathMap = ({onSelectId}) => {
     const params = useParams();
     const singlePathId = params.id;
 
-    const { get } = useFetch({ state: {} });
+    const { get, Processing } = useFetch({ state: {} });
 
     const getIndividualPathData = () => {
         get({
@@ -183,6 +183,7 @@ const SinglePathMap = ({onSelectId}) => {
     
       return (
         <React.Fragment>
+        {Processing ? <Loading  processing={Processing}/> : null}
         <div
         className="scroll-container"
         style={{
@@ -221,6 +222,7 @@ const SinglePathMap = ({onSelectId}) => {
         <svg ref={svgRef}></svg>
         </div>
         </React.Fragment>
+
   );
 };
 

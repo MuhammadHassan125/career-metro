@@ -17,6 +17,7 @@ import axios from 'axios';
 import ChangePassword from './ChangePassword';
 import useFetch from 'point-fetch-react';
 import UserContext from '../../context/UserContext';
+import Loading from '../../Components/Loading';
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
     width: 30,
@@ -46,7 +47,7 @@ const Profile = () => {
     const [uploadMessage, setUploadMessage] = useState('');
     const [newUsername, setNewUsername] = useState(user?.data?.username);
 
-    const {put, Data, setData} = useFetch({
+    const {put, Data, setData, Processing} = useFetch({
         state:{
             newUsername
         },
@@ -98,11 +99,9 @@ const Profile = () => {
                 }
             });
             setUploadMessage(response.data.message);
-            Snackbar(response.data.message, { variant: 'success' });
             gettingProfileInfo();
         } catch (error) {
             setUploadMessage('Error uploading file');
-            Snackbar(error.response.data.error, { variant: 'error' });
         }
     };
 
@@ -125,6 +124,7 @@ const Profile = () => {
 
     return (
         <React.Fragment>
+            {Processing ? <Loading fullScreen={true} processing={Processing}/> : null}
             <div className='profile-details'>
                 <div>
                     <h2 style={{ color: 'white' }}>Your Profile Details</h2>
@@ -185,8 +185,8 @@ const Profile = () => {
 
                     <hr />
                     <div style={{
-                        width: "50%", marginTop: "40px",
-                        margin: "0 auto", backgroundColor: "red", display: "flex", justifyContent: "center", alignContent: "center"
+                        width: "60%", marginTop: "40px",
+                        margin: "0 auto", display: "flex", justifyContent: "center", alignContent: "center"
                     }}>
                         <ChangePassword />
                     </div>

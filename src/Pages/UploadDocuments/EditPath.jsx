@@ -77,7 +77,7 @@ const EditPath = () => {
 
 
   const navigate = useNavigate();
-  const { Data, setData, Errors, post, put, validate, get } = useFetch(
+  const { Data, setData, Errors, post, put, validate, get, Processing } = useFetch(
     {
       state: {
         title: location.state?.title || '',
@@ -210,7 +210,7 @@ const EditPath = () => {
 
   return (
     <React.Fragment>
-      <Loading />
+      {Processing ?<Loading processing={Processing}/> : null}
       <main className='documents-upload__section'>
         {success && (
           <div className='success__message'>

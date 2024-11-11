@@ -15,7 +15,7 @@ const ListCareerPath = () => {
   const [selectedId, setSelectedId] = React.useState(null);
   const [listData, setListData] = React.useState([]);
   const params = useParams();
-  const { get, destroy } = useFetch({state:{}});
+  const { get, destroy, Processing } = useFetch({state:{}});
 
 
   const [open, setOpen] = React.useState(false);
@@ -95,7 +95,7 @@ const ListCareerPath = () => {
 
   return (
     <React.Fragment>
-      <Loading />
+      {Processing ? <Loading processing={Processing}/> : null}
       <main className="list-section">
         <div className="main__heading">
           <div>
@@ -191,7 +191,7 @@ const ListCareerPath = () => {
               );
             })
           ) : (
-            <p style={{ textAlign: "center" }}>loading...</p>
+            null
           )}
         </div>
       </main>

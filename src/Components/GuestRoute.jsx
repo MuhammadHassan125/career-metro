@@ -1,5 +1,6 @@
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import GuestLoading from "./GuestRoutesLoading";
 
 const hasResetToken = () => !!localStorage.getItem('reset-token');
 const hasOtpVerified = () => !!localStorage.getItem('otp-verified');
@@ -20,7 +21,7 @@ const GuestRoute = () => {
     return <Navigate to="/register" />;
   }
 
-  return <Outlet />;
+  return  <Suspense fallback={<GuestLoading/>}><Outlet /></Suspense>;
 };
 
 export default GuestRoute;

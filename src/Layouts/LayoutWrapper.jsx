@@ -1,8 +1,8 @@
 import { Provider } from "point-fetch-react";
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { Suspense } from "react";
 import { baseURL } from "../Utils/contants";
 import useErrorDialogs from "../Hooks/useErrorDialogs";
+import GuestLoading from "../Components/GuestRoutesLoading";
 
 const LayoutWrapper = ({ children }) => {
   const { handleOpenUnAuthorizeModal, handleOpenInternalServer } =
@@ -14,7 +14,9 @@ const LayoutWrapper = ({ children }) => {
       onUnAuthenticated={handleOpenUnAuthorizeModal}
       onServerError={handleOpenInternalServer}
     >
-      {children}
+    <Suspense fallback={<GuestLoading/>}>
+       {children}
+    </Suspense>
     </Provider>
   );
 };

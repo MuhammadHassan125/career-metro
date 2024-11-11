@@ -80,7 +80,7 @@ import MapContext from '../../context/MapContext';
     const {setCheckSubscription} = useContext(MapContext);
     const navigate = useNavigate();
 
-    const { Data, setData, Errors, post, get, validate } = useFetch({
+    const { Data, setData, Errors, post, get, validate, Processing } = useFetch({
       state: {
         title: '',
         prompt: ''
@@ -216,7 +216,7 @@ import MapContext from '../../context/MapContext';
 
     return (
       <React.Fragment>
-        <Loading />
+        {Processing ? <Loading  processing={Processing}/> : null}
         <main className='documents-upload__section'>
           {success && (
             <div className='success__message'>

@@ -18,7 +18,8 @@ const LinkedinBtn = () => {
           onClick={linkedInLogin}
           src={'/images/linkedin.png'}
           alt="Sign in with Linked In"
-          style={{ maxWidth: '180px', cursor: 'pointer' }}
+          // style={{ maxWidth: '20px', cursor: 'pointer' }}
+          width={'20px'} 
         />
       )}
     </LinkedIn>

@@ -5,20 +5,15 @@ import Loading from "../../Components/Loading";
 import DrawBranch from "../../Utils/DrawBranch";
 import { Typography } from "@mui/material";
 import useFetch from "point-fetch-react";
-import Fire from "../../Fire/Fire";
-import { baseURL } from "../../Utils/contants";
 
 const UserDetailsMap = () => {
   const [pathDetailsArray, setPathDetailsArray] = React.useState([]);
   const navigate = useNavigate();
   const svgRefs = useRef([]);
 
-  const {get} = useFetch({ state: {} });
+  const {get,Processing} = useFetch({ state: {} });
 
-  // const token = localStorage.getItem('user-visited-dashboard');
-  // console.log(token, 'ffffffff')
-
-useEffect(() => {
+const getMapDetails = () => {
   get({
     endPoint:`/get-details-with-path`,
     onSuccess: (res) => {
@@ -30,8 +25,14 @@ useEffect(() => {
       console.log(err);
     }
   });
+}
+
+// getting map details 
+useEffect(() => {
+  getMapDetails();
 }, [])
 
+// creating the map functionlity I am here 
 useEffect(() => {    
   if(pathDetailsArray.length > 0) {
     const width = 1000;
@@ -54,7 +55,7 @@ useEffect(() => {
 
 return (
   <>
-    <Loading />
+    {Processing ? <Loading processing= {Processing}/> : null}
     <div style={{
       display: "flex",
       flexDirection: "column",

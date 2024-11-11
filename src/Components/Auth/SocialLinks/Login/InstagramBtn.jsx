@@ -75,7 +75,7 @@ const InstagramBtn = () => {
         textAlign: 'center',
       }}
     >
-      <img src='/images/instagram.png' alt="Instagram Logo" />
+      <img width={'20px'}  src='/images/instagram.png' alt="Instagram Logo" />
     </div>
   );
 };

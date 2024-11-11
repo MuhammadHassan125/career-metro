@@ -11,12 +11,11 @@ import Fire from '../../../Fire/Fire';
 
 const UploadDataGrid = ({ heading, dropdown }) => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(4);
   const navigate = useNavigate();
 
-  const { get, post} = useFetch({ state: {} });
+  const { get, post, Processing} = useFetch({ state: {} });
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -148,7 +147,7 @@ const UploadDataGrid = ({ heading, dropdown }) => {
 
   return (
     <>
-      <Loading />
+    {Processing ? <Loading processing= {Processing}/> : null}
       <section className="data-grid">
         <div className='data-grid__heading'>
           <h3>{heading}</h3>

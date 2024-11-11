@@ -34,7 +34,7 @@ const FacebookBtn = () => {
       callback={responseFacebook}
       render={(renderProps) => (
         <button onClick={renderProps.onClick} className='social-icon-div' style={{ backgroundColor: 'white', border: 'none', outline: 'none' }}>
-          <img src='/images/facebook.png' alt='facebook' />
+          <img width={'20px'} src='/images/facebook.png' alt='facebook' />
         </button>
       )}
     />

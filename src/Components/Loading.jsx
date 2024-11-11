@@ -1,32 +1,28 @@
-import React from 'react'
-import { useUser } from '../context/context'
-import { Box, CircularProgress } from '@mui/material';
+import React from "react";
+import { Box, CircularProgress } from "@mui/material";
 
-const Loading = () => {
+const Loading = ({ fullScreen = false, processing }) => {
+  if (processing) {
+    return (
+      <Box
+        sx={{
+          position: fullScreen ? "fixed" : "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999,
+          backgroundColor: fullScreen ? "rgba(0, 0, 0, 0.3)" : "transparent",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+  return null;
+};
 
-    // const { loading } = useUser();
-
-    // if (loading) {
-    //     return (
-    //     <Box 
-    //     sx={{ 
-    //         position: 'fixed',
-    //         top: 0, 
-    //         left: 0, 
-    //         right: 0, 
-    //         bottom: 0, 
-    //         display: 'flex', 
-    //         alignItems: 'center', 
-    //         justifyContent: 'center', 
-    //         zIndex: 9999, 
-    //         backgroundColor: 'rgba(0, 0, 0, 0.3)', 
-    //       }}>
-    //         <CircularProgress />
-    //     </Box>
-    //     )
-    // } return null;
-
-    <div>loading</div>
-}
-
-export default Loading
+export default Loading;

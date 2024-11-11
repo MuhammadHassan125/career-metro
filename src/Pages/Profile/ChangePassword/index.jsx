@@ -2,10 +2,11 @@ import React from 'react';
 import PrimaryInput from '../../../Components/PrimaryInput';
 import { useNavigate } from 'react-router-dom';
 import useFetch from 'point-fetch-react';
+import Loading from '../../../Components/Loading';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
-  const { Data, setData, errors, put } = useFetch({
+  const { Data, setData, errors, put, Processing } = useFetch({
     state:{
       currentPassword: '', 
       newPassword: '', 
@@ -42,9 +43,8 @@ const ChangePassword = () => {
 
   return (
     <>
+    {Processing ? <Loading fullScreen={false} processing={Processing}/> : null}
     <main style={{width:'100%',  display:'flex', justifyContent:'center', alignItems:'center'}}>
-
-    </main>
         <div className="login-form">
           <form  onSubmit={handleLogin}>
           <div className="login-form-heading">
@@ -97,12 +97,13 @@ const ChangePassword = () => {
           {/* <PrimaryBtn text="Login" /> */}
           <button 
           type="submit"
-          style={{width: '100%', borderRadius: '10px', backgroundColor: '#3749A6', border: 'none', 
+          style={{width: '100%', borderRadius: '10px', backgroundColor: '#879aad', border: 'none', 
           padding: '10px 20px', color: 'white', fontSize: '14px', fontWeight: '500', cursor: 'pointer', hover: {opacity: '0.9'}}}
           >Change Password</button>
          </div>
           </form>
         </div>
+    </main>
     </>
   );
 };

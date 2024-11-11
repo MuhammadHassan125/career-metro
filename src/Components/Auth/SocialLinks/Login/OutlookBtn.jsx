@@ -55,7 +55,7 @@ const OutlookBtn = () => {
     <button onClick={handleLogin}
       style={{ border: "none", outline: "none", backgroundColor: "transparent" }}
     >
-      <img src="/images/outlook.png" alt="Outlook Login" />
+      <img width={'20px'}  src="/images/outlook.png" alt="Outlook Login" />
     </button>
   );
 };

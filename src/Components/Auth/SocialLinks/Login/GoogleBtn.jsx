@@ -51,7 +51,7 @@ const GoogleBtn = () => {
         cursor: 'pointer',
       }}
     >
-      <img src='/images/google.png' alt='Google' />
+      <img width={'20px'}  src='/images/google.png' alt='Google' />
     </button>
   );
 };

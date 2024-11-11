@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import './index.scss'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import { Outlet } from 'react-router-dom'
 import LayoutWrapper from '../LayoutWrapper'
+import Loading from '../../Components/Loading'
 // import Outlet from 'react-router-dom'
 const Layout = () => {
   return (
@@ -18,8 +19,10 @@ const Layout = () => {
             <Header />
           </div>
 
-          <div className='dashboard-content'>
-            <Outlet />
+          <div className='dashboard-content' style={{ position: 'relative' }}>
+          <Suspense fallback={<Loading fullScreen={false} />}>
+              <Outlet />
+          </Suspense>
           </div>
         </div>
 
