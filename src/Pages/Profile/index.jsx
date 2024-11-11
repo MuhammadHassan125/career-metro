@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import './index.scss';
 // import { useUser } from '../../context/context';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import Fire from '../../Fire/Fire';
-import { baseURL } from '../../Fire/useFire';
+import { baseURL } from '../../Utils/contants';
 import { Snackbar } from '../../Utils/SnackbarUtils';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -16,7 +16,6 @@ import PrimaryBtn from '../../Components/PrimaryBtn/index';
 import axios from 'axios';
 import ChangePassword from './ChangePassword';
 import useFetch from 'point-fetch-react';
-import UserContext from '../../context/UserContext';
 import Loading from '../../Components/Loading';
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
@@ -41,7 +40,7 @@ const style = {
 };
 
 const Profile = () => {
-    const { user, gettingProfileInfo } = useContext(UserContext);
+    const [user, setUser] = React.useState();
     const [open, setOpen] = React.useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadMessage, setUploadMessage] = useState('');
@@ -64,6 +63,27 @@ const Profile = () => {
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const authToken = localStorage.getItem("user-visited-dashboard")
+
+    const gettingProfileInfo = () => {
+      if (!authToken) return;
+      Fire.get({
+        url: `${baseURL}/show-profile`,
+        onSuccess: (res) => {
+          setUser(res?.data || []);
+          console.log("Profile data headerrrrrrrrrrrrrrrrrrrrrrr", res);
+        },
+        onError: (err) => {
+          console.log("Error loading profile:", err);
+          setUser([]);
+        },
+      });
+    };
+  
+    useEffect(() => {
+        gettingProfileInfo();
+    }, []);
 
     const handleUsernameChange = (event) => {
         setNewUsername(event.target.value);

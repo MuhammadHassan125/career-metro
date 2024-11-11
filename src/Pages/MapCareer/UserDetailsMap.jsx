@@ -11,7 +11,7 @@ const UserDetailsMap = () => {
   const navigate = useNavigate();
   const svgRefs = useRef([]);
 
-  const {get,Processing} = useFetch({ state: {} });
+  const {get, Processing} = useFetch({ state: {} });
 
 const getMapDetails = () => {
   get({

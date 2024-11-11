@@ -5,12 +5,9 @@ import Form from '../../Components/Auth/Form';
 import SocialLinkComponent from '../../Components/Auth/SocialLinks/SocialLinksComponent';
 import FormBtn from '../../Components/Auth/FormBtn';
 import useFetch from 'point-fetch-react';
-import { useContext } from 'react';
-import UserContext from '../../context/UserContext';
 
 const Login = () => {
   const navigate = useNavigate();
-  const {gettingProfileInfo} = useContext(UserContext);
 
   const { Data, setData, Errors, post, Processing, validate } = useFetch({
     state:{
@@ -33,9 +30,10 @@ const Login = () => {
       post({
         endPoint:'/login',
         onSuccess: (res) => {
-          localStorage.setItem('user-visited-dashboard', res.data.data.AuthToken);
+          const token = res.data.data.AuthToken;
+          localStorage.setItem('user-visited-dashboard', token);
+
           navigate('/');
-          gettingProfileInfo();
         },
       });
     }

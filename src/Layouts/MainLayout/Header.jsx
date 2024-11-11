@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import "./index.scss";
 import { IoSearchOutline } from "react-icons/io5";
 import Badge from "@mui/material/Badge";
@@ -16,8 +16,9 @@ import { Box, Typography } from "@mui/material";
 import { MdOutlineMarkChatUnread } from "react-icons/md";
 import { MdOutlineMarkChatRead } from "react-icons/md";
 import { MdOutlineMarkEmailUnread } from "react-icons/md";
-import UserContext from "../../context/UserContext";
 import useFetch from "point-fetch-react";
+import Fire from "../../Fire/Fire";
+import { baseURL } from "../../Utils/contants";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -34,7 +35,7 @@ const Header = () => {
   const open = Boolean(anchorEl);
 
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const [user, setUser] = React.useState();
   const { get, put } = useFetch({ state: {} });
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -71,11 +72,33 @@ const Header = () => {
     { id: 9, name: "Logout", link: "/login" },
   ];
 
+  const authToken = localStorage.getItem("user-visited-dashboard")
+
+  const gettingProfileInfo = () => {
+    if (!authToken) return;
+    Fire.get({
+      url: `${baseURL}/show-profile`,
+      onSuccess: (res) => {
+        setUser(res?.data || []);
+        },
+      onError: (err) => {
+        console.log("Error loading profile:", err);
+        setUser([]);
+      },
+    });
+  };
+
+  useEffect(() => {
+      gettingProfileInfo();
+  }, []);
+
+
   const handleLogout = () => {
     localStorage.removeItem("user-visited-dashboard");
     navigate("/login");
     Snackbar("Logout successfully", { variant: "success" });
   };
+
   const handleToggle = () => {
     setOpenNotification(!openNotification);
     if (openNotification === false) {
@@ -359,6 +382,7 @@ const Header = () => {
           <Avatar
             alt="Travis Howard"
             src={
+              user?.data?.profile_picture ||
               "https://media.istockphoto.com/id/1278978817/photo/portrait-of-happy-mature-man-smiling.jpg?s=612x612&w=0&k=20&c=GPniKSszzPgprveN7sCT5mb-_L3-RSlGAOAsmoDaafw="
             }
           />

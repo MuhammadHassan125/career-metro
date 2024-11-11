@@ -20,11 +20,14 @@ const Register = () => {
     rules: {
       email: [ 'required', 'email'],
       username:['required', 'username'],
-      password: ['required']
+      password: ['required', 'min:8', 'regex:/^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$/'] // For minimum 8 chars with one letter and one number
     },
     message:{
       username:{
         required:'username field must be unique'
+      },
+      password:{
+        required:'Password must be at least 8 characters long, contain at least one letter and one number'
       }
     }
   });
@@ -39,13 +42,13 @@ const Register = () => {
       },
       onError: (error) => {
         console.log(error);
-        Snackbar(error.message || 'Registration failed', { variant: 'error' });
+        alert(error.message || 'Registration failed', { variant: 'error' });
       },
     });
    }
   };
 
-
+  console.log(Errors.password, 'fffffffffff')
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setData(name, value);
@@ -112,7 +115,7 @@ const Register = () => {
             value={Data.password}
             onChange={handleInputChange}
           />
-          {Errors.password && <p className="error">{Errors.password}</p>}
+              {Errors.password && <p className="error">{Errors.password}</p>}
         </div>
 
         {/* Remember Password */}
