@@ -10,9 +10,9 @@ import MapProvider from './Providers/MapProvider.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <ErrorDialogsProvider>
-      <MapProvider>
-        <App />
-      </MapProvider>
+        <MapProvider>
+          <App />
+        </MapProvider>
     </ErrorDialogsProvider>
   </BrowserRouter>
 )

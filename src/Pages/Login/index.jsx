@@ -33,6 +33,12 @@ const Login = () => {
           const token = res.data.data.AuthToken;
           localStorage.setItem('user-visited-dashboard', token);
 
+          const userRole = res.data.data.roleName;
+          localStorage.setItem('user-role', userRole);
+          
+          const permissionSlugs = res?.data?.data?.permissionSlugs;
+          localStorage.setItem("userPermissions", JSON.stringify(permissionSlugs));
+
           navigate('/');
         },
       });

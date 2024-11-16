@@ -1,0 +1,14 @@
+.roles-section{
+    width: 100%;
+
+    .roles__heading{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        h2{
+            font-size: 23px;
+        }
+    }
+}

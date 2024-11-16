@@ -1,26 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './index.scss';
 import { Snackbar } from '../../Utils/SnackbarUtils';
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const sidebarItems = [
+  const [userRole, setUserRole] = useState('');
+  
+  useEffect(() => {
+    const role = localStorage.getItem('user-role');
+    setUserRole(role || 'User'); 
+  }, []);
+
+  const clientItems = [
     { id: 1, name: "Dashboard", link: "/" },
     { id: 2, name: "Career", link: "/map-career" },
-    // { id: 3, name: "Add Path", link: "/map-single-path" },
-    // { id: 4, name: "Documents", link: "/documents" },
-    { id: 5, name: "All Paths", link: "/path" },
-    // { id: 6, name: "Profile", link: "/profile" },
-    { id: 8, name: "Settings", link: "/profile" },
+    { id: 3, name: "All Paths", link: "/path" },
+    { id: 4, name: "Settings", link: "/profile" },
   ];
+
+  const adminItems = [
+    { id: 5, name: "Dashboard", link: "/" },
+    { id: 6, name: "Users", link: "/users" },
+    { id: 7, name: "Roles", link: "/roles" },
+    { id: 8, name: "Permissions", link: "/permissions" },
+  ];
+
+  const sidebarItems =
+    userRole === 'User' ? clientItems : adminItems;
 
   const handleLogout = () => {
     localStorage.removeItem('user-visited-dashboard');
+    localStorage.removeItem('user-role');
     navigate('/login');
     Snackbar('Logout successfully', { variant: 'success' });
-
-  }
+  };
 
   return (
     <main className='sidebar-section'>
@@ -53,6 +67,6 @@ const Sidebar = () => {
       </div>
     </main>
   );
-}
+};
 
 export default Sidebar;

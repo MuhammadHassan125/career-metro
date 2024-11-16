@@ -31,6 +31,12 @@ const Header = () => {
   const [unseenCount, setUnseenCount] = React.useState(null);
   const previousUnseenCountRef = useRef(0);
   const audioRef = useRef(new Audio("./notification-sound.mp3"));
+  const [userRole, setUserRole] = React.useState(""); 
+
+  useEffect(() => {
+    const role = localStorage.getItem("roleName");
+    setUserRole(role || "User ");
+  }, []);
 
   const open = Boolean(anchorEl);
 
@@ -63,15 +69,32 @@ const Header = () => {
     setDrawerOpen(open);
   };
 
-  const sidebarItems = [
+  // const sidebarItems = [
+  //   { id: 1, name: "Dashboard", link: "/" },
+  //   { id: 2, name: "Career", link: "/map-career" },
+  //   { id: 3, name: "Add Path", link: "/map-single-path" },
+  //   { id: 5, name: "All Paths", link: "/path" },
+  //   { id: 8, name: "Settings", link: "" },
+  //   { id: 9, name: "Logout", link: "/login" },
+  // ];
+
+  const clientItems = [
     { id: 1, name: "Dashboard", link: "/" },
     { id: 2, name: "Career", link: "/map-career" },
-    { id: 3, name: "Add Path", link: "/map-single-path" },
-    { id: 5, name: "All Paths", link: "/path" },
-    { id: 8, name: "Settings", link: "" },
+    { id: 3, name: "All Paths", link: "/path" },
+    { id: 4, name: "Settings", link: "/profile" },
     { id: 9, name: "Logout", link: "/login" },
   ];
 
+  const adminItems = [
+    { id: 5, name: "Dashboard", link: "/" },
+    { id: 6, name: "Users", link: "/users" },
+    { id: 7, name: "Roles", link: "/roles" },
+    { id: 8, name: "Permissions", link: "/permissions" },
+    { id: 9, name: "Logout", link: "/login" },
+  ];
+
+  const sidebarItems = userRole === "User" ? clientItems : adminItems;
   const authToken = localStorage.getItem("user-visited-dashboard")
 
   const gettingProfileInfo = () => {
