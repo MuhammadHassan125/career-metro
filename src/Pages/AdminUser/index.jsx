@@ -63,11 +63,14 @@ const AdminUsers = () => {
       onSuccess: (res) => {
         console.log(res);
         getAllUser();
-        Snackbar(res.data.message, { variant: "success" });
+        Snackbar(res.data.message, {
+          style: { backgroundColor: "var(--primary-btn-color)" },
+          variant:"success"
+        });
       },
       onError: (err) => {
         console.log(err);
-        Snackbar(err.error, { variant: "error" });
+        Snackbar(err, { variant: "error" });
       },
     });
   };
@@ -283,6 +286,7 @@ const AdminUsers = () => {
         handleClose={handleClose}
         getAllUser={getAllUser}
       />
+
       <UpdateUser
         open={editOpen}
         handleClose={handleUpdateClose}

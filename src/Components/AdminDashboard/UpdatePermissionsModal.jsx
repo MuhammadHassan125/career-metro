@@ -15,6 +15,7 @@ import useFetch from "point-fetch-react";
 import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { Snackbar } from "../../Utils/SnackbarUtils";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -49,10 +50,8 @@ const UpdatePermissionsModal = (props, ref) => {
       permissions: [],
     },
   });
-  console.log(Data, "data");
   useImperativeHandle(ref, () => ({
     setData: (row, permissions) => {
-      console.log(row);
       setData({
         moduleId: row.id,
         moduleName: row.moduleName,
@@ -64,8 +63,6 @@ const UpdatePermissionsModal = (props, ref) => {
     },
   }));
 
-  //   console.log(id, 'fffffffffffffffffffffffffffff')
-
   const [top100Films, setTop100Films] = useState([
     "Index",
     "Create",
@@ -73,38 +70,11 @@ const UpdatePermissionsModal = (props, ref) => {
     "Edit/Update",
     "Delete",
   ]);
-
-  //  useEffect(() => {
-  //   if (id) {
-  //     console.log("Setting moduleId:", id);
-  //     setData("moduleId", id);
-  //     setData("moduleName", getModuleName || "");
-  //     setData(
-  //       "permissions",
-  //       permissions.map((p) => ({
-  //         id: p.permissionId,
-  //         name: p.permissionName,
-  //       }))
-  //     );
-  //   }
-  // }, [id, getModuleName, permissions]);
-
   const handleModuleNameChange = (event) => {
     setData("moduleName", event.target.value);
   };
 
-  //   console.log(Data, '1111ffffffffffffffffffffffffffffffffffffffff')
   const handleUpdatePermission = () => {
-    // console.log(Data, 'ffffffffffffffffffffffffffffffffffffffff')
-
-    // console.log("Updating Permission with the following data:", {
-    //   moduleId: Data.moduleId,
-    //   moduleName: Data.moduleName,
-    //   permissions: Data.permissions.map((p) => ({
-    //     id: p.id,
-    //     name: p.name,
-    //   })),
-    // });
     post({
       endPoint: `/update-permission`,
       data: {
@@ -120,10 +90,15 @@ const UpdatePermissionsModal = (props, ref) => {
         setData("permissions", []);
         setData("moduleName", "");
         handleClose();
+        Snackbar("Permissions has been updated successfully", {
+          variant: "success",
+          style: { backgroundColor: "var(--primary-btn-color)" },
+        });
         handleGetPermissionsList();
       },
       onError: (err) => {
         console.log(err);
+        Snackbar(err, { variant: "error" });
       },
     });
   };

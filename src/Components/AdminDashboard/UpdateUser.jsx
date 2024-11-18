@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import { IoMdClose } from "react-icons/io";
 import { Button, TextField } from "@mui/material";
 import useFetch from "point-fetch-react";
+import { Snackbar } from "../../Utils/SnackbarUtils";
 
 const style = {
   position: "absolute",
@@ -23,9 +24,12 @@ const style = {
 
 const UpdateUser = ({open, handleClose, userId, getAllUser, UserPassword}) => {
 
-  const { setData, Data, put } = useFetch({
+  const { setData, Data, put, Errors, validate } = useFetch({
     state: {
         password:"",
+    },
+    rules:{
+      password:['required']
     }
   });
 
@@ -35,21 +39,28 @@ const UpdateUser = ({open, handleClose, userId, getAllUser, UserPassword}) => {
   };
 
   const handUpdateUser = () => {
-    put({
-      endPoint: `/update-user/${userId}`,
-      data: {
-        password: Data.password
-      },
-      onSuccess: (res) => {
-        console.log(res);
-        setData("password", "");
-        handleClose();
-        getAllUser();
-      },
-      onError: (err) => {
-        console.log(err);
-      }
-    });
+    if(validate()){
+      put({
+        endPoint: `/update-user/${userId}`,
+        data: {
+          password: Data.password
+        },
+        onSuccess: (res) => {
+          console.log(res);
+          setData("password", "");
+          handleClose();
+          Snackbar(res?.data?.message, {
+            variant: "success",
+            style: { backgroundColor: "var(--primary-btn-color)" },
+          })
+          getAllUser();
+        },
+        onError: (err) => {
+          console.log(err);
+          Snackbar(err, {variant:"error"});
+        }
+      });
+    }
   };
 
   return (
@@ -110,6 +121,8 @@ const UpdateUser = ({open, handleClose, userId, getAllUser, UserPassword}) => {
                 }
               }}
             />
+             {Errors.password && <p className="error">{Errors.password}</p>}
+
 
             <Button
               onClick={handUpdateUser}

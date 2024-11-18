@@ -16,6 +16,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 // import { Snackbar } from "../../Utils/SnackbarUtils";
 import useFetch from "point-fetch-react";
+import { Snackbar } from "../../Utils/SnackbarUtils";
 
 const style = {
   position: "absolute",
@@ -35,11 +36,15 @@ const CreatePermissionsModal = ({
   handleClose,
   handleGetPermissionsList,
 }) => {
-  const { post, Data, setData } = useFetch({
+  const { post, Data, setData, validate, Errors } = useFetch({
     state: {
       moduleName: "",
       permissions: [],
     },
+    rules:{
+      moduleName:['required'],
+      permissions:['required']
+    }
   });
 
   const handleInputChange = (event) => {
@@ -48,19 +53,25 @@ const CreatePermissionsModal = ({
   };
 
   const handleCreatePermissions = () => {
+    if(validate()){
     post({
       endPoint: `/create-permission-with-module`,
       onSuccess: (res) => {
         console.log(res);
         setData("username", "email", "password", "");
+        Snackbar(res?.data?.message, {
+          variant: "success",
+          style: { backgroundColor: "var(--primary-btn-color)" },
+        })
         handleGetPermissionsList();
         handleClose();
       },
       onError: (err) => {
         console.log(err);
+        Snackbar(err, {variant:'success'});
       },
     });
-  };
+  }};
 
   const top100Films = [
     { title: "Index" },
@@ -121,6 +132,7 @@ const CreatePermissionsModal = ({
               onChange={handleInputChange}
               value={Data.moduleName}
             />
+            {Errors.moduleName && <p className="error" style={{marginTop:"-10px", marginBottom:'10px'}}>{Errors.moduleName}</p>}
 
             <Autocomplete
               multiple
@@ -161,6 +173,7 @@ const CreatePermissionsModal = ({
                 />
               )}
             />
+            {Errors.permissions && <p className="error" style={{marginTop:"-10px"}}>{Errors.permissions}</p>}
 
             <Button
               onClick={handleCreatePermissions}

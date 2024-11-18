@@ -136,7 +136,7 @@ const AdminRoles = () => {
                 cursor: "pointer",
               }}
               onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
-            onMouseLeave={(e) => (e.target.style.opacity = "1")} 
+              onMouseLeave={(e) => (e.target.style.opacity = "1")} 
             >
               Add Role
             </button>

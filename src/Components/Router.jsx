@@ -43,7 +43,6 @@ const Router = () => {
     setUserRole(role || "User");
 
     if (!role) {
-      // Redirect to login if no role is found
       navigate("/login");
     }
   }, [navigate]);

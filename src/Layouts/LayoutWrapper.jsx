@@ -14,9 +14,7 @@ const LayoutWrapper = ({ children }) => {
       onUnAuthenticated={handleOpenUnAuthorizeModal}
       onServerError={handleOpenInternalServer}
     >
-    <Suspense fallback={<GuestLoading/>}>
-       {children}
-    </Suspense>
+      <Suspense fallback={<GuestLoading />}>{children}</Suspense>
     </Provider>
   );
 };

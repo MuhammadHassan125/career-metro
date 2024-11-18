@@ -22,9 +22,12 @@ const style = {
 };
 
 const AddRolesModal = ({ open, handleClose }) => {
-  const { post, Data, setData } = useFetch({
+  const { post, Data, setData, validate, Errors } = useFetch({
     state: {
         name: "",
+    },
+    rules:{
+      name:['required']
     }
   });
 
@@ -34,11 +37,15 @@ const AddRolesModal = ({ open, handleClose }) => {
   };
 
   const handleAddRole = () => {
+    if(validate ()){
     post({
       endPoint: `/create-role`,
       onSuccess: (res) => {
         console.log(res);
-        Snackbar(res.data.message, { variant: "success" });
+        Snackbar(res.data.message, { 
+          variant: "success",
+          style: { backgroundColor: "var(--primary-btn-color)" },
+        });
         setData("name", "");
         handleClose();
       },
@@ -47,6 +54,8 @@ const AddRolesModal = ({ open, handleClose }) => {
         Snackbar(err.message, { variant: "error" });
       },
     });
+  }
+
   };
 
   return (
@@ -99,8 +108,8 @@ const AddRolesModal = ({ open, handleClose }) => {
               name="name"
               onChange={handleInputChange}
               value={Data.name}
-
             />
+            {Errors.name && <p className="error" style={{marginTop:"-10px"}}>{Errors.name}</p>}
             
             <Button
               onClick={handleAddRole}

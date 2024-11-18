@@ -3,6 +3,8 @@ import { Checkbox, FormControlLabel, Typography, Box, Divider, Button } from '@m
 import useFetch from 'point-fetch-react';
 import { useParams } from 'react-router-dom';
 import Loading from "../../Components/Loading";
+import { Snackbar } from '../../Utils/SnackbarUtils';
+import {baseURL} from '../../Utils/contants';
 
 const AdminEditPermission = () => {
   const [data, setData] = useState([]);
@@ -50,32 +52,28 @@ const AdminEditPermission = () => {
       });
     });
 
-    // Check if permissionIds is not empty before sending the request
     if (permissionIds.length === 0) {
-      alert("Please select at least one permission.");
+      Snackbar("Please select at least one permission.", {variant:'error'});
       return;
     }
 
-    // Ensure roleId is available before sending the request
     if (!roleId) {
-      alert("Role ID is missing.");
+      Snackbar("Role ID is missing.", {variant:'error'});
       return;
     }
 
-    // Get the token (assuming you're storing it in localStorage or any other method)
-    const token = localStorage.getItem('user-visited-dashboard'); // Adjust this based on where you're storing the token
+    const token = localStorage.getItem('user-visited-dashboard'); 
 
-    // Send data to API with roleId and permissionIds
     try {
-      const response = await fetch('http://192.168.18.195:8001/api/assign-permissions-to-role', {
+      const response = await fetch(`${baseURL}/assign-permissions-to-role`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Adding the token to the headers
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          roleId: roleId, // Sending the roleId from state
-          permissionIds: permissionIds, // Sending permissionIds array
+          roleId: roleId, 
+          permissionIds: permissionIds,
         }),
       });
 
@@ -83,14 +81,17 @@ const AdminEditPermission = () => {
 
       if (response.ok) {
         console.log("Permissions updated successfully:", result);
-        alert("Permissions updated successfully");
+        Snackbar("Permissions updated successfully", {
+          variant:"success",
+          style: { backgroundColor: "var(--primary-btn-color)" },
+        });
       } else {
         console.log("Error:", result);
         alert("Failed to update permissions");
       }
     } catch (error) {
       console.log("Error occurred during fetch:", error);
-      alert("An error occurred while updating permissions");
+      Snackbar("An error occurred while updating permissions", {variant:'error'});
     }
   };
 
