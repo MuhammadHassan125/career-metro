@@ -1,4 +1,3 @@
-// Debug ke liye console logs add karein
 export const getPermissionsFromLocalStorage = () => {
   let permissionSlugs = [];
   try {
@@ -29,7 +28,7 @@ export const hasSlugAction = (roleName, action) => {
   console.log("All permission slugs:", permissionSlugs);
 
   // Check for exact match first
-  if (permissionSlugs.some(slug => slug.endsWith(`-${action}`))) {
+  if (permissionSlugs.some(slug => slug === action || slug.endsWith(`-${action}`))) {
     console.log("Found matching action");
     return true;
   }

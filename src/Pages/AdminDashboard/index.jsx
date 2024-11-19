@@ -1,6 +1,7 @@
 import '../Dashboard/index.scss';
 import UploadDataGrid from '../../Components/DashboardComponents/DataGrid/UploadDataGrid';
 import RevenueChart from '../../Components/AdminDashboard/TrackChart';
+import React, { useEffect } from 'react';
 
 const columns = [
     { Header: "Id", accessor: "id" },
@@ -103,10 +104,18 @@ const style = {
         // p: 2,
     }
 };
+
+
 const AdminDashboard = () => {
+    const [userRole, setUserRole] = React.useState('');
+
+    React.useEffect(()=> {
+        const role = localStorage.getItem('user-role');
+        setUserRole(role);
+    }, [])
     return (
         <main className='dashboard-section' id="chart">
-            <h2>Admin Dashboard</h2>
+            {userRole === "Super Admin" ? <h2>Super Admin Dashboard</h2> : <h2>Admin Dashboard</h2>}
             <DashboardCards />
             <UploadDataGrid columns={columns} heading={"Path Details"} dropdown={"October"} />
 

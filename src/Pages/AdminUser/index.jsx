@@ -30,7 +30,7 @@ const AdminUsers = () => {
 
   const roleName = localStorage.getItem("user-role");
   const canCreate = hasSlugAction(roleName, "create");
-  const canEdit = hasSlugAction(roleName, "edit");
+  const canEdit = hasSlugAction(roleName, "update");
   const canDelete = hasSlugAction(roleName, "delete");
 
 

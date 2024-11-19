@@ -2,11 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './index.scss';
 import { Snackbar } from '../../Utils/SnackbarUtils';
+import { hasSlugAction } from '../../Utils/SlugPermission';
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState('');
-  
+
+  const roleName = localStorage.getItem("user-role");
+  const showSkillToAdmin = 
+  hasSlugAction(roleName, "skills-delete") || 
+  hasSlugAction(roleName, "skills-update");
+
+  const showPathToAdmin = hasSlugAction(roleName, "paths-update");
+
   useEffect(() => {
     const role = localStorage.getItem('user-role');
     setUserRole(role || 'User'); 
@@ -22,18 +30,37 @@ const Sidebar = () => {
   const adminItems = [
     { id: 5, name: "Dashboard", link: "/" },
     { id: 6, name: "Users", link: "/users" },
+    { id: 7, name: "User Tracking", link: "/admin-activities" },
+    ...(showSkillToAdmin ? [{ id: 8, name: "Skills", link: "/admin-skills" }] : []),
+    ...(showPathToAdmin ? [{ id: 9, name: "Paths", link: "/admin-paths" }] : []),
+    { id: 10, name: "Roles", link: "/roles" },
+    // { id: 11, name: "Permissions", link: "/permissions" },
+  ];
+
+  const superAdminItems = [
+    { id: 5, name: "Dashboard", link: "/" },
+    { id: 6, name: "Users", link: "/users" },
     { id: 7, name: "Roles", link: "/roles" },
-    { id: 8, name: "Permissions", link: "/permissions" },
+    { id: 8, name: "User Tracking", link: "/admin-activities" },
+    { id: 9, name: "Skills", link: "/admin-skills" },
+    { id: 10, name: "Paths", link: "/admin-paths" },
+    // { id: 11, name: "Permissions", link: "/permissions" },
   ];
 
   const sidebarItems =
-    userRole === 'User' ? clientItems : adminItems;
+  userRole === 'User' ? clientItems :
+  userRole === 'Admin' ? adminItems :
+  userRole === 'Super Admin' ? superAdminItems :
+  [];
 
   const handleLogout = () => {
     localStorage.removeItem('user-visited-dashboard');
     localStorage.removeItem('user-role');
     navigate('/login');
-    Snackbar('Logout successfully', { variant: 'success' });
+    Snackbar('Logout successfully', { 
+      variant: 'success',
+      style: { backgroundColor: "var(--primary-btn-color)" },
+    });
   };
 
   return (

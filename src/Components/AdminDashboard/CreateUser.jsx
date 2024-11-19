@@ -89,7 +89,7 @@ const CreateUser = ({ open, handleClose, stepId, getAllUser }) => {
         },
         onError: (err) => {
           console.log(err);
-          Snackbar(err, { variant: "error" });
+          Snackbar(err || err.message, { variant: "error" });
         },
       });
     }

@@ -103,11 +103,11 @@ const GPTComponent = ({ selectedPathId }) => {
               Get Started
             </button>
           </div>
-          <div>
+          {/* <div>
             <p style={{marginTop:'10px'}}>
               <strong>Next Role:</strong>Sales Team Lead
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
 

@@ -68,7 +68,6 @@ const Documents = () => {
         navigate('/documents-upload')
     }
     return (
-        <React.Fragment>
             <main className="documents-section">
                 {/* heading  */}
                 <div className='main__heading'>
@@ -80,8 +79,7 @@ const Documents = () => {
 
                 <DataGrid columns={columns} data={data} heading={"Uploaded CV's"} dropdown={"October"} />
             </main>
-        </React.Fragment>
     )
-}
+};
 
 export default Documents
