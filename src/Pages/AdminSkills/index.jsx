@@ -12,23 +12,12 @@ import UpdateSkills from "../../Components/AdminDashboard/UpdateSkills";
 
 const AdminSkills = () => {
   const [skillsData, setSkillsData] = useState([]);
-  const [skillsId, setSkillsId] = useState(null);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   
-  const [id, setId] = useState(null);
-  const [skillTitle, setSkillsTitle] = useState('');
-  const [skillStatus, setSkillStatus] = useState('');
-  const [stepId, setStepId] = useState(null);
-//   const [selectedSkill, setSelectedSkill] = useState({
-//     id: null,
-//     title: "",
-//     status: "",
-//     stepId: null,
-//   });
-
+  const [skillRow, setSkillRow] = useState([]);
   // for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -54,11 +43,8 @@ const AdminSkills = () => {
     gettingSkillsList();
   }, [currentPage]);
 
-const handleUpdateSkills = (id, title, step_id, status) => {
-    setId(id);
-    setSkillsTitle(title);
-    setSkillStatus(status);
-    setStepId(step_id);
+const handleUpdateSkills = (row) => {
+    setSkillRow(row)
     handleOpen();
 };
 
@@ -116,7 +102,6 @@ const handleUpdateSkills = (id, title, step_id, status) => {
       Header: "Edit",
       accessor: "edit",
       Cell: ({ row }) => {
-        const {id, step_id, title, status} = row;
         return (
           <div
             style={{
@@ -125,7 +110,7 @@ const handleUpdateSkills = (id, title, step_id, status) => {
             }}
           >
             <AiOutlineEdit
-              onClick={() => handleUpdateSkills(id, step_id, status, title)}
+              onClick={() => handleUpdateSkills(row)}
               style={{
                 backgroundColor: "#E8E8E8",
                 width: "22px",
@@ -140,7 +125,7 @@ const handleUpdateSkills = (id, title, step_id, status) => {
             />
 
             <AiOutlineDelete
-              onClick={() => handleDeleteSkill(id)}
+              onClick={() => handleDeleteSkill(row?.id)}
               style={{
                 backgroundColor: "#E8E8E8",
                 width: "22px",
@@ -227,12 +212,8 @@ const handleUpdateSkills = (id, title, step_id, status) => {
       <UpdateSkills
         open={open}
         gettingSkillsList={gettingSkillsList}
-        // selectedSkill={selectedSkill} 
+        skillRow={skillRow}
         handleClose={handleClose}
-        id={id}
-        skillTitle={skillTitle}
-        skillStatus={skillStatus}
-        stepId={stepId}
       />
     </>
   );

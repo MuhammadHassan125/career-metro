@@ -5,7 +5,7 @@ import FullPageFormLayout from "../Layouts/FullPageFormLayout";
 import GuestRoute from "./GuestRoute";
 import AuthRoute from "./AuthRoute";
 import { Snackbar } from "../Utils/SnackbarUtils";
-import AdminPaths from "../Pages/AdminPaths";
+
 
 const Login = lazy(() => import("../Pages/Login"));
 const Register = lazy(() => import("../Pages/Register"));
@@ -35,6 +35,8 @@ const CancelCheckout = lazy(() => import("../Pages/PaymentCheckout/CancelCheckou
 const Success = lazy(() => import("../Pages/PaymentCheckout/SuccessCheckout"));
 const EditPath = lazy(() => import("../Pages/UploadDocuments/EditPath"));
 const AdminEditPermission = lazy(() => import("../Pages/AdminEditPermission"))
+const AdminPaths = lazy(() => import("../Pages/AdminPaths"));
+const AdminPathMap = lazy(() => import("../Pages/AdminPathMap"));
 const ExportPdf = lazy(() => import('../Pages/ExportPdf'));
 
 const Router = () => {
@@ -79,6 +81,7 @@ const Router = () => {
       <Route path="/admin-activities" element={<AdminActivity/>}/>
       <Route path="/admin-skills" element={<AdminSkills/>}/>
       <Route path="/admin-paths" element={<AdminPaths/>}/>
+      <Route path="/admin-paths/:id" element={<AdminPathMap/>}/>
       <Route path="/permissions" element={<AdminPermissions />} />
       <Route path="/edit-role/:id" element={<AdminEditPermission/>} />
     </>

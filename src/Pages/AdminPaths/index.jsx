@@ -5,6 +5,8 @@ import { Pagination, Typography } from "@mui/material";
 import "../../Components/DashboardComponents/DataGrid/index.scss";
 import UpdatePath from "../../Components/AdminDashboard/UpdatePath";
 import { AiOutlineEdit } from "react-icons/ai";
+import { BsFillEyeFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const AdminPaths = () => {
   const [path, setPath] = useState([]);
@@ -16,15 +18,13 @@ const AdminPaths = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [itemsPerPage] = useState(4);
 
   const { get, Processing } = useFetch({ state: {} });
-
+  const navigate = useNavigate();
   const gettingAdminPaths = () => {
     get({
       endPoint: "/get-all-paths-for-admin-panel",
       onSuccess: (res) => {
-        console.log(res, "admin paths");
         setPath(res?.data?.paths);
       },
       onError: (err) => {
@@ -83,6 +83,21 @@ const AdminPaths = () => {
               gap: "8px",
             }}
           >
+            
+            <BsFillEyeFill
+              onClick={() => navigate(`/admin-paths/${id}`)}
+              style={{
+                backgroundColor: "#E8E8E8",
+                width: "22px",
+                height: "22px",
+                fontSize: "10px",
+                padding: "4px",
+                borderRadius: "50%",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+              onMouseLeave={(e) => (e.target.style.opacity = "1")}
+            />
             <AiOutlineEdit
               onClick={() => handleUpdatePath(id, prompt)}
               style={{
@@ -101,6 +116,7 @@ const AdminPaths = () => {
         );
       },
     },
+    
   ];
 
   const handlePageChange = (event, newPage) => {

@@ -23,17 +23,13 @@ const style = {
   fontFamily: "Poppins sans-serif",
 };
 
-const UpdateSkills = ({ open, handleClose, gettingSkillsList, id,
-  skillTitle,
-  skillStatus,
-  stepId,
- }) => {
+const UpdateSkills = ({ open, handleClose, gettingSkillsList, skillRow}) => {
 
   const { post, Data, setData, Errors, validate } = useFetch({
     state: {
-      title: skillTitle || "",
-      status: skillStatus || "",
-      step_id:   stepId || null,
+      title: skillRow?.title || "",
+      status: skillRow?.status || "",
+      step_id:   skillRow?.step_id || null,
     },
     rules: {
       title: ['required'],
@@ -42,12 +38,14 @@ const UpdateSkills = ({ open, handleClose, gettingSkillsList, id,
   });
 
   useEffect(() => {
-        setData({
-            title: skillTitle || "",
-            status: skillStatus || "",
-            step_id: stepId || null,
-        });
-}, [setData]);
+    if (skillRow) {
+      setData({
+        title: skillRow?.title || "",
+        status: skillRow?.status || "",
+        step_id: skillRow?.step_id || null,
+      });
+    }
+  }, [skillRow]);
 
 
   const handleInputChange = (event) => {
@@ -58,7 +56,7 @@ const UpdateSkills = ({ open, handleClose, gettingSkillsList, id,
   const updatePathPrompt = () => {
     if (validate()) {
       post({
-        endPoint: `/update-skill-for-admin-panel/${id}`,
+        endPoint: `/update-skill-for-admin-panel/${skillRow?.id}`,
         onSuccess: (res) => {
           console.log(res, 'update path prompt');
           Snackbar(res?.data?.message, {
@@ -66,12 +64,23 @@ const UpdateSkills = ({ open, handleClose, gettingSkillsList, id,
             style: { backgroundColor: "var(--primary-btn-color)" },
           });
           handleClose();
+          setData({
+            title:"",
+            status:"",
+            step_id: null
+          })
           gettingSkillsList();
         },
         onError: (err) => {
           console.log(err);
         },
       });
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      updatePathPrompt();
     }
   };
 
@@ -90,7 +99,7 @@ const UpdateSkills = ({ open, handleClose, gettingSkillsList, id,
       }}
     >
       <Fade in={open}>
-        <Box sx={style}>
+        <Box sx={style} onKeyDown={handleKeyDown}>
           <IoMdClose
             onClick={handleClose}
             style={{
@@ -134,9 +143,9 @@ const UpdateSkills = ({ open, handleClose, gettingSkillsList, id,
                   width: "100%",
                   mt: 2,
                 }}
-                name="status"
+                name="title"
                 onChange={handleInputChange}
-                value={Data.status}
+                value={Data.title}
               />
               {Errors.title && <p className="error">{Errors.title}</p>}
 
@@ -149,9 +158,10 @@ const UpdateSkills = ({ open, handleClose, gettingSkillsList, id,
                   mt: 1,
                   mb: 6
                 }}
-                name="title"
+                name="status"
                 onChange={handleInputChange}
-                value={Data.title} 
+                value={Data.status} 
+                
               />
               {Errors.status && <p className="error">{Errors.status}</p>}
 
