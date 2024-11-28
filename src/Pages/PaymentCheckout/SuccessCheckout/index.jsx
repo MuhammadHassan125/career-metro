@@ -18,14 +18,12 @@ const Success = () => {
             url: `${baseURL}/confirm-subscription`,
             data: { sessionId },
             headers: {
-                Authorization: `Bearer ${token}`, 
+                Authorization: `Bearer ${token}`,
             },
             onSuccess: (res) => {
-                console.log('Subscription confirmed successfully:', res);
                 alert("Subscription confirmed successfully");
             },
             onError: (err) => {
-                console.error('Subscription confirmation error:', err);
                 alert("Subscription confirmation failed");
             },
         });
@@ -38,7 +36,6 @@ const Success = () => {
         if (sessionId) {
             confirmSubscription(sessionId);
         } else {
-            console.log('Session ID is missing');
             alert('Session ID is missing');
         }
     }, [location.search]);

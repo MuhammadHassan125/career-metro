@@ -4,13 +4,6 @@ import UploadDataGrid from '../../Components/DashboardComponents/DataGrid/Upload
 import PaymentCheckout from '../PaymentCheckout/index.jsx';
 
 const Path = () => {
-    // const [subscriptionStatus, setSubscriptionStatus] = useState(null);
-
-    // useEffect(() => {
-    //     const status = localStorage.getItem('subscription');
-    //     setSubscriptionStatus(status === 'false'); 
-    //     console.log(status);
-    // }, []);
 
     return (
         <React.Fragment>
@@ -18,8 +11,8 @@ const Path = () => {
                 <h2>Listing Documents</h2>
                 <UploadDataGrid heading={"Uploaded Documents"} dropdown={"October"} />
             </main>
-            
-           <PaymentCheckout />
+
+            <PaymentCheckout />
         </React.Fragment>
     );
 }

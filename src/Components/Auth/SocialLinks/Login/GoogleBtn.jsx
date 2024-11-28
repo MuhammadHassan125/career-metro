@@ -7,7 +7,6 @@ const GoogleBtn = () => {
   //   onSuccess: async (codeResponse) => {
   //     try {
   //       const authorizationCode = codeResponse.code;
-  //       console.log('Authorization Code:', authorizationCode);
 
   //       const response = await fetch('http://192.168.18.194:8001/api/google-login', {
   //         method: 'POST',
@@ -18,7 +17,6 @@ const GoogleBtn = () => {
   //       });
 
   //       const data = await response.json();
-  //       console.log('Backend Response:', data);
 
   //       if (response.ok && data.status) {
   //         // localStorage.setItem('jwtToken', data.data.token);
@@ -51,7 +49,7 @@ const GoogleBtn = () => {
         cursor: 'pointer',
       }}
     >
-      <img width={'20px'}  src='/images/google.png' alt='Google' />
+      <img width={'20px'} src='/images/google.png' alt='Google' />
     </button>
   );
 };

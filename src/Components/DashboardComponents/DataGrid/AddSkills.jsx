@@ -36,14 +36,12 @@ const AddSkills = ({ open, handleClose, stepId, handleSubmit }) => {
 
   const handAddSkills = () => {
     if (!Data.title.trim()) {
-      console.log("Title is required");
       return;
     }
 
     post({
       endPoint: `/add-skill`,
       onSuccess: (res) => {
-        console.log(res);
         // Snackbar(res?.data?.message, {
         //   variant: "success",
         //   style: { backgroundColor: "var(--primary-btn-color)" },
@@ -51,11 +49,7 @@ const AddSkills = ({ open, handleClose, stepId, handleSubmit }) => {
         setData("title", "");
         handleSubmit();
         handleClose();
-      },
-      onError: (err) => {
-        console.log(err);
-        // Snackbar(err.message || "An error occurred", { variant: "error" });
-      },
+      }
     });
   };
 

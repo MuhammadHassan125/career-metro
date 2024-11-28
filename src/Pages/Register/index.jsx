@@ -18,37 +18,34 @@ const Register = () => {
     },
 
     rules: {
-      email: [ 'required', 'email'],
-      username:['required', 'username'],
+      email: ['required', 'email'],
+      username: ['required', 'username'],
       password: ['required', 'min:8', 'regex:/^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$/'] // For minimum 8 chars with one letter and one number
     },
-    message:{
-      username:{
-        required:'username field must be unique'
+    message: {
+      username: {
+        required: 'username field must be unique'
       },
-      password:{
-        required:'Password must be at least 8 characters long, contain at least one letter and one number'
+      password: {
+        required: 'Password must be at least 8 characters long, contain at least one letter and one number'
       }
     }
   });
 
   const handleSubmit = () => {
-   if(validate()){
-    post({
-      endPoint: `/register`,
-      onSuccess: (res) => {
-        console.log('Register successfully', res);
-        navigate('/login');
-      },
-      onError: (error) => {
-        console.log(error);
-        alert(error.message || 'Registration failed', { variant: 'error' });
-      },
-    });
-   }
+    if (validate()) {
+      post({
+        endPoint: `/register`,
+        onSuccess: (res) => {
+          navigate('/login');
+        },
+        onError: (error) => {
+          alert(error.message || 'Registration failed', { variant: 'error' });
+        },
+      });
+    }
   };
 
-  console.log(Errors.password, 'fffffffffff')
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setData(name, value);
@@ -115,7 +112,7 @@ const Register = () => {
             value={Data.password}
             onChange={handleInputChange}
           />
-              {Errors.password && <p className="error">{Errors.password}</p>}
+          {Errors.password && <p className="error">{Errors.password}</p>}
         </div>
 
         {/* Remember Password */}

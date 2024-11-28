@@ -36,14 +36,14 @@ const CreateUser = ({ open, handleClose, stepId, getAllUser }) => {
       password: "",
       roleId: "",
     },
-    rules:{
-      email: ['required','email'],
+    rules: {
+      email: ['required', 'email'],
       password: ['required', 'password'],
-      username:['required'],
-      roleId:['required']
+      username: ['required'],
+      roleId: ['required']
     },
-    message:{
-      roleId:{
+    message: {
+      roleId: {
         required: 'Role must be selected',
       }
     }
@@ -58,11 +58,9 @@ const CreateUser = ({ open, handleClose, stepId, getAllUser }) => {
     get({
       endPoint: `/get-role`,
       onSuccess: (res) => {
-        console.log(res, "getting roles");
         setRoles(res?.data?.results);
       },
       onError: (err) => {
-        console.log(err);
       },
     });
   };
@@ -73,7 +71,6 @@ const CreateUser = ({ open, handleClose, stepId, getAllUser }) => {
         endPoint: `/create-user`,
         body: { ...Data },
         onSuccess: (res) => {
-          console.log(res);
           setData({
             username: "",
             email: "",
@@ -88,13 +85,12 @@ const CreateUser = ({ open, handleClose, stepId, getAllUser }) => {
           });
         },
         onError: (err) => {
-          console.log(err);
           Snackbar(err || err.message, { variant: "error" });
         },
       });
     }
   };
-  
+
 
   const handleRoleChange = (event) => {
     setData("roleId", event.target.value);
@@ -135,13 +131,13 @@ const CreateUser = ({ open, handleClose, stepId, getAllUser }) => {
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
-              gap:'10px'
+              gap: '10px'
             }}
           >
-            <Typography id="transition-modal-title" variant="h3" component="h2" 
-            sx={{
-              fontWeight:"semiBold"
-            }}>
+            <Typography id="transition-modal-title" variant="h3" component="h2"
+              sx={{
+                fontWeight: "semiBold"
+              }}>
               Add New User
             </Typography>
 
@@ -149,79 +145,79 @@ const CreateUser = ({ open, handleClose, stepId, getAllUser }) => {
               Super Admin only have access
             </Typography>
 
-          <Box
-          sx={{
-            display:"flex",
-            alignItem:"center",
-            flexDirection:"column",
-            gap:"30px",
-            width:"100%"
-          }}
-          >
-
-            <TextField
-              label="Username"
-              variant="outlined"
+            <Box
               sx={{
-                height: 40,
-                width: "100%",
-                // mb: 4,
-                mt: 2,
+                display: "flex",
+                alignItem: "center",
+                flexDirection: "column",
+                gap: "30px",
+                width: "100%"
               }}
-              name="username"
-              onChange={handleInputChange}
-              value={Data.username}
-            />
-            {Errors.username && <p className="error">{Errors.username}</p>}
+            >
 
-            <TextField
-              label="Email"
-              variant="outlined"
-              sx={{
-                height: 40,
-                width: "100%",
-                // mb: 4,
-              }}
-              name="email"
-              onChange={handleInputChange}
-              value={Data.email}
-            />
-           {Errors.email && <p className="error">{Errors.email}</p>}
+              <TextField
+                label="Username"
+                variant="outlined"
+                sx={{
+                  height: 40,
+                  width: "100%",
+                  // mb: 4,
+                  mt: 2,
+                }}
+                name="username"
+                onChange={handleInputChange}
+                value={Data.username}
+              />
+              {Errors.username && <p className="error">{Errors.username}</p>}
 
-            <TextField
-              label="Password"
-              variant="outlined"
-              sx={{
-                height: 40,
-                width: "100%",
-                // mb: 4,
-              }}
-              name="password"
-              onChange={handleInputChange}
-              value={Data.password}
-            />
-           {Errors.password && <p className="error">{Errors.password}</p>}
+              <TextField
+                label="Email"
+                variant="outlined"
+                sx={{
+                  height: 40,
+                  width: "100%",
+                  // mb: 4,
+                }}
+                name="email"
+                onChange={handleInputChange}
+                value={Data.email}
+              />
+              {Errors.email && <p className="error">{Errors.email}</p>}
+
+              <TextField
+                label="Password"
+                variant="outlined"
+                sx={{
+                  height: 40,
+                  width: "100%",
+                  // mb: 4,
+                }}
+                name="password"
+                onChange={handleInputChange}
+                value={Data.password}
+              />
+              {Errors.password && <p className="error">{Errors.password}</p>}
 
 
-            <FormControl fullWidth sx={{ mb: 4 }}>
-              <InputLabel>Assign Role</InputLabel>
-              <Select
-                value={Data.roleId}
-                onChange={handleRoleChange}
-                label="Assign Role"
-              >
-                {roles.map((role) => (
-                  <MenuItem
-                    key={role.id}
-                    value={role.id}
-                    sx={{ display: "flex", justifyContent: "left" }}
-                  >
-                    {role.name}
-                  </MenuItem>
-                ))}
-              </Select>
+              <FormControl fullWidth sx={{ mb: 4 }}>
+                <InputLabel>Assign Role</InputLabel>
+                <Select
+                  value={Data.roleId}
+                  onChange={handleRoleChange}
+                  label="Assign Role"
+                >
+                  {roles.map((role) => (
+                    <MenuItem
+                      key={role.id}
+                      value={role.id}
+                      sx={{ display: "flex", justifyContent: "left" }}
+                    >
+                      {role.name}
+                    </MenuItem>
+                  ))}
+                </Select>
                 {Errors.roleId && <p className="error">{Errors.roleId}</p>}
-            </FormControl>
+              </FormControl>
 
             </Box>
 

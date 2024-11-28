@@ -6,12 +6,6 @@ const LinkedinBtn = () => {
     <LinkedIn
       clientId="77xgzu666vbrij"
       redirectUri={`http://localhost:5173`}
-      onSuccess={(code) => {
-        console.log(code);
-      }}
-      onError={(error) => {
-        console.log(error);
-      }}
     >
       {({ linkedInLogin }) => (
         <img
@@ -19,7 +13,7 @@ const LinkedinBtn = () => {
           src={'/images/linkedin.png'}
           alt="Sign in with Linked In"
           // style={{ maxWidth: '20px', cursor: 'pointer' }}
-          width={'20px'} 
+          width={'20px'}
         />
       )}
     </LinkedIn>

@@ -15,7 +15,7 @@ const UploadDataGrid = ({ heading, dropdown }) => {
   const [itemsPerPage] = useState(4);
   const navigate = useNavigate();
 
-  const { get, post, Processing} = useFetch({ state: {} });
+  const { get, post, Processing } = useFetch({ state: {} });
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -26,10 +26,8 @@ const UploadDataGrid = ({ heading, dropdown }) => {
       endPoint: `/get-paths-for-user`,
       onSuccess: (res) => {
         setData(res.data.data.result || []);
-        console.log('data', res);
       },
       onError: (err) => {
-        console.log(err);
         setData([]);
       },
     });
@@ -39,19 +37,14 @@ const UploadDataGrid = ({ heading, dropdown }) => {
     Fire.post({
       url: `${AnalyzeURL}/${status === 'pending' ? "generate_roadmap" : "regenerate_roadmap"}?id=${id}`,
       onSuccess: (res) => {
-        console.log(res);
-        // Snackbar(res?.data?.message, { variant: 'success' });
         setLoading(false);
         getUploadDataList();
-      },
-      onError: (err) => {
-        console.log(err);
       }
     });
   };
 
   const handleEdit = (rowData) => {
-    navigate(`/path/${rowData.id}/edit`, {state:rowData}); 
+    navigate(`/path/${rowData.id}/edit`, { state: rowData });
   };
 
   const columns = [
@@ -76,10 +69,10 @@ const UploadDataGrid = ({ heading, dropdown }) => {
             color: value === 'pending' || value === 'analyzed' ? '#879aad' : '#354E70',
             borderRadius: '10px',
             padding: '3px 0',
-            textAlign:'center',
+            textAlign: 'center',
             cursor: 'pointer',
             fontSize: '11px',
-             width:'70px',
+            width: '70px',
             // height:'25px'
           }}
         >
@@ -94,18 +87,18 @@ const UploadDataGrid = ({ heading, dropdown }) => {
       Cell: ({ row }) => (
         <div
           style={{
-            cursor: 'pointer', 
-            background: '#E8E8E8', 
-            padding: '6px', 
-            borderRadius: "20px", 
+            cursor: 'pointer',
+            background: '#E8E8E8',
+            padding: '6px',
+            borderRadius: "20px",
             fontSize: "12px",
-            textAlign:'center',
-            width:'25px',
-            height:'25px'
+            textAlign: 'center',
+            width: '25px',
+            height: '25px'
           }}
           onClick={() => handleEdit(row)}
         >
-          <AiOutlineEdit  />
+          <AiOutlineEdit />
         </div>
       )
     },
@@ -137,17 +130,17 @@ const UploadDataGrid = ({ heading, dropdown }) => {
 
   useEffect(() => {
     getUploadDataList();
-  
+
     const pollInterval = setInterval(() => {
       getUploadDataList();
     }, 20000);
-  
+
     return () => clearInterval(pollInterval);
   }, []);
 
   return (
     <>
-    {Processing ? <Loading processing= {Processing}/> : null}
+      {Processing ? <Loading processing={Processing} /> : null}
       <section className="data-grid">
         <div className='data-grid__heading'>
           <h3>{heading}</h3>

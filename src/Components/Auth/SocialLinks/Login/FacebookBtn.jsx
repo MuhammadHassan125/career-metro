@@ -3,7 +3,6 @@ import FacebookLogin from '@greatsumini/react-facebook-login';
 
 const FacebookBtn = () => {
   const responseFacebook = (response) => {
-    console.log('Facebook login response:', response);
 
     if (response.status !== 'connected') {
       console.error('Login failed:', response.status);
@@ -11,7 +10,6 @@ const FacebookBtn = () => {
     }
 
     const { accessToken } = response;
-    console.log('Facebook access token:', accessToken);
     // Example of sending the token to your backend directly
     fetch('http://192.168.18.194:8001/api/facebook-login', {
       method: 'POST',
@@ -20,11 +18,7 @@ const FacebookBtn = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Backend response:', data);
       })
-      .catch(error => {
-        console.error('Backend error:', error);
-      });
   };
 
   return (

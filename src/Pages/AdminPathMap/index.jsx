@@ -31,10 +31,7 @@ const AdminPathMap = () => {
           prompt: pathData?.Prompt,
         });
         setPathDetailsArray(res.data.data || []);
-      },
-      onError: (err) => {
-        console.log(err.message);
-      },
+      }
     });
   };
 
@@ -89,10 +86,10 @@ const AdminPathMap = () => {
           >
             <CardContent>
               <Typography variant="subtitle1" gutterBottom>
-              <span style={{fontWeight:"bold"}}>Username:</span> {pathInfo.username}
+                <span style={{ fontWeight: "bold" }}>Username:</span> {pathInfo.username}
               </Typography>
               <Typography variant="subtitle1" gutterBottom>
-              <span style={{fontWeight:"bold"}}>Title:</span> {pathInfo.title}
+                <span style={{ fontWeight: "bold" }}>Title:</span> {pathInfo.title}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -100,10 +97,10 @@ const AdminPathMap = () => {
                   color: pathInfo.status === "analysed" ? "#1976d2" : null,
                 }}
               >
-                <span style={{fontWeight:"bold"}}>Status:</span> {pathInfo.status}
+                <span style={{ fontWeight: "bold" }}>Status:</span> {pathInfo.status}
               </Typography>
               <Typography variant="body1" sx={{ marginTop: "5px" }}>
-              <span style={{fontWeight:"bold"}}>Prompt:</span> {pathInfo.prompt}
+                <span style={{ fontWeight: "bold" }}>Prompt:</span> {pathInfo.prompt}
               </Typography>
             </CardContent>
           </Card>

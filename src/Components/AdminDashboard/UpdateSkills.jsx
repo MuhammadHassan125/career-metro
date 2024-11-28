@@ -19,17 +19,17 @@ const style = {
   boxShadow: 24,
   p: 4,
   borderRadius: 2,
-  outline:'none',
+  outline: 'none',
   fontFamily: "Poppins sans-serif",
 };
 
-const UpdateSkills = ({ open, handleClose, gettingSkillsList, skillRow}) => {
+const UpdateSkills = ({ open, handleClose, gettingSkillsList, skillRow }) => {
 
   const { post, Data, setData, Errors, validate } = useFetch({
     state: {
       title: skillRow?.title || "",
       status: skillRow?.status || "",
-      step_id:   skillRow?.step_id || null,
+      step_id: skillRow?.step_id || null,
     },
     rules: {
       title: ['required'],
@@ -58,21 +58,17 @@ const UpdateSkills = ({ open, handleClose, gettingSkillsList, skillRow}) => {
       post({
         endPoint: `/update-skill-for-admin-panel/${skillRow?.id}`,
         onSuccess: (res) => {
-          console.log(res, 'update path prompt');
           Snackbar(res?.data?.message, {
             variant: 'success',
             style: { backgroundColor: "var(--primary-btn-color)" },
           });
           handleClose();
           setData({
-            title:"",
-            status:"",
+            title: "",
+            status: "",
             step_id: null
           })
           gettingSkillsList();
-        },
-        onError: (err) => {
-          console.log(err);
         },
       });
     }
@@ -160,8 +156,8 @@ const UpdateSkills = ({ open, handleClose, gettingSkillsList, skillRow}) => {
                 }}
                 name="status"
                 onChange={handleInputChange}
-                value={Data.status} 
-                
+                value={Data.status}
+
               />
               {Errors.status && <p className="error">{Errors.status}</p>}
 

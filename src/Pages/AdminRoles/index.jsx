@@ -41,10 +41,7 @@ const AdminRoles = () => {
       endPoint: `/get-role`,
       onSuccess: (res) => {
         setData(res?.data?.results);
-      },
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
@@ -111,14 +108,14 @@ const AdminRoles = () => {
                 cursor: "pointer",
               }}
               onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
-              onMouseLeave={(e) => (e.target.style.opacity = "1")} 
+              onMouseLeave={(e) => (e.target.style.opacity = "1")}
             />
           </div>
         ) : null;
       },
     },
   ];
-  
+
   return (
     <>
       {Processing ? <Loading processing={Processing} /> : null}
@@ -136,7 +133,7 @@ const AdminRoles = () => {
                 cursor: "pointer",
               }}
               onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
-              onMouseLeave={(e) => (e.target.style.opacity = "1")} 
+              onMouseLeave={(e) => (e.target.style.opacity = "1")}
             >
               Add Role
             </button>
@@ -178,8 +175,8 @@ const AdminRoles = () => {
                             {col.Cell
                               ? col.Cell({ value: row[col.accessor], row })
                               : row[col.accessor] !== null
-                              ? row[col.accessor]
-                              : "No Data"}
+                                ? row[col.accessor]
+                                : "No Data"}
                           </td>
                         ))}
                       </tr>

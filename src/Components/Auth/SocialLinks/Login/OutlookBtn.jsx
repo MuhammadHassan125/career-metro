@@ -45,7 +45,6 @@ const OutlookBtn = () => {
         throw new Error(`Error sending access token to backend: ${backendResponse.statusText}`);
       }
       const data = await backendResponse.json();
-      console.log('Login successful', data);
     } catch (error) {
       console.error('Outlook Login Error:', error.message);
     }
@@ -55,7 +54,7 @@ const OutlookBtn = () => {
     <button onClick={handleLogin}
       style={{ border: "none", outline: "none", backgroundColor: "transparent" }}
     >
-      <img width={'20px'}  src="/images/outlook.png" alt="Outlook Login" />
+      <img width={'20px'} src="/images/outlook.png" alt="Outlook Login" />
     </button>
   );
 };

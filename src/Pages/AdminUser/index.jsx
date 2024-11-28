@@ -47,11 +47,9 @@ const AdminUsers = () => {
     get({
       endPoint: `/get-all-users`,
       onSuccess: (res) => {
-        console.log(res, "get-all-users");
         setData(res.data.users);
       },
       onError: (err) => {
-        console.log(err);
         setData([]);
       },
     });
@@ -61,15 +59,13 @@ const AdminUsers = () => {
     Fire.delete({
       url: `${baseURL}/delete-user/${id}`,
       onSuccess: (res) => {
-        console.log(res);
         getAllUser();
         Snackbar(res.data.message, {
           style: { backgroundColor: "var(--primary-btn-color)" },
-          variant:"success"
+          variant: "success"
         });
       },
       onError: (err) => {
-        console.log(err);
         Snackbar(err, { variant: "error" });
       },
     });
@@ -152,7 +148,7 @@ const AdminUsers = () => {
               gap: "8px",
             }}
           >
-            
+
             {canEdit ? (
               <AiOutlineEdit
                 onClick={() => handleUpdateUser(id)}
@@ -166,9 +162,9 @@ const AdminUsers = () => {
                   cursor: "pointer",
                 }}
                 onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
-            onMouseLeave={(e) => (e.target.style.opacity = "1")} 
+                onMouseLeave={(e) => (e.target.style.opacity = "1")}
               />
-             ): null}
+            ) : null}
 
             {canDelete ? (
               <AiOutlineDelete
@@ -182,8 +178,8 @@ const AdminUsers = () => {
                   borderRadius: "50%",
                   cursor: "pointer",
                 }}
-                onMouseEnter={(e) => (e.target.style.opacity = "0.8")}  
-                onMouseLeave={(e) => (e.target.style.opacity = "1")} 
+                onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+                onMouseLeave={(e) => (e.target.style.opacity = "1")}
               />
             ) : null}
           </div>
@@ -209,12 +205,12 @@ const AdminUsers = () => {
                 padding: "6px 12px",
                 cursor: "pointer",
               }}
-            onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
-            onMouseLeave={(e) => (e.target.style.opacity = "1")} 
+              onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+              onMouseLeave={(e) => (e.target.style.opacity = "1")}
             >
               Add User
             </button>
-           ) : null}
+          ) : null}
         </div>
 
         {data.length === 0 ? (
@@ -252,8 +248,8 @@ const AdminUsers = () => {
                             {col.Cell
                               ? col.Cell({ value: row[col.accessor], row })
                               : row[col.accessor] !== null
-                              ? row[col.accessor]
-                              : "No Data"}
+                                ? row[col.accessor]
+                                : "No Data"}
                           </td>
                         ))}
                       </tr>

@@ -86,7 +86,6 @@ const UpdatePermissionsModal = (props, ref) => {
         })),
       },
       onSuccess: (res) => {
-        console.log(res);
         setData("permissions", []);
         setData("moduleName", "");
         handleClose();
@@ -97,7 +96,6 @@ const UpdatePermissionsModal = (props, ref) => {
         handleGetPermissionsList();
       },
       onError: (err) => {
-        console.log(err);
         Snackbar(err, { variant: "error" });
       },
     });

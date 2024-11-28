@@ -22,31 +22,30 @@ const style = {
   outline: "none"
 };
 
-const UpdateUser = ({open, handleClose, userId, getAllUser, UserPassword}) => {
+const UpdateUser = ({ open, handleClose, userId, getAllUser, UserPassword }) => {
 
   const { setData, Data, put, Errors, validate } = useFetch({
     state: {
-        password:"",
+      password: "",
     },
-    rules:{
-      password:['required']
+    rules: {
+      password: ['required']
     }
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setData(name, value); 
+    setData(name, value);
   };
 
   const handUpdateUser = () => {
-    if(validate()){
+    if (validate()) {
       put({
         endPoint: `/update-user/${userId}`,
         data: {
           password: Data.password
         },
         onSuccess: (res) => {
-          console.log(res);
           setData("password", "");
           handleClose();
           Snackbar(res?.data?.message, {
@@ -56,8 +55,7 @@ const UpdateUser = ({open, handleClose, userId, getAllUser, UserPassword}) => {
           getAllUser();
         },
         onError: (err) => {
-          console.log(err);
-          Snackbar(err, {variant:"error"});
+          Snackbar(err, { variant: "error" });
         }
       });
     }
@@ -86,7 +84,7 @@ const UpdateUser = ({open, handleClose, userId, getAllUser, UserPassword}) => {
               cursor: "pointer",
               fontSize: "20px",
               marginTop: "-20px",
-              fontFamily:'Poppins sans-serif'
+              fontFamily: 'Poppins sans-serif'
             }}
           />
           <Box
@@ -113,7 +111,7 @@ const UpdateUser = ({open, handleClose, userId, getAllUser, UserPassword}) => {
               }}
               onChange={handleInputChange}
               name="password"
-              value={Data.password} 
+              value={Data.password}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -121,7 +119,7 @@ const UpdateUser = ({open, handleClose, userId, getAllUser, UserPassword}) => {
                 }
               }}
             />
-             {Errors.password && <p className="error">{Errors.password}</p>}
+            {Errors.password && <p className="error">{Errors.password}</p>}
 
 
             <Button

@@ -24,10 +24,10 @@ const style = {
 const AddRolesModal = ({ open, handleClose }) => {
   const { post, Data, setData, validate, Errors } = useFetch({
     state: {
-        name: "",
+      name: "",
     },
-    rules:{
-      name:['required']
+    rules: {
+      name: ['required']
     }
   });
 
@@ -37,24 +37,22 @@ const AddRolesModal = ({ open, handleClose }) => {
   };
 
   const handleAddRole = () => {
-    if(validate ()){
-    post({
-      endPoint: `/create-role`,
-      onSuccess: (res) => {
-        console.log(res);
-        Snackbar(res.data.message, { 
-          variant: "success",
-          style: { backgroundColor: "var(--primary-btn-color)" },
-        });
-        setData("name", "");
-        handleClose();
-      },
-      onError: (err) => {
-        console.log(err);
-        Snackbar(err.message, { variant: "error" });
-      },
-    });
-  }
+    if (validate()) {
+      post({
+        endPoint: `/create-role`,
+        onSuccess: (res) => {
+          Snackbar(res.data.message, {
+            variant: "success",
+            style: { backgroundColor: "var(--primary-btn-color)" },
+          });
+          setData("name", "");
+          handleClose();
+        },
+        onError: (err) => {
+          Snackbar(err.message, { variant: "error" });
+        },
+      });
+    }
 
   };
 
@@ -109,8 +107,8 @@ const AddRolesModal = ({ open, handleClose }) => {
               onChange={handleInputChange}
               value={Data.name}
             />
-            {Errors.name && <p className="error" style={{marginTop:"-10px"}}>{Errors.name}</p>}
-            
+            {Errors.name && <p className="error" style={{ marginTop: "-10px" }}>{Errors.name}</p>}
+
             <Button
               onClick={handleAddRole}
               sx={{

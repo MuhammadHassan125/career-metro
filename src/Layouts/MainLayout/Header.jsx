@@ -31,7 +31,7 @@ const Header = () => {
   const [unseenCount, setUnseenCount] = React.useState(null);
   const previousUnseenCountRef = useRef(0);
   const audioRef = useRef(new Audio("./notification-sound.mp3"));
-  const [userRole, setUserRole] = React.useState(""); 
+  const [userRole, setUserRole] = React.useState("");
 
   useEffect(() => {
     const role = localStorage.getItem("roleName");
@@ -103,16 +103,15 @@ const Header = () => {
       url: `${baseURL}/show-profile`,
       onSuccess: (res) => {
         setUser(res?.data || []);
-        },
+      },
       onError: (err) => {
-        console.log("Error loading profile:", err);
         setUser([]);
       },
     });
   };
 
   useEffect(() => {
-      gettingProfileInfo();
+    gettingProfileInfo();
   }, []);
 
 
@@ -125,7 +124,6 @@ const Header = () => {
   const handleToggle = () => {
     setOpenNotification(!openNotification);
     if (openNotification === false) {
-      console.log("true");
       getNotification();
       handleSeenAllNotifications();
     }
@@ -137,27 +135,14 @@ const Header = () => {
       endPoint: `/get-notifications`,
 
       onSuccess: (res) => {
-        console.log("Notifications Response:", res?.data?.data);
         setNotifications(res?.data?.data);
         setUnseenCount(res?.data?.data?.unseen_count);
-      },
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
   const handleSeenAllNotifications = () => {
-    put({
-      endPoint: `/update-seen-all-notifications-for-specific-user`,
-      onSuccess: (res) => {
-        console.log(res, "seen all notifications");
-      },
-
-      onError: (err) => {
-        console.log(err);
-      },
-    });
+    put({ endPoint: `/update-seen-all-notifications-for-specific-user` });
   };
 
   const handleReadToggle = (id) => {
@@ -172,13 +157,8 @@ const Header = () => {
     put({
       endPoint: `/update-read-notification-for-specfic-user/${id}`,
       onSuccess: (res) => {
-        console.log(res, "read notifications");
         getNotification();
-      },
-
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
@@ -193,13 +173,8 @@ const Header = () => {
     put({
       endPoint: `/update-unread-notification-for-specfic-user/${id}`,
       onSuccess: (res) => {
-        console.log(res, "unread notifications");
         getNotification();
-      },
-
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
@@ -214,12 +189,8 @@ const Header = () => {
     put({
       endPoint: `/update-read-all-notifications-for-specfic-user`,
       onSuccess: (res) => {
-        console.log(res, "unread notifications");
         getNotification();
-      },
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
@@ -235,9 +206,7 @@ const Header = () => {
 
   useEffect(() => {
     if (unseenCount > previousUnseenCountRef.current) {
-      audioRef.current
-        .play()
-        .catch((error) => console.error("Error playing audio:", error));
+      audioRef.current.play();
     }
     previousUnseenCountRef.current = unseenCount;
   }, [unseenCount]);
@@ -258,11 +227,11 @@ const Header = () => {
             sx={{ position: "relative", zIndex: 999 }}
           >
             <IoMdNotifications
-  style={{
-    fontSize: "23px",
-    color: "var(--primary-btn-color)",
-    cursor: "pointer",
-  }}            />
+              style={{
+                fontSize: "23px",
+                color: "var(--primary-btn-color)",
+                cursor: "pointer",
+              }} />
             {openNotification && (
               <React.Fragment>
                 <Box
@@ -315,7 +284,7 @@ const Header = () => {
                     </div>
                   </div>
                   {notifications?.notifications &&
-                  notifications?.notifications?.length > 0 ? (
+                    notifications?.notifications?.length > 0 ? (
                     notifications?.notifications?.map((notification) => (
                       <React.Fragment>
                         <Box

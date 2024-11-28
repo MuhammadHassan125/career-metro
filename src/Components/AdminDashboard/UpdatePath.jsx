@@ -28,8 +28,8 @@ const UpdatePath = ({ open, handleClose, getPathList, pathId, prompt }) => {
     state: {
       newPrompt: prompt || "",
     },
-    rules:{
-        newPrompt: ['required'],
+    rules: {
+      newPrompt: ['required'],
     },
   });
 
@@ -43,23 +43,19 @@ const UpdatePath = ({ open, handleClose, getPathList, pathId, prompt }) => {
   }, []);
 
   const updatePathPrompt = () => {
-    if(validate()){
-        post({
-            endPoint:`/update-path-prompt-for-admin-panel/${pathId}`,
-            onSuccess: (res) => {
-                console.log(res, 'update path prompt');
-                Snackbar(res?.data?.message, {
-                    variant:'success',
-                    style: { backgroundColor: "var(--primary-btn-color)" },
-                })
-                setData('newPrompt', '')
-                handleClose();
-                getPathList();
-            },
-            onError:(err) => {
-                console.log(err)
-            }
-        })
+    if (validate()) {
+      post({
+        endPoint: `/update-path-prompt-for-admin-panel/${pathId}`,
+        onSuccess: (res) => {
+          Snackbar(res?.data?.message, {
+            variant: 'success',
+            style: { backgroundColor: "var(--primary-btn-color)" },
+          })
+          setData('newPrompt', '')
+          handleClose();
+          getPathList();
+        },
+      })
     }
   };
 
@@ -94,45 +90,45 @@ const UpdatePath = ({ open, handleClose, getPathList, pathId, prompt }) => {
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
-              gap:'10px'
+              gap: '10px'
             }}
           >
-            <Typography id="transition-modal-title" variant="h3" component="h2" 
-            sx={{
-              fontWeight:"semiBold"
-            }}>
+            <Typography id="transition-modal-title" variant="h3" component="h2"
+              sx={{
+                fontWeight: "semiBold"
+              }}>
               Update your prompt
             </Typography>
 
-          <Box
-          sx={{
-            display:"flex",
-            alignItem:"center",
-            flexDirection:"column",
-            gap:"30px",
-            width:"100%"
-          }}
-          >
-
-            <TextField
-              label="Update Prompt"
-              variant="outlined"
+            <Box
               sx={{
-                height: 40,
-                width: "100%",
-                mb: 6,
-                mt: 2,
+                display: "flex",
+                alignItem: "center",
+                flexDirection: "column",
+                gap: "30px",
+                width: "100%"
               }}
-              name="newPrompt"
-              onChange={handleInputChange}
-              value={Data.newPrompt}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updatePathPrompt(); 
-                }
-              }}
-            />
-            {Errors.newPrompt && <p className="error">{Errors.newPrompt}</p>}
+            >
+
+              <TextField
+                label="Update Prompt"
+                variant="outlined"
+                sx={{
+                  height: 40,
+                  width: "100%",
+                  mb: 6,
+                  mt: 2,
+                }}
+                name="newPrompt"
+                onChange={handleInputChange}
+                value={Data.newPrompt}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    updatePathPrompt();
+                  }
+                }}
+              />
+              {Errors.newPrompt && <p className="error">{Errors.newPrompt}</p>}
             </Box>
 
             <Button

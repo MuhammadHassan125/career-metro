@@ -26,10 +26,7 @@ const AdminPaths = () => {
       endPoint: "/get-all-paths-for-admin-panel",
       onSuccess: (res) => {
         setPath(res?.data?.paths);
-      },
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
@@ -37,10 +34,10 @@ const AdminPaths = () => {
     gettingAdminPaths();
   }, []);
 
-  const handleUpdatePath= (id, prompt) => {
-        handleOpen();
-        setPathId(id);
-        setPrompt(prompt)
+  const handleUpdatePath = (id, prompt) => {
+    handleOpen();
+    setPathId(id);
+    setPrompt(prompt)
   }
 
   const columns = [
@@ -83,7 +80,7 @@ const AdminPaths = () => {
               gap: "8px",
             }}
           >
-            
+
             <BsFillEyeFill
               onClick={() => navigate(`/admin-paths/${id}`)}
               style={{
@@ -116,7 +113,7 @@ const AdminPaths = () => {
         );
       },
     },
-    
+
   ];
 
   const handlePageChange = (event, newPage) => {
@@ -165,8 +162,8 @@ const AdminPaths = () => {
                           {col.Cell
                             ? col.Cell({ value: row[col.accessor], row })
                             : row[col.accessor] !== null
-                            ? row[col.accessor]
-                            : "No Data"}
+                              ? row[col.accessor]
+                              : "No Data"}
                         </td>
                       ))}
                     </tr>
@@ -184,12 +181,12 @@ const AdminPaths = () => {
         )}
       </section>
 
-      <UpdatePath 
-      open={open}
-      handleClose={handleClose}
-      getPathList={gettingAdminPaths}
-      pathId={pathId}
-      prompt={prompt}
+      <UpdatePath
+        open={open}
+        handleClose={handleClose}
+        getPathList={gettingAdminPaths}
+        pathId={pathId}
+        prompt={prompt}
       />
     </>
   );

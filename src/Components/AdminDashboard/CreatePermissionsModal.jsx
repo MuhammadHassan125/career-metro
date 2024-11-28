@@ -41,9 +41,9 @@ const CreatePermissionsModal = ({
       moduleName: "",
       permissions: [],
     },
-    rules:{
-      moduleName:['required'],
-      permissions:['required']
+    rules: {
+      moduleName: ['required'],
+      permissions: ['required']
     }
   });
 
@@ -53,25 +53,24 @@ const CreatePermissionsModal = ({
   };
 
   const handleCreatePermissions = () => {
-    if(validate()){
-    post({
-      endPoint: `/create-permission-with-module`,
-      onSuccess: (res) => {
-        console.log(res);
-        setData("username", "email", "password", "");
-        Snackbar(res?.data?.message, {
-          variant: "success",
-          style: { backgroundColor: "var(--primary-btn-color)" },
-        })
-        handleGetPermissionsList();
-        handleClose();
-      },
-      onError: (err) => {
-        console.log(err);
-        Snackbar(err, {variant:'success'});
-      },
-    });
-  }};
+    if (validate()) {
+      post({
+        endPoint: `/create-permission-with-module`,
+        onSuccess: (res) => {
+          setData("username", "email", "password", "");
+          Snackbar(res?.data?.message, {
+            variant: "success",
+            style: { backgroundColor: "var(--primary-btn-color)" },
+          })
+          handleGetPermissionsList();
+          handleClose();
+        },
+        onError: (err) => {
+          Snackbar(err, { variant: 'success' });
+        },
+      });
+    }
+  };
 
   const top100Films = [
     { title: "Index" },
@@ -132,7 +131,7 @@ const CreatePermissionsModal = ({
               onChange={handleInputChange}
               value={Data.moduleName}
             />
-            {Errors.moduleName && <p className="error" style={{marginTop:"-10px", marginBottom:'10px'}}>{Errors.moduleName}</p>}
+            {Errors.moduleName && <p className="error" style={{ marginTop: "-10px", marginBottom: '10px' }}>{Errors.moduleName}</p>}
 
             <Autocomplete
               multiple
@@ -173,7 +172,7 @@ const CreatePermissionsModal = ({
                 />
               )}
             />
-            {Errors.permissions && <p className="error" style={{marginTop:"-10px"}}>{Errors.permissions}</p>}
+            {Errors.permissions && <p className="error" style={{ marginTop: "-10px" }}>{Errors.permissions}</p>}
 
             <Button
               onClick={handleCreatePermissions}

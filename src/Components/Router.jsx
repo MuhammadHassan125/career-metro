@@ -1,5 +1,5 @@
 import React, { lazy, useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import MainLayout from "../Layouts/MainLayout";
 import FullPageFormLayout from "../Layouts/FullPageFormLayout";
 import GuestRoute from "./GuestRoute";
@@ -39,7 +39,16 @@ const AdminPaths = lazy(() => import("../Pages/AdminPaths"));
 const AdminPathMap = lazy(() => import("../Pages/AdminPathMap"));
 const ExportPdf = lazy(() => import('../Pages/ExportPdf'));
 
+const guestRoutes = [
+  "/login",
+  "/register",
+  "/forget-password",
+  "/reset-password",
+  "/verify-otp",
+];
+
 const Router = () => {
+  const { pathname } = useLocation();
   const [userRole, setUserRole] = useState(localStorage.getItem("user-role"));
   const navigate = useNavigate();
 
@@ -47,7 +56,7 @@ const Router = () => {
     const role = localStorage.getItem("user-role");
     setUserRole(role || "User");
 
-    if (!role) {
+    if (!role && !guestRoutes.indexOf(pathname)) {
       navigate("/login");
     }
   }, [navigate]);
@@ -69,7 +78,7 @@ const Router = () => {
       <Route path="payment-checkout" element={<PaymentCheckout />} />
       <Route path="/cancel" element={<CancelCheckout />} />
       <Route path="/success" element={<Success />} />
-      <Route path='get-pdf/:id' element={<ExportPdf/>} target='_blank'/>
+      <Route path='get-pdf/:id' element={<ExportPdf />} target='_blank' />
     </>
   );
 
@@ -78,12 +87,12 @@ const Router = () => {
       <Route path="/" element={<AdminDashboard />} />
       <Route path="/users" element={<AdminUsers />} />
       <Route path="/roles" element={<AdminRoles />} />
-      <Route path="/admin-activities" element={<AdminActivity/>}/>
-      <Route path="/admin-skills" element={<AdminSkills/>}/>
-      <Route path="/admin-paths" element={<AdminPaths/>}/>
-      <Route path="/admin-paths/:id" element={<AdminPathMap/>}/>
+      <Route path="/admin-activities" element={<AdminActivity />} />
+      <Route path="/admin-skills" element={<AdminSkills />} />
+      <Route path="/admin-paths" element={<AdminPaths />} />
+      <Route path="/admin-paths/:id" element={<AdminPathMap />} />
       <Route path="/permissions" element={<AdminPermissions />} />
-      <Route path="/edit-role/:id" element={<AdminEditPermission/>} />
+      <Route path="/edit-role/:id" element={<AdminEditPermission />} />
     </>
   );
 

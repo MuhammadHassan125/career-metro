@@ -41,7 +41,7 @@ const EditSkills = ({
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setData(name, value); 
+    setData(name, value);
   };
 
   const handEditSkills = () => {
@@ -51,17 +51,9 @@ const EditSkills = ({
         title: Data.title
       },
       onSuccess: (res) => {
-        console.log(res);
-        // Snackbar(res?.data?.message, {
-        //   variant: "success",
-        //   style: { backgroundColor: "var(--primary-btn-color)" }
-        // });
         setData("title", "");
         handleClose();
         handleSubmit();
-      },
-      onError: (err) => {
-        console.log(err);
       }
     });
   };

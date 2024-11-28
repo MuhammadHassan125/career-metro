@@ -24,7 +24,7 @@ const MapSinglePath = () => {
 
   const { post, get, Data, setData, Errors, processing } = useFetch({
     state: {
-      branchId: params.id || "", 
+      branchId: params.id || "",
     },
   });
 
@@ -50,35 +50,28 @@ const MapSinglePath = () => {
 
     post({
       endPoint: `/redirect-subscription`,
-      data: { branchId: Data.branchId }, 
+      data: { branchId: Data.branchId },
       onSuccess: (res) => {
         setCheckoutUrl(res?.data?.data?.url);
         setOpen(true);
-      },
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
-  
+
   const checkTrainingPlanSubscription = () => {
     get({
       endPoint: `/check-training-plan-subscription-limit`,
       onSuccess: (res) => {
-        console.log(res, 'training plan');
         if (res?.data?.Subscription_Status === false) {
           setTrainingExceed(true);
         } else {
-          redirectToStripe();  
+          redirectToStripe();
         }
-      },
-      onError: (err) => {
-        console.log(err);
       }
     });
   };
-  
+
 
   return (
     <React.Fragment>
@@ -107,7 +100,7 @@ const MapSinglePath = () => {
         <GPTComponent selectedPathId={selectedPathId} />
       </main>
 
-    {/* proceed to training plan  */}
+      {/* proceed to training plan  */}
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
@@ -131,8 +124,8 @@ const MapSinglePath = () => {
               fontSize: "13px",
               border: "none",
               cursor: "pointer",
-              padding:'10px 15px',
-              borderRadius:'10px'
+              padding: '10px 15px',
+              borderRadius: '10px'
             }}
           >
             Cancel
@@ -157,7 +150,7 @@ const MapSinglePath = () => {
         </DialogActions>
       </Dialog>
 
-    {/* will show the training exceed  */}
+      {/* will show the training exceed  */}
       <Dialog
         open={trainingExceed}
         onClose={() => setTrainingExceed(false)}
@@ -180,7 +173,7 @@ const MapSinglePath = () => {
               fontSize: "14px",
               border: "none",
               cursor: "pointer",
-              padding:'5px 10px',
+              padding: '5px 10px',
               borderRadius: "8px",
             }}
           >

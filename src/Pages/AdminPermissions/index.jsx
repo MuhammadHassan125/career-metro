@@ -29,8 +29,8 @@ const AdminPermissions = () => {
   const canEdit = hasSlugAction(roleName, "edit");
   const canCreatePermission = hasSlugAction(roleName, "create");
 
-  const handleUpdateUser = (row,id, getpermissions, moduleName) => {
-    
+  const handleUpdateUser = (row, id, getpermissions, moduleName) => {
+
     setEditOpen(true);
     const filteredPermissions = getpermissions.map(
       ({ permissionId, permissionName }) => ({
@@ -39,7 +39,7 @@ const AdminPermissions = () => {
       })
     );
 
-    modelRef.current.setData(row,filteredPermissions)
+    modelRef.current.setData(row, filteredPermissions)
 
     setPermissions(filteredPermissions);
     setId(id);
@@ -64,10 +64,7 @@ const AdminPermissions = () => {
       endPoint: `/get-all-permissions`,
       onSuccess: (res) => {
         setData(res?.data?.permissionsByModule);
-      },
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
@@ -113,18 +110,18 @@ const AdminPermissions = () => {
           <div style={{ display: "flex", gap: "8px" }}>
             {canEdit ? (
               <AiOutlineEdit
-              onClick={() => handleUpdateUser(row,id, permissions, moduleName)}
-              style={{
-                backgroundColor: "#E8E8E8",
-                width: "22px",
-                height: "22px",
-                fontSize: "10px",
-                padding: "4px",
-                borderRadius: "50%",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
-               onMouseLeave={(e) => (e.target.style.opacity = "1")} 
+                onClick={() => handleUpdateUser(row, id, permissions, moduleName)}
+                style={{
+                  backgroundColor: "#E8E8E8",
+                  width: "22px",
+                  height: "22px",
+                  fontSize: "10px",
+                  padding: "4px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+                onMouseLeave={(e) => (e.target.style.opacity = "1")}
               />
             ) : null}
           </div>
@@ -142,19 +139,19 @@ const AdminPermissions = () => {
           {canCreatePermission ? (
 
             <button
-            onClick={handleOpen}
-            style={{
-              backgroundColor: "#879aad",
-              color: "#E8E8E8",
-              fontSize: "12px",
-              padding: "6px 12px",
-              cursor: "pointer",
-            }}
-            onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
-            onMouseLeave={(e) => (e.target.style.opacity = "1")} 
+              onClick={handleOpen}
+              style={{
+                backgroundColor: "#879aad",
+                color: "#E8E8E8",
+                fontSize: "12px",
+                padding: "6px 12px",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+              onMouseLeave={(e) => (e.target.style.opacity = "1")}
             >
-            Create Permission
-          </button>
+              Create Permission
+            </button>
           ) : null}
         </div>
 
@@ -193,8 +190,8 @@ const AdminPermissions = () => {
                             {col.Cell
                               ? col.Cell({ value: row[col.accessor], row })
                               : row[col.accessor] !== null
-                              ? row[col.accessor]
-                              : "No Data"}
+                                ? row[col.accessor]
+                                : "No Data"}
                           </td>
                         ))}
                       </tr>

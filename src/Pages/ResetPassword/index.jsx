@@ -8,13 +8,13 @@ const ResetPassword = () => {
   const navigate = useNavigate();
 
   const { Data, setData, post, Errors, Processing, validate } = useFetch({
-    state:{
+    state: {
       email: '',
       newPassword: '',
       confirmPassword: '',
-    }, 
+    },
 
-    rules : {
+    rules: {
       email: ['required', 'email'],
       newPassword: ['same:newPassword'],
       confirmPassword: ['same:newPassword'],
@@ -29,8 +29,6 @@ const ResetPassword = () => {
       post({
         endPoint: '/reset-password',
         onSuccess: (res) => {
-          console.log(res)
-          // Snackbar(res.data.message, { variant: 'success' });
           navigate('/login');
         },
 

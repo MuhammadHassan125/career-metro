@@ -15,7 +15,7 @@ const ListCareerPath = () => {
   const [selectedId, setSelectedId] = React.useState(null);
   const [listData, setListData] = React.useState([]);
   const params = useParams();
-  const { get, destroy, Processing } = useFetch({state:{}});
+  const { get, destroy, Processing } = useFetch({ state: {} });
 
 
   const [open, setOpen] = React.useState(false);
@@ -47,12 +47,8 @@ const ListCareerPath = () => {
     get({
       endPoint: `/get-skills-for-single-step/${params.id}`,
       onSuccess: (res) => {
-        console.log('API Response:', res?.data?.data?.skills); 
         setListData(res?.data?.data?.skills || []);
-      },
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
@@ -60,42 +56,36 @@ const ListCareerPath = () => {
     get({
       endPoint: `/check-status-of-skills/${id}`,
       onSuccess: (res) => {
-        console.log(res, '')
         if (res?.data?.status === "completed") {
           setSelectedId(id);
         } else {
           setSelectedId(null);
         }
         handleSubmit();
-      },
-      onError: (err) => {
-        console.log(err)
       }
     })
   };
 
-  
+
   const handleDelete = (id) => {
     destroy({
       endPoint: `/delete-skill/${id}`,
       onSuccess: (res) => {
-        console.log(res);
         handleSubmit();
       },
       onError: (err) => {
-        console.log(err);
         Snackbar(err.error, { variant: "error" });
       },
     });
   };
 
   useEffect(() => {
-      handleSubmit();
+    handleSubmit();
   }, []);
 
   return (
     <React.Fragment>
-      {Processing ? <Loading processing={Processing}/> : null}
+      {Processing ? <Loading processing={Processing} /> : null}
       <main className="list-section">
         <div className="main__heading">
           <div>

@@ -21,11 +21,11 @@ const style = {
   outline: "none"
 };
 
-const UpdateRoleModal = ({open, handleClose, id, getAllUser, UserName}) => {
+const UpdateRoleModal = ({ open, handleClose, id, getAllUser, UserName }) => {
 
   const { post, setData, Data } = useFetch({
     state: {
-        name: UserName || "",
+      name: UserName || "",
     }
   });
 
@@ -35,7 +35,7 @@ const UpdateRoleModal = ({open, handleClose, id, getAllUser, UserName}) => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setData(name, value); 
+    setData(name, value);
   };
 
   const handleUpdateRole = (id) => {
@@ -45,13 +45,9 @@ const UpdateRoleModal = ({open, handleClose, id, getAllUser, UserName}) => {
         name: Data.name
       },
       onSuccess: (res) => {
-        console.log(res);
         setData("name", "");
         handleClose();
       },
-      onError: (err) => {
-        console.log(err);
-      }
     });
   };
 
@@ -104,7 +100,7 @@ const UpdateRoleModal = ({open, handleClose, id, getAllUser, UserName}) => {
               }}
               onChange={handleInputChange}
               name="name"
-              value={Data.name} 
+              value={Data.name}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();

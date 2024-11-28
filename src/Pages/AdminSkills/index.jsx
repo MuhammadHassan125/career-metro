@@ -16,7 +16,7 @@ const AdminSkills = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
   const [skillRow, setSkillRow] = useState([]);
   // for pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,13 +29,9 @@ const AdminSkills = () => {
     get({
       endPoint: `/get-all-skills-for-admin-panel?page=${currentPage}&limit=${itemsPerPage}`,
       onSuccess: (res) => {
-        console.log(res, "admin-skills");
         setSkillsData(res?.data?.skills || []);
         setTotalPages(res?.data?.totalPages || 1);
-      },
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
@@ -43,16 +39,15 @@ const AdminSkills = () => {
     gettingSkillsList();
   }, [currentPage]);
 
-const handleUpdateSkills = (row) => {
+  const handleUpdateSkills = (row) => {
     setSkillRow(row)
     handleOpen();
-};
+  };
 
   const handleDeleteSkill = (id) => {
     Fire.delete({
       url: `${baseURL}/delete-user/${id}`,
       onSuccess: (res) => {
-        console.log(res);
         getAllUser();
         Snackbar(res.data.message, {
           style: { backgroundColor: "var(--primary-btn-color)" },
@@ -60,9 +55,7 @@ const handleUpdateSkills = (row) => {
         });
       },
       onError: (err) => {
-        console.log(err, 'ddddddddddddddd');
-        Snackbar(err 
-            || 'Access Denied - Super Admin only have access', { variant: "error" });
+        Snackbar(err || 'Access Denied - Super Admin only have access', { variant: "error" });
       },
     });
   };
@@ -190,8 +183,8 @@ const handleUpdateSkills = (row) => {
                           {col.Cell
                             ? col.Cell({ value: row[col.accessor], row })
                             : row[col.accessor] !== null
-                            ? row[col.accessor]
-                            : "No Data"}
+                              ? row[col.accessor]
+                              : "No Data"}
                         </td>
                       ))}
                     </tr>

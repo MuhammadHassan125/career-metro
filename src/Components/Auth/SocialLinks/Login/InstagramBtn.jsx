@@ -18,32 +18,29 @@ const InstagramBtn = () => {
   //   const interval = setInterval(() => {
   //     if (popup.closed) {
   //       clearInterval(interval);
-  //       console.log('Popup closed');
   //     }
   //   }, 1000);
   // };
 
   const handleLogin = () => {
     const instagramAuthUrl = `https://api.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user_profile,user_media&response_type=code`;
-  
+
     const width = 600;
     const height = 700;
     const left = (window.innerWidth - width) / 2;
     const top = (window.innerHeight - height) / 2;
-  
+
     const popup = window.open(instagramAuthUrl, '_blank', `width=${width},height=${height},left=${left},top=${top}`);
-  
+
     const interval = setInterval(() => {
       if (popup.closed) {
         clearInterval(interval);
-        console.log('Popup closed');
-  
+
         const url = popup.document.URL;
         const codeRegex = /code=([^&]+)/;
         const match = url.match(codeRegex);
         if (match) {
           const code = match[1];
-          console.log(`Authorization code: ${code}`);
 
           const accessToken = code;
 
@@ -52,12 +49,10 @@ const InstagramBtn = () => {
             data: { accessToken },
 
             onSuccess: (res) => {
-              console.log(res);
               Snackbar(res.data.message, { variant: 'success' });
             },
 
             onError: (err) => {
-              console.log(err);
               Snackbar('Instagram login failed. Please try again.', { variant: 'error' });
             }
           })
@@ -75,7 +70,7 @@ const InstagramBtn = () => {
         textAlign: 'center',
       }}
     >
-      <img width={'20px'}  src='/images/instagram.png' alt="Instagram Logo" />
+      <img width={'20px'} src='/images/instagram.png' alt="Instagram Logo" />
     </div>
   );
 };

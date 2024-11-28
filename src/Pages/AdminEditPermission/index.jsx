@@ -4,7 +4,7 @@ import useFetch from 'point-fetch-react';
 import { useParams } from 'react-router-dom';
 import Loading from "../../Components/Loading";
 import { Snackbar } from '../../Utils/SnackbarUtils';
-import {baseURL} from '../../Utils/contants';
+import { baseURL } from '../../Utils/contants';
 
 const AdminEditPermission = () => {
   const [data, setData] = useState([]);
@@ -27,9 +27,6 @@ const AdminEditPermission = () => {
       endPoint: `/get-all-permissions-with-role/${roleId}`,
       onSuccess: (res) => {
         setData(res?.data?.data);
-      },
-      onError: (err) => {
-        console.log(err);
       }
     });
   };
@@ -46,23 +43,23 @@ const AdminEditPermission = () => {
     const permissionIds = [];
     data.forEach(module => {
       module.permissions.forEach(permission => {
-        if (permission.status) { 
+        if (permission.status) {
           permissionIds.push(permission.permissionId);
         }
       });
     });
 
     if (permissionIds.length === 0) {
-      Snackbar("Please select at least one permission.", {variant:'error'});
+      Snackbar("Please select at least one permission.", { variant: 'error' });
       return;
     }
 
     if (!roleId) {
-      Snackbar("Role ID is missing.", {variant:'error'});
+      Snackbar("Role ID is missing.", { variant: 'error' });
       return;
     }
 
-    const token = localStorage.getItem('user-visited-dashboard'); 
+    const token = localStorage.getItem('user-visited-dashboard');
 
     try {
       const response = await fetch(`${baseURL}/assign-permissions-to-role`, {
@@ -72,7 +69,7 @@ const AdminEditPermission = () => {
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          roleId: roleId, 
+          roleId: roleId,
           permissionIds: permissionIds,
         }),
       });
@@ -80,67 +77,64 @@ const AdminEditPermission = () => {
       const result = await response.json();
 
       if (response.ok) {
-        console.log("Permissions updated successfully:", result);
         Snackbar("Permissions updated successfully", {
-          variant:"success",
+          variant: "success",
           style: { backgroundColor: "var(--primary-btn-color)" },
         });
       } else {
-        console.log("Error:", result);
         alert("Failed to update permissions");
       }
     } catch (error) {
-      console.log("Error occurred during fetch:", error);
-      Snackbar("An error occurred while updating permissions", {variant:'error'});
+      Snackbar("An error occurred while updating permissions", { variant: 'error' });
     }
   };
 
   return (
     <>
-    {Processing ? <Loading processing={Processing} /> : null}
-    <Box sx={{ padding: '20px' }}>
-      {Array.isArray(data) && data.map((module, moduleIndex) => (
-        <Box key={module.moduleName} sx={{ marginBottom: '20px' }}>
-          <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
-            {module.moduleName}
-          </Typography>
-          <Divider sx={{ marginBottom: '10px' }} />
-          <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-            {module.permissions.map((permission, permissionIndex) => (
-              <FormControlLabel
-                key={permission.permissionId}
-                control={
-                  <Checkbox
-                    checked={permission.status} // Check based on the permission's status
-                    onChange={() => handleCheckboxChange(moduleIndex, permissionIndex)}
-                    color="primary"
-                  />
-                }
-                label={permission.permissionName}
-                sx={{ marginRight: '10px', marginBottom: '5px' }}
-              />
-            ))}
+      {Processing ? <Loading processing={Processing} /> : null}
+      <Box sx={{ padding: '20px' }}>
+        {Array.isArray(data) && data.map((module, moduleIndex) => (
+          <Box key={module.moduleName} sx={{ marginBottom: '20px' }}>
+            <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+              {module.moduleName}
+            </Typography>
+            <Divider sx={{ marginBottom: '10px' }} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+              {module.permissions.map((permission, permissionIndex) => (
+                <FormControlLabel
+                  key={permission.permissionId}
+                  control={
+                    <Checkbox
+                      checked={permission.status} // Check based on the permission's status
+                      onChange={() => handleCheckboxChange(moduleIndex, permissionIndex)}
+                      color="primary"
+                    />
+                  }
+                  label={permission.permissionName}
+                  sx={{ marginRight: '10px', marginBottom: '5px' }}
+                />
+              ))}
+            </Box>
           </Box>
-        </Box>
-      ))}
-      <button 
-        onClick={handleSaveChanges}
-        style={{
-          backgroundColor: '#879aad',
-          color: '#E8E8E8',
-          fontSize: '12px',
-          padding: '6px 12px',
-          cursor: 'pointer',
-          border:'none',
-          outline:'none',
-          borderRadius:'5px'
-      }}>
-      
-        Save Changes
-      </button>
-    </Box>
+        ))}
+        <button
+          onClick={handleSaveChanges}
+          style={{
+            backgroundColor: '#879aad',
+            color: '#E8E8E8',
+            fontSize: '12px',
+            padding: '6px 12px',
+            cursor: 'pointer',
+            border: 'none',
+            outline: 'none',
+            borderRadius: '5px'
+          }}>
+
+          Save Changes
+        </button>
+      </Box>
     </>
-      );
+  );
 };
 
 export default AdminEditPermission;

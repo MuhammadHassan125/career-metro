@@ -23,10 +23,6 @@ const RevenueChart = ({ heading, dropdown }) => {
           ]);
           setTitles(titles);
         }
-        console.log(res, 'charts data');
-      },
-      onError: (err) => {
-        console.log(err, 'charts error');
       },
     });
   };
@@ -94,7 +90,7 @@ const RevenueChart = ({ heading, dropdown }) => {
         </button>
       </div>
 
-      <div style={{padding: '20px'}}>
+      <div style={{ padding: '20px' }}>
         <Chart
           options={chartOptions}
           series={chartData}

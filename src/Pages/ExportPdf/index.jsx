@@ -40,14 +40,9 @@ const ExportPdf = () => {
         branchId,
       },
       onSuccess: (res) => {
-        // Snackbar("Subscription confirmed successfully!", {
-        //   variant: "success",
-        //   style: { backgroundColor:'var(--primary-btn-color)' }
-        // });
         setOpen(false);
       },
       onError: (err) => {
-        console.log(err);
         Snackbar(err.message, { variant: "error" });
       },
     });
@@ -57,16 +52,12 @@ const ExportPdf = () => {
     Fire.post({
       url: `${AnalyzeURL}/generate_training_steps?branch_id=${branchId}`,
       onSuccess: (res) => {
-        console.log(res);
         setGenerate(true);
         Snackbar("Training steps generation has started", {
           variant: "success",
-          style: { backgroundColor:'var(--primary-btn-color)' }
+          style: { backgroundColor: 'var(--primary-btn-color)' }
         });
-      },
-      onError: (err) => {
-        console.log(err);
-      },
+      }
     });
   };
 
@@ -80,12 +71,12 @@ const ExportPdf = () => {
   }, [sessionId, branchId]);
 
   return (
-    <div  style={{backgroundColor: '#f5f6fa', display:'flex', height:'100vh', alignItems:'center', justifyContent:'center'}}>
-            {generate === true ? 
-        <PaymentSuccessModal/>
+    <div style={{ backgroundColor: '#f5f6fa', display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>
+      {generate === true ?
+        <PaymentSuccessModal />
         : <p>Loading....</p>
       }
-      
+
     </div>
   );
 };

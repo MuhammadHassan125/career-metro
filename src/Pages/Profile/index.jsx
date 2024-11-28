@@ -46,20 +46,20 @@ const Profile = () => {
     const [uploadMessage, setUploadMessage] = useState('');
     const [newUsername, setNewUsername] = useState(user?.data?.username);
 
-    const {put, Data, setData, Processing} = useFetch({
-        state:{
+    const { put, Data, setData, Processing } = useFetch({
+        state: {
             newUsername
         },
-        
-        rules:{
+
+        rules: {
             newUsername: 'required'
         },
-        message:{
-            newUsername:{
+        message: {
+            newUsername: {
                 required: 'Please provide new username'
             }
         }
-})
+    })
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -67,20 +67,18 @@ const Profile = () => {
     const authToken = localStorage.getItem("user-visited-dashboard")
 
     const gettingProfileInfo = () => {
-      if (!authToken) return;
-      Fire.get({
-        url: `${baseURL}/show-profile`,
-        onSuccess: (res) => {
-          setUser(res?.data || []);
-          console.log("Profile data headerrrrrrrrrrrrrrrrrrrrrrr", res);
-        },
-        onError: (err) => {
-          console.log("Error loading profile:", err);
-          setUser([]);
-        },
-      });
+        if (!authToken) return;
+        Fire.get({
+            url: `${baseURL}/show-profile`,
+            onSuccess: (res) => {
+                setUser(res?.data || []);
+            },
+            onError: (err) => {
+                setUser([]);
+            },
+        });
     };
-  
+
     useEffect(() => {
         gettingProfileInfo();
     }, []);
@@ -97,16 +95,14 @@ const Profile = () => {
             await handleUpload(file);
         }
     };
-    
+
     const handleUpload = async () => {
-        console.log('upload picture ')
         if (!selectedFile) {
             setUploadMessage('Please select a file first');
             return;
         }
         const token = localStorage.getItem('user-visited-dashboard');
         if (!token) {
-            console.log('User not authenticated');
             return;
         }
         const formData = new FormData();
@@ -144,7 +140,7 @@ const Profile = () => {
 
     return (
         <React.Fragment>
-            {Processing ? <Loading fullScreen={true} processing={Processing}/> : null}
+            {Processing ? <Loading fullScreen={true} processing={Processing} /> : null}
             <div className='profile-details'>
                 <div>
                     <h2 style={{ color: 'white' }}>Your Profile Details</h2>
@@ -182,9 +178,10 @@ const Profile = () => {
                             <p>Your profile details.</p>
                             <Button
                                 variant='contained'
-                                sx={{ 
+                                sx={{
                                     backgroundColor: '#879aad',
-                                    height: '24px', width: 'auto', fontSize: '14px', padding: '5px', textTransform:'capitalize' }}
+                                    height: '24px', width: 'auto', fontSize: '14px', padding: '5px', textTransform: 'capitalize'
+                                }}
                                 onClick={handleOpen}
                             >Update Username
                             </Button>

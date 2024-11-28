@@ -118,13 +118,9 @@ const EditPath = () => {
           navigate('/path');
           localStorage.setItem('subscription', false);
         } else {
-          localStorage.removeItem('subscription'); 
+          localStorage.removeItem('subscription');
         }
         return;
-      },
-
-      onError: (err) => {
-        console.log(err)
       }
     })
   };
@@ -168,14 +164,9 @@ const EditPath = () => {
       put({
         endPoint: `/update-path/${params.id}`,
         onSuccess: (res) => {
-          console.log(res);
           setData({ title: '', prompt: '' });
           navigate('/path')
           handleClose();
-        },
-
-        onError: (err) => {
-          console.log(err);
         }
       })
     }
@@ -210,7 +201,7 @@ const EditPath = () => {
 
   return (
     <React.Fragment>
-      {Processing ?<Loading processing={Processing}/> : null}
+      {Processing ? <Loading processing={Processing} /> : null}
       <main className='documents-upload__section'>
         {success && (
           <div className='success__message'>
