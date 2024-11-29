@@ -34,8 +34,8 @@ const Header = () => {
   const [userRole, setUserRole] = React.useState("");
 
   useEffect(() => {
-    const role = localStorage.getItem("roleName");
-    setUserRole(role || "User ");
+    const role = localStorage.getItem("user-role");
+    setUserRole(role);
   }, []);
 
   const open = Boolean(anchorEl);
@@ -68,22 +68,13 @@ const Header = () => {
     }
     setDrawerOpen(open);
   };
-
-  // const sidebarItems = [
-  //   { id: 1, name: "Dashboard", link: "/" },
-  //   { id: 2, name: "Career", link: "/map-career" },
-  //   { id: 3, name: "Add Path", link: "/map-single-path" },
-  //   { id: 5, name: "All Paths", link: "/path" },
-  //   { id: 8, name: "Settings", link: "" },
-  //   { id: 9, name: "Logout", link: "/login" },
-  // ];
+  
 
   const clientItems = [
     { id: 1, name: "Dashboard", link: "/" },
     { id: 2, name: "Career", link: "/map-career" },
     { id: 3, name: "All Paths", link: "/path" },
     { id: 4, name: "Settings", link: "/profile" },
-    { id: 9, name: "Logout", link: "/login" },
   ];
 
   const adminItems = [
@@ -91,11 +82,10 @@ const Header = () => {
     { id: 6, name: "Users", link: "/users" },
     { id: 7, name: "Roles", link: "/roles" },
     { id: 8, name: "Permissions", link: "/permissions" },
-    { id: 9, name: "Logout", link: "/login" },
   ];
 
   const sidebarItems = userRole === "User" ? clientItems : adminItems;
-  const authToken = localStorage.getItem("user-visited-dashboard")
+  const authToken = localStorage.getItem("user-visited-dashboard");
 
   const gettingProfileInfo = () => {
     if (!authToken) return;
@@ -118,7 +108,6 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("user-visited-dashboard");
     navigate("/login");
-    Snackbar("Logout successfully", { variant: "success" });
   };
 
   const handleToggle = () => {
@@ -136,13 +125,19 @@ const Header = () => {
 
       onSuccess: (res) => {
         setNotifications(res?.data?.data);
-        setUnseenCount(res?.data?.data?.unseen_count);
+        setUnseenCount(res?.data?.data?.data?.totalUnseenNotifications);
       }
     });
   };
 
   const handleSeenAllNotifications = () => {
-    put({ endPoint: `/update-seen-all-notifications-for-specific-user` });
+    put({ 
+      endPoint: `/update-seen-all-notifications-for-specific-user`,
+      onSuccess: (res) => {
+        getNotification();
+        handleReadAllNotifications()
+      }
+    });
   };
 
   const handleReadToggle = (id) => {
@@ -157,6 +152,7 @@ const Header = () => {
     put({
       endPoint: `/update-read-notification-for-specfic-user/${id}`,
       onSuccess: (res) => {
+        handleReadAllNotifications()
         getNotification();
       }
     });
@@ -357,7 +353,7 @@ const Header = () => {
                       </React.Fragment>
                     ))
                   ) : (
-                    <Typography>No notifications available</Typography>
+                    <Typography sx={{ fontSize: "13px", mt:1 }}>No notifications available</Typography>
                   )}
                 </Box>
               </React.Fragment>
@@ -373,10 +369,7 @@ const Header = () => {
 
           <Avatar
             alt="Travis Howard"
-            src={
-              user?.data?.profile_picture ||
-              "https://media.istockphoto.com/id/1278978817/photo/portrait-of-happy-mature-man-smiling.jpg?s=612x612&w=0&k=20&c=GPniKSszzPgprveN7sCT5mb-_L3-RSlGAOAsmoDaafw="
-            }
+            src={user?.data?.profile_picture || null}
           />
           <div className="inter-font">
             <h3>
@@ -447,6 +440,11 @@ const Header = () => {
               </div>
             )
           )}
+           <div className="sidebar-item inactive" onClick={handleLogout}>
+        <ul>
+          <li>Logout</li>
+        </ul>
+      </div>
         </div>
       </Drawer>
     </>

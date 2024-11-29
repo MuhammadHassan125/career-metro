@@ -21,6 +21,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <App />
         </SnackbarProvider>
       </MapProvider>
-    </ErrorDialogsProvider>
+    </ErrorDialogsProvider> 
   </BrowserRouter>
 );

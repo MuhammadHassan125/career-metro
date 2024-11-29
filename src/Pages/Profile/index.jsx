@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import './index.scss';
-// import { useUser } from '../../context/context';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import Fire from '../../Fire/Fire';
 import { baseURL } from '../../Utils/contants';
-import { Snackbar } from '../../Utils/SnackbarUtils';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -87,10 +85,17 @@ const Profile = () => {
         setNewUsername(event.target.value);
     };
 
+    const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
+    
+        if (file.size > MAX_FILE_SIZE) {
+            alert('File size exceeds the limit of 5 MB');
+            return;
+        }
+    
         setSelectedFile(file);
-
         if (file) {
             await handleUpload(file);
         }
@@ -117,7 +122,7 @@ const Profile = () => {
             setUploadMessage(response.data.message);
             gettingProfileInfo();
         } catch (error) {
-            setUploadMessage('Error uploading file');
+            alert('Error uploading file');
         }
     };
 

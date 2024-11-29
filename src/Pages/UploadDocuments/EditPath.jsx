@@ -250,6 +250,8 @@ const EditPath = () => {
                   ),
                 }}
               />
+              <p style={{fontSize:"14px"}}><span style={{fontWeight: 700}}>Hint:</span> Include your country/location, industry/field, current job title, and career level for more tailored guidance.</p>
+
               {Errors.prompt && <p className="error">{Errors.prompt}</p>}
               <Button variant="contained"
                 sx={{

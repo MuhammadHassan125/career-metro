@@ -2,6 +2,8 @@ import '../Dashboard/index.scss';
 import UploadDataGrid from '../../Components/DashboardComponents/DataGrid/UploadDataGrid';
 import RevenueChart from '../../Components/AdminDashboard/TrackChart';
 import React, { useEffect } from 'react';
+import useFetch from 'point-fetch-react';
+
 
 const columns = [
     { Header: "Id", accessor: "id" },
@@ -127,101 +129,92 @@ export default AdminDashboard;
 
 export const DashboardCards = () => {
 
-    const cardData = [
-        {
+  const [cardsData, setCardsData] = React.useState([]);
+  const { get } = useFetch({
+    state: {},
+  });
+
+  const getCardsData = () => {
+    get({
+      endPoint: `/get-analytics`,
+      onSuccess: (res) => {
+        console.log(res, "cards data response");
+        const apiData = res?.data?.result;
+
+        const transformedData = [
+          {
             title: "Total Users",
-            count: "406",
+            count: apiData.totalUsers,
             span: "8.5%",
             txt: "Up from yesterday",
             arrow: "/images/arrow-success.png",
-            img: "/images/cards-icon (1).png"
-        },
-        {
+            img: "/images/cards-icon (1).png",
+          },
+          {
             title: "Total Paths",
-            count: "89",
+            count: apiData.totalPaths,
             span: "4.3%",
             txt: "Down from yesterday",
             arrow: "/images/arrow-danger.png",
-            img: "/images/cards-icon (4).png"
-        },
-        {
-            title: "Total Orders",
-            count: "102",
-            span: "1.3%",
-            txt: "Up from past week",
-            arrow: "/images/arrow-success.png",
-            img: "/images/cards-icon (3).png"
-        },
-        {
-            title: "Total Pending",
-            count: "2",
+            img: "/images/cards-icon (4).png",
+          },
+          {
+            title: "Paths Pending",
+            count: apiData.pendingPaths,
             span: "1.8%",
             txt: "Up from yesterday",
             arrow: "/images/arrow-success.png",
-            img: "/images/cards-icon (2).png"
-        }
-    ];
+            img: "/images/cards-icon (2).png",
+          },
+          {
+            title: "Purchase Subscription",
+            count: apiData.purchaseSubscription,
+            span: "1.3%", // Example data
+            txt: "Up from past week",
+            arrow: "/images/arrow-success.png",
+            img: "/images/cards-icon (3).png",
+          },
+        ];
 
-    const settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-    };
-    return (
-        <>
-            <main className='dashboard-cards'>
-                {cardData.map((item, index) => (
-                    <div className='dashboard-card-div' key={index}>
-                        <div className='dashboard-card-heading'>
-                            <div>
-                                <h4>{item.title}</h4>
-                                <h2>{item.count}</h2>
-                            </div>
-                            <div>
-                                <img src={item.img} alt="cards icon" />
-                            </div>
-                        </div>
+        setCardsData(transformedData);
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    });
+  };
 
-                        <div className='dashboard-card-bottom'>
-                            <img src={item.arrow} alt="arrow" />
-                            <span>{item.span}</span>
-                            <p>{item.txt}</p>
-                        </div>
-                    </div>
-                ))}
-            </main>
+  useEffect(() => {
+    getCardsData();
+  }, []);
 
-            <div style={{backgroundColor:'white', borderRadius:'10px', width:'100%'}}>
-            <RevenueChart heading={'Popular Tracks'} dropdown={'dropdown'}/>
+  return (
+    <>
+      <main className="dashboard-cards">
+        {cardsData.map((item, index) => (
+          <div className="dashboard-card-div" key={index}>
+            <div className="dashboard-card-heading">
+              <div>
+                <h4>{item.title}</h4>
+                <h2>{item.count}</h2>
+              </div>
+              <div>
+                <img src={item.img} alt="cards icon" />
+              </div>
             </div>
 
-{/* 
-            <main className='dashboard-slider nunito-sans'>
-                <Slider {...settings}>
-                    <div className='slider-div'>
-                        <p>September 12-24</p>
-                        <h2>Lorem ipsum dolor sit <br /> amet consectetur</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur. Aenean adipiscing <br />risus aliquet nunc fames  porttitor ullamcorper morbi.</p>
-                        <button>Get Started</button>
-                    </div>
-                    <div className='slider-div'>
-                        <p>September 12-24</p>
-                        <h2>Lorem ipsum dolor sit <br /> amet consectetur</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur. Aenean adipiscing <br />risus aliquet nunc fames  porttitor ullamcorper morbi.</p>
-                        <button>Get Started</button>
-                    </div>
-                    <div className='slider-div'>
-                        <p>September 12-24</p>
-                        <h2>Lorem ipsum dolor sit <br /> amet consectetur</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur. Aenean adipiscing <br />risus aliquet nunc fames  porttitor ullamcorper morbi.</p>
-                        <button>Get Started</button>
-                    </div>
-                </Slider>
-            </main> */}
-        </>
-    );
-}
+            <div className="dashboard-card-bottom">
+              <img src={item.arrow} alt="arrow" />
+              <span>{item.span}</span>
+              <p>{item.txt}</p>
+            </div>
+          </div>
+        ))}
+      </main>
+
+      <div style={{ backgroundColor: "white", borderRadius: "10px", width: "100%" }}>
+        <RevenueChart heading={"Popular Tracks"} dropdown={"dropdown"} />
+      </div>
+    </>
+  );
+};

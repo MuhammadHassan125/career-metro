@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import UploadDataGrid from '../../Components/DashboardComponents/DataGrid/UploadDataGrid';
+import { Link } from 'react-router-dom';
 
 const columns = [
     { Header: "Id", accessor: "id" },
@@ -165,7 +166,7 @@ export const DashboardCards = () => {
     };
     return (
         <>
-            <main className='dashboard-cards'>
+            {/* <main className='dashboard-cards'>
                 {cardData.map((item, index) => (
                     <div className='dashboard-card-div' key={index}>
                         <div className='dashboard-card-heading'>
@@ -185,7 +186,7 @@ export const DashboardCards = () => {
                         </div>
                     </div>
                 ))}
-            </main>
+            </main> */}
 
             <main className='dashboard-slider nunito-sans'>
                 <Slider {...settings}>
@@ -193,19 +194,19 @@ export const DashboardCards = () => {
                         <p>September 12-24</p>
                         <h2>Lorem ipsum dolor sit <br /> amet consectetur</h2>
                         <p>Lorem ipsum dolor sit amet consectetur. Aenean adipiscing <br />risus aliquet nunc fames  porttitor ullamcorper morbi.</p>
-                        <button>Get Started</button>
+                        <Link to="/add-path"><button>Get Started</button></Link>
                     </div>
                     <div className='slider-div'>
                         <p>September 12-24</p>
                         <h2>Lorem ipsum dolor sit <br /> amet consectetur</h2>
                         <p>Lorem ipsum dolor sit amet consectetur. Aenean adipiscing <br />risus aliquet nunc fames  porttitor ullamcorper morbi.</p>
-                        <button>Get Started</button>
+                        <Link to="/add-path"><button>Get Started</button></Link>
                     </div>
                     <div className='slider-div'>
                         <p>September 12-24</p>
                         <h2>Lorem ipsum dolor sit <br /> amet consectetur</h2>
                         <p>Lorem ipsum dolor sit amet consectetur. Aenean adipiscing <br />risus aliquet nunc fames  porttitor ullamcorper morbi.</p>
-                        <button>Get Started</button>
+                        <Link to="/add-path"><button>Get Started</button></Link>
                     </div>
                 </Slider>
             </main>
