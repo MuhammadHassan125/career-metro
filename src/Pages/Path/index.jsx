@@ -8,8 +8,8 @@ const Path = () => {
     return (
         <React.Fragment>
             <main className='path-section' style={{ marginBottom: '25px' }}>
-                <h2>Listing Documents</h2>
-                <UploadDataGrid heading={"Uploaded Documents"} dropdown={"October"} />
+                <h2>Historical Prompts</h2>
+                <UploadDataGrid heading={"Previous Entries"} dropdown={"October"} />
             </main>
 
             <PaymentCheckout />

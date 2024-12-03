@@ -22,8 +22,8 @@ const Sidebar = () => {
 
   const clientItems = [
     { id: 1, name: "Dashboard", link: "/" },
-    { id: 2, name: "Career", link: "/map-career" },
-    { id: 3, name: "All Paths", link: "/path" },
+    { id: 2, name: "Career Maps", link: "/map-career" },
+    { id: 3, name: "All Prompts", link: "/path" },
     { id: 4, name: "Settings", link: "/profile" },
   ];
 

@@ -4,7 +4,6 @@ import MapContext from "../../../context/MapContext";
 import { MdOutlineClose } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
 import { GrAttachment } from "react-icons/gr";
-import { MdOutlineKeyboardVoice } from "react-icons/md";
 import useFetch from "point-fetch-react";
 import { BiSolidSend } from "react-icons/bi";
 
@@ -68,6 +67,10 @@ const GPTComponent = ({ selectedPathId }) => {
   const handleToggle = () => {
     setIsMinimized(!isMinimized);
   };
+
+  const handleFileUpload = () => {
+
+  }
 
   return (
     <main className="gpt-section">
@@ -145,7 +148,17 @@ const GPTComponent = ({ selectedPathId }) => {
 
               <div className="search__box">
                 <div>
-                  <GrAttachment style={{ fontSize: "20px" }} />
+                  {/* <GrAttachment style={{ fontSize: "20px" }} /> */}
+                  <label className="upload-label">
+                    <GrAttachment style={{ fontSize: "16px" }} />
+                    <input
+                      type="file"
+                      name="file"
+                      style={{ display: "none" }}
+                      onChange={handleFileUpload}
+                    />
+                  </label>
+
                   <input
                     type="text"
                     placeholder="Search"
@@ -153,7 +166,8 @@ const GPTComponent = ({ selectedPathId }) => {
                     value={Data.message}
                     onChange={handleInputChange}
                   />
-                  {/* <MdOutlineKeyboardVoice style={{ fontSize: "25px" }} /> */}
+
+                  {/* send btn  */}
                   <button
                     onClick={handleSendMessage}
                     style={{
@@ -164,7 +178,8 @@ const GPTComponent = ({ selectedPathId }) => {
                     <BiSolidSend
                       style={{
                         fontSize: "16px",
-                        color: isSending ? "#cccccc" : "#000000"
+                        color: isSending ? "#cccccc" : "#000000",
+                        backgroundColor:"--var(--primary-btn-color)"
                       }}
                     />
                   </button>

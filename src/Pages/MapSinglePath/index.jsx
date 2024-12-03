@@ -83,7 +83,7 @@ const MapSinglePath = () => {
           </div>
           <div className="map-section__btn-div">
             <p>
-              <strong>{getTitle} </strong>/ 1 Path
+              <strong>{getTitle} </strong>
             </p>
             <button className="map-section__btn" onClick={checkTrainingPlanSubscription} disabled={processing}>
               <BiExport style={{ fontSize: "18px" }} />

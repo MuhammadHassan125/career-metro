@@ -19,6 +19,7 @@ import { MdOutlineMarkEmailUnread } from "react-icons/md";
 import useFetch from "point-fetch-react";
 import Fire from "../../Fire/Fire";
 import { baseURL } from "../../Utils/contants";
+import ProfileDetailsContext from "../../context/ProfileDetailContext";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -41,7 +42,7 @@ const Header = () => {
   const open = Boolean(anchorEl);
 
   const navigate = useNavigate();
-  const [user, setUser] = React.useState();
+  const { user } = React.useContext(ProfileDetailsContext);
   const { get, put } = useFetch({ state: {} });
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -72,8 +73,8 @@ const Header = () => {
 
   const clientItems = [
     { id: 1, name: "Dashboard", link: "/" },
-    { id: 2, name: "Career", link: "/map-career" },
-    { id: 3, name: "All Paths", link: "/path" },
+    { id: 2, name: "Career Maps", link: "/map-career" },
+    { id: 3, name: "All Prompts", link: "/path" },
     { id: 4, name: "Settings", link: "/profile" },
   ];
 
@@ -87,22 +88,22 @@ const Header = () => {
   const sidebarItems = userRole === "User" ? clientItems : adminItems;
   const authToken = localStorage.getItem("user-visited-dashboard");
 
-  const gettingProfileInfo = () => {
-    if (!authToken) return;
-    Fire.get({
-      url: `${baseURL}/show-profile`,
-      onSuccess: (res) => {
-        setUser(res?.data || []);
-      },
-      onError: (err) => {
-        setUser([]);
-      },
-    });
-  };
+  // const gettingProfileInfo = () => {
+  //   if (!authToken) return;
+  //   Fire.get({
+  //     url: `${baseURL}/show-profile`,
+  //     onSuccess: (res) => {
+  //       setUser(res?.data || []);
+  //     },
+  //     onError: (err) => {
+  //       setUser([]);
+  //     },
+  //   });
+  // };
 
-  useEffect(() => {
-    gettingProfileInfo();
-  }, []);
+  // useEffect(() => {
+  //   gettingProfileInfo();
+  // }, []);
 
 
   const handleLogout = () => {

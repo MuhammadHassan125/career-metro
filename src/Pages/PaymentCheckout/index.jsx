@@ -60,7 +60,7 @@ const PaymentCheckout = () => {
         <React.Fragment>
             <main className='path-section' style={{ marginTop: '40px' }}>
 
-                <h2 style={{ textAlign: 'center', marginTop: '25px', marginBottom: '-10px', color: "var(--primary-btn-color)", }}>Choose Your Subscription Plan</h2>
+                <h4 style={{ textAlign: 'center', marginTop: '25px', marginBottom: '-10px', color: "var(--primary-btn-color)", fontSize:"1.7rem" }}>Choose Your Plan</h4>
                 <div className="plans-container">
                     {subscriptionPlans?.map((plan) => (
                         <div key={plan?.id} className="plan-card">

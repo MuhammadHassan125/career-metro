@@ -15,6 +15,7 @@ import axios from 'axios';
 import ChangePassword from './ChangePassword';
 import useFetch from 'point-fetch-react';
 import Loading from '../../Components/Loading';
+import ProfileDetailsContext from '../../context/ProfileDetailContext';
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
     width: 30,
@@ -38,11 +39,13 @@ const style = {
 };
 
 const Profile = () => {
-    const [user, setUser] = React.useState();
+
+    const { user, gettingProfileInfo } = useContext(ProfileDetailsContext);
     const [open, setOpen] = React.useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadMessage, setUploadMessage] = useState('');
     const [newUsername, setNewUsername] = useState(user?.data?.username);
+
 
     const { put, Data, setData, Processing } = useFetch({
         state: {
@@ -61,28 +64,11 @@ const Profile = () => {
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    const authToken = localStorage.getItem("user-visited-dashboard")
-
-    const gettingProfileInfo = () => {
-        if (!authToken) return;
-        Fire.get({
-            url: `${baseURL}/show-profile`,
-            onSuccess: (res) => {
-                setUser(res?.data || []);
-            },
-            onError: (err) => {
-                setUser([]);
-            },
-        });
-    };
-
-    useEffect(() => {
-        gettingProfileInfo();
-    }, []);
-
-    const handleUsernameChange = (event) => {
-        setNewUsername(event.target.value);
+   const handleUsernameChange = (event) => {
+    setData((prev) => ({
+        ...prev,
+        newUsername: event.target.value,
+    }));
     };
 
     const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -101,8 +87,8 @@ const Profile = () => {
         }
     };
 
-    const handleUpload = async () => {
-        if (!selectedFile) {
+    const handleUpload = async (file) => {
+        if (!file) {
             setUploadMessage('Please select a file first');
             return;
         }
@@ -111,7 +97,7 @@ const Profile = () => {
             return;
         }
         const formData = new FormData();
-        formData.append('file', selectedFile);
+        formData.append('file', file);
         try {
             const response = await axios.post(`${baseURL}/update-profile-picture`, formData, {
                 headers: {
@@ -122,32 +108,34 @@ const Profile = () => {
             setUploadMessage(response.data.message);
             gettingProfileInfo();
         } catch (error) {
+            console.error('Upload error:', error);
             alert('Error uploading file');
         }
     };
 
-
     const handleUpdateUsername = (event) => {
         event.preventDefault();
+    
         put({
             endPoint: `/update-username`,
+            data: { username: newUsername },
             onSuccess: (res) => {
-                alert(res.data.message || "Username updated successfully", { variant: "success" });
                 gettingProfileInfo();
+                handleClose();
             },
             onError: (err) => {
                 alert(err.error || "Failed to update username", { variant: "error" });
-            }
+            },
         });
-
-        handleClose();
     };
+    
 
     return (
         <React.Fragment>
             {Processing ? <Loading fullScreen={true} processing={Processing} /> : null}
+            
             <div className='profile-details'>
-                <div>
+                <div className='profile-details__heading'>
                     <h2 style={{ color: 'white' }}>Your Profile Details</h2>
                     <p style={{ color: 'white', marginBottom: '20px' }}>Hi {user?.data?.username}, Welcome to your profile settings</p>
                 </div>
@@ -216,37 +204,36 @@ const Profile = () => {
 
             </div>
 
-
             {/* modal for update username */}
-            <div>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <form onSubmit={handleUpdateUsername}>
-                        <Box sx={style}>
-                            <Typography id="modal-modal-title" variant="h6" component="h3">
-                                Update Username:
-                            </Typography>
-                            <div style={{ width: "100%", marginBottom: '10px' }}>
-                                <PrimaryInput
-                                    type="text"
-                                    value={Data?.newUsername}
-                                    placeholder={user?.data?.username}
-                                    onChange={handleUsernameChange}
-                                />
-                            </div>
-
-                            <div style={{ display: 'flex', gap: '10px', marginTop: "20px" }}>
-                                <PrimaryBtn text={'Cancel'} onClick={handleClose} />
-                                <PrimaryBtn text={'Update'} type="submit" />
-                            </div>
-                        </Box>
-                    </form>
-                </Modal>
+            <Modal
+    open={open}
+    onClose={handleClose}
+    aria-labelledby="modal-modal-title"
+    aria-describedby="modal-modal-description"
+>
+    <form onSubmit={handleUpdateUsername}>
+        <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h3">
+                Update Username:
+            </Typography>
+            <div style={{ width: "100%", marginBottom: "10px" }}>
+                <PrimaryInput
+                    type="text"
+                    value={newUsername} 
+                    placeholder={user?.data?.username}
+                    onChange={(e) => setNewUsername(e.target.value)}
+                />
             </div>
+
+            <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "20px" }}>
+                <button text={"Update"} onClick={handleClose} style={{padding:'0 12px', border:"none",
+                    cursor:"pointer", borderRadius:"8px"}}>Cancel</button>
+                <PrimaryBtn text={"Update"} type="submit" />
+            </div>
+        </Box>
+    </form>
+            </Modal>
+
         </React.Fragment>
     );
 };

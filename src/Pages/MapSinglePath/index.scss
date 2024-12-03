@@ -214,3 +214,15 @@
     -ms-overflow-style: none; 
     scrollbar-width: none;
 }
+
+.upload-label {
+    cursor: pointer;
+    display: inline-block;
+    padding: 8px;
+    border-radius: 15px;
+  }
+  
+  .upload-label:hover {
+    background-color: #e8e8e8;
+
+  }
