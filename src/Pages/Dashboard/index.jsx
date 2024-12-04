@@ -212,7 +212,7 @@ export const DashboardCards = () => {
       <main className="dashboard-cards">
         {cardData && cardData.length > 0 ? (
           cardData.map((item, index) => (
-            <div className="dashboard-card-div" key={index}>
+            <div className="dashboard-card-user" key={index}>
               <div className="dashboard-card-heading">
                 <div>
                   <h4>{item.title}</h4>

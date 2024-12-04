@@ -138,7 +138,7 @@ const GPTComponent = ({ selectedPathId }) => {
       setFile(null); 
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while sending the message. Only .pdf, .doc, .png, .jpg formats allowed!");
+      alert("Only PDF files are allowed");
     } finally {
       setIsSending(false);
     }
@@ -253,41 +253,61 @@ const GPTComponent = ({ selectedPathId }) => {
             <div style={{ display: "flex", alignItems: "center" }}>
               {/* Preview Section */}
               {file && (
-  <div style={{ marginRight: "10px", position: "relative", display: "inline-block" }}>
-    <img
-      src={URL.createObjectURL(file)}
-      alt="Preview"
-      style={{
-        width: "50px",
-        height: "50px",
-        borderRadius: "5px",
-        objectFit: "cover",
-        border: "1px solid #ddd",
-      }}
-    />
-    {/* Cross Icon */}
-    <button
-      onClick={() => setFile(null)}
-      style={{
-        position: "absolute",
-        top: "-5px",
-        right: "-5px",
-        background: "red",
-        color: "white",
-        border: "none",
-        borderRadius: "50%",
-        width: "20px",
-        height: "20px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer",
-      }}
-    >
-      ✕
-    </button>
-  </div>
-)}
+              <div style={{ marginRight: "10px", position: "relative", display: "inline-block" }}>
+                {file.type === "application/pdf" ? (
+                  // PDF ke liye
+                  <div
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: "#f4f4f4",
+                      border: "1px solid #ddd",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <span style={{ fontSize: "12px", fontWeight: "bold", color: "#555" }}>PDF</span>
+                  </div>
+                ) : (
+                  // Images ke liye
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="Preview"
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "5px",
+                      objectFit: "cover",
+                      border: "1px solid #ddd",
+                    }}
+                  />
+                )}
+                {/* Cross Icon */}
+                <button
+                  onClick={() => setFile(null)}
+                  style={{
+                    position: "absolute",
+                    top: "-5px",
+                    right: "-5px",
+                    background: "red",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "50%",
+                    width: "20px",
+                    height: "20px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
       
               {/* Upload Input */}
               <label className="upload-label" style={{ marginRight: "10px" }}>

@@ -49,11 +49,11 @@
 }
 
 
-.dashboard-card-user{
+.dashboard-card-div{
     background-color: white;
     border-radius: 15px;
     padding: 20px;
-    width:32%;
+    width:24%;
 }
 
 .dashboard-slider{
@@ -112,7 +112,7 @@
 }
 
 @media screen and (max-width: 600px) {
-    .dashboard-card-user{
+    .dashboard-card-div{
         width: 100%;
         margin-bottom: 12px;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -120,14 +120,14 @@
 }
 
 @media screen and (min-width: 600px) and (max-width: 900px) {
-    .dashboard-card-user{
+    .dashboard-card-div{
         width: 48%;
         margin-bottom: 10px;
     }
 }
 
 @media screen and (min-width: 900px) and (max-width: 1200px) {
-    .dashboard-card-user{
+    .dashboard-card-div{
         width: 33.3%;
         padding: 20px 0;
     }

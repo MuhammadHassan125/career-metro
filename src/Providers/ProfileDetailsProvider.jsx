@@ -23,7 +23,7 @@ const ProfileDetailsProvider = ({ children }) => {
 
     React.useEffect(() => {
         gettingProfileInfo();
-    }, []);
+    }, [authToken]);
     
     return(
         <ProfileDetailsContext.Provider value={{user, setUser, gettingProfileInfo}}>

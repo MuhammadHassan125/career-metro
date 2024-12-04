@@ -89,7 +89,7 @@ const Register = () => {
           <p>Username:</p>
           <PrimaryInput
             type="text"
-            placeholder="Enter Email"
+            placeholder="Enter Username"
             name="username"
             value={Data.username}
             onChange={handleInputChange}

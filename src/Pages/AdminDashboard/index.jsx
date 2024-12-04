@@ -1,4 +1,4 @@
-import '../Dashboard/index.scss';
+import './index.scss';
 import UploadDataGrid from '../../Components/DashboardComponents/DataGrid/UploadDataGrid';
 import RevenueChart from '../../Components/AdminDashboard/TrackChart';
 import React, { useEffect } from 'react';
