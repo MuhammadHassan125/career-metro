@@ -54,7 +54,7 @@
     border-radius: 15px;
     // border: 1px solid black;
     padding: 20px;
-    width:24%;
+    width:32%;
 }
 
 .dashboard-slider{
@@ -95,7 +95,6 @@
             border: none;
 
             &:hover{
-                // background-color: #FF8743;
                 opacity: 0.9;
                 cursor: pointer;
             }
@@ -130,7 +129,7 @@
 
 @media screen and (min-width: 900px) and (max-width: 1200px) {
     .dashboard-card-div{
-        width: 25%;
-        // margin: 1px;
+        width: 33.3%;
+        padding: 20px 0;
     }
 }

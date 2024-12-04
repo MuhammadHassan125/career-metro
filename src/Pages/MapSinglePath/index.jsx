@@ -85,10 +85,14 @@ const MapSinglePath = () => {
             <p>
               <strong>{getTitle} </strong>
             </p>
-            <button className="map-section__btn" onClick={checkTrainingPlanSubscription} disabled={processing}>
-              <BiExport style={{ fontSize: "18px" }} />
-              Export your Training PDF
-            </button>
+              <button
+                className="map-section__btn"
+                onClick={checkTrainingPlanSubscription}
+                disabled={processing}
+              >
+                <BiExport style={{ fontSize: "18px" }} />
+                Export your Training PDF
+              </button>
             <AddPathComponent />
           </div>
         </div>

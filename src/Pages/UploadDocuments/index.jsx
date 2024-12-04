@@ -116,11 +116,14 @@ const UploadDocuments = () => {
       endPoint: `/check-path-subscription-limit`,
       onSuccess: (res) => {
         if (res?.data?.Subscription_Status === false) {
+          // localStorage.setItem('subscription-status', false);
           setCheckSubscription(false);
           navigate('/path');
           localStorage.setItem('subscription', false);
         } else {
           localStorage.removeItem('subscription');
+          // localStorage.setItem('subscription-status', true);
+
         }
         return;
       }

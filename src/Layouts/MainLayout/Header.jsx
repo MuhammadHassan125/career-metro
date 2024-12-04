@@ -44,6 +44,9 @@ const Header = () => {
   const navigate = useNavigate();
   const { user } = React.useContext(ProfileDetailsContext);
   const { get, put } = useFetch({ state: {} });
+
+  const [checkData, setCheckData] = React.useState(null);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -88,22 +91,23 @@ const Header = () => {
   const sidebarItems = userRole === "User" ? clientItems : adminItems;
   const authToken = localStorage.getItem("user-visited-dashboard");
 
-  // const gettingProfileInfo = () => {
-  //   if (!authToken) return;
-  //   Fire.get({
-  //     url: `${baseURL}/show-profile`,
-  //     onSuccess: (res) => {
-  //       setUser(res?.data || []);
-  //     },
-  //     onError: (err) => {
-  //       setUser([]);
-  //     },
-  //   });
-  // };
+  const checkRemainingPlans = () => {
+    if (!authToken) return;
+    Fire.get({
+      url: `${baseURL}/check-remaining-plans`,
+      onSuccess: (res) => {
+        setCheckData(res?.data || []);
+      },
+      onError: (err) => {
+        setCheckData([]);
+        console.log(err)
+      },
+    });
+  };
 
-  // useEffect(() => {
-  //   gettingProfileInfo();
-  // }, []);
+  useEffect(() => {
+    checkRemainingPlans();
+  }, []);
 
 
   const handleLogout = () => {

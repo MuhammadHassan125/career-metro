@@ -6,55 +6,143 @@ import { IoIosArrowDown } from "react-icons/io";
 import { GrAttachment } from "react-icons/gr";
 import useFetch from "point-fetch-react";
 import { BiSolidSend } from "react-icons/bi";
+import { baseURL } from "../../../Utils/contants";
 
 
 const GPTComponent = ({ selectedPathId }) => {
+  // const navigate = useNavigate();
+  // const [isMinimized, setIsMinimized] = useState(false);
+  // const [isSending, setIsSending] = useState(false);
+  // const [getGPTResponse, setGetGPTResponse] = useState([]);
+  // const { gettingSkillsData, getTitle, getDescription } = useContext(MapContext);
+  // const skillsId = localStorage.getItem("singlePathId");
+
+  // const { post, get, Data, setData, Errors, validate } = useFetch({
+  //   state: {
+  //     message: "",
+  //     step_id: null,
+  //   },
+  //   rules: {
+  //     message: ["required"],
+  //   },
+  //   message: {
+  //     message: {
+  //       required: "Message field is required*",
+  //     },
+  //   },
+  // });
+
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setData(name, value);
+  // };
+
+  // useEffect(() => {
+  //   setData({ step_id: selectedPathId, message: "" });
+  // }, [selectedPathId]);
+
+  // const handleSendMessage = () => {
+  //   setIsSending(true);
+  //   post({
+  //     endPoint: `/send-message`,
+  //     onSuccess: (res) => {
+  //       handleGetMessage(selectedPathId);
+  //       setData("message", "");
+  //       setIsSending(false);
+  //     },
+  //     onError: (err) => {
+  //       setIsSending(false);
+  //     },
+  //   });
+  // };
+
+  // const handleGetMessage = (stepId) => {
+  //   get({
+  //     endPoint: `/get-message/${stepId}`,
+  //     onSuccess: (res) => {
+  //       setGetGPTResponse(res?.data?.data);
+  //     }
+  //   });
+  // };
+
+  // const handleToggle = () => {
+  //   setIsMinimized(!isMinimized);
+  // };
+
+  // const handleFileUpload = () => {
+
+  // }
+
   const navigate = useNavigate();
   const [isMinimized, setIsMinimized] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [getGPTResponse, setGetGPTResponse] = useState([]);
   const { gettingSkillsData, getTitle, getDescription } = useContext(MapContext);
   const skillsId = localStorage.getItem("singlePathId");
+  const [file, setFile] = useState(null); 
+  const [message, setMessage] = useState(""); 
 
-  const { post, get, Data, setData, Errors, validate } = useFetch({
-    state: {
-      message: "",
-      step_id: null,
-    },
-    rules: {
-      message: ["required"],
-    },
-    message: {
-      message: {
-        required: "Message field is required*",
-      },
-    },
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setData(name, value);
-  };
+  const {get} = useFetch({state:{}});
 
   useEffect(() => {
-    setData({ step_id: selectedPathId, message: "" });
+    setMessage(""); 
+    setFile(null); 
   }, [selectedPathId]);
 
-  const handleSendMessage = () => {
-    setIsSending(true);
-    post({
-      endPoint: `/send-message`,
-      onSuccess: (res) => {
-        handleGetMessage(selectedPathId);
-        setData("message", "");
-        setIsSending(false);
-      },
-      onError: (err) => {
-        setIsSending(false);
-      },
-    });
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setMessage(value);
   };
 
+  const handleFileUpload = (event) => {
+    const uploadedFile = event.target.files[0];
+    setFile(uploadedFile);
+  };
+
+  const handleSendMessage = async () => {
+    if (!message && !file) {
+      alert("Please enter a message or upload a file!");
+      return;
+    }
+
+    setIsSending(true);
+    const token = localStorage.getItem("user-visited-dashboard");
+    const formData = new FormData();
+    
+    if (message) {
+      formData.append("message", message);
+    }
+    
+    if (file) {
+      formData.append("file", file);
+    }
+    
+    formData.append("step_id", selectedPathId);
+
+    try {
+      const response = await fetch(`${baseURL}/send-message`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const resData = await response.json();
+      handleGetMessage(selectedPathId);
+      setMessage(""); 
+      setFile(null); 
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while sending the message. Only .pdf, .doc, .png, .jpg formats allowed!");
+    } finally {
+      setIsSending(false);
+    }
+  };
   const handleGetMessage = (stepId) => {
     get({
       endPoint: `/get-message/${stepId}`,
@@ -67,10 +155,6 @@ const GPTComponent = ({ selectedPathId }) => {
   const handleToggle = () => {
     setIsMinimized(!isMinimized);
   };
-
-  const handleFileUpload = () => {
-
-  }
 
   return (
     <main className="gpt-section">
@@ -100,11 +184,6 @@ const GPTComponent = ({ selectedPathId }) => {
               Get Started
             </button>
           </div>
-          {/* <div>
-            <p style={{marginTop:'10px'}}>
-              <strong>Next Role:</strong>Sales Team Lead
-            </p>
-          </div> */}
         </div>
       </div>
 
@@ -126,68 +205,133 @@ const GPTComponent = ({ selectedPathId }) => {
         </div>
 
         {!isMinimized && (
-          <div className="gpt-section__content">
-            <div className="content__inner">
-              <div style={{ overflowY: "auto", height: "66%", padding: "12px 5px" }}>
-                {getGPTResponse?.length > 0 &&
-                  getGPTResponse.map((item, index) => (
-                    <div key={index} style={{ marginBottom: "20px" }}>
-                      <div style={{ backgroundColor: '#f5f6fa', padding: '10px', borderRadius: '10px', marginBottom: '10px', fontSize: '12px', fontWeight: 'bold', color: "#5B708B", width: '60%' }}>
-                        <span>{item.prompt}</span>
-                      </div>
-                      <p style={{ background: '#E8E8E8', padding: '10px', fontSize: '11px', width: '80%' }}>
-                        {item.result}
-                      </p>
-                    </div>
-                  ))}
-                <div className="innder-right__txt">
-                  <img src="/images/clear.png" alt="clear" />
-                  New dialog
-                </div>
-              </div>
-
-              <div className="search__box">
-                <div>
-                  {/* <GrAttachment style={{ fontSize: "20px" }} /> */}
-                  <label className="upload-label">
-                    <GrAttachment style={{ fontSize: "16px" }} />
-                    <input
-                      type="file"
-                      name="file"
-                      style={{ display: "none" }}
-                      onChange={handleFileUpload}
-                    />
-                  </label>
-
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    name="message"
-                    value={Data.message}
-                    onChange={handleInputChange}
-                  />
-
-                  {/* send btn  */}
-                  <button
-                    onClick={handleSendMessage}
+        <div className="gpt-section__content">
+        <div className="content__inner">
+          <div style={{ overflowY: "auto", height: "66%", padding: "12px 5px" }}>
+            {getGPTResponse?.length > 0 &&
+              getGPTResponse.map((item, index) => (
+                <div key={index} style={{ marginBottom: "20px" }}>
+                  <div
                     style={{
-                      cursor: "pointer",
+                      backgroundColor: "#f5f6fa",
+                      padding: "10px",
+                      borderRadius: "10px",
+                      marginBottom: "10px",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      color: "#5B708B",
+                      width: "60%",
                     }}
-                    disabled={isSending}
                   >
-                    <BiSolidSend
-                      style={{
-                        fontSize: "16px",
-                        color: isSending ? "#cccccc" : "#000000",
-                        backgroundColor:"--var(--primary-btn-color)"
-                      }}
-                    />
-                  </button>
+                    <span>{item.prompt}</span>
+                  </div>
+                  <p
+                    style={{
+                      background: "#E8E8E8",
+                      padding: "10px",
+                      fontSize: "11px",
+                      width: "80%",
+                    }}
+                  >
+                    {item.result}
+                  </p>
                 </div>
-                {Errors.message && <p className="error">{Errors.message}</p>}
-              </div>
+              ))}
+            <div className="innder-right__txt">
+              <img src="/images/clear.png" alt="clear" />
+              New dialog
             </div>
           </div>
+      
+          <div
+            className="search__box"
+            style={{
+              boxShadow:
+                "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              {/* Preview Section */}
+              {file && (
+  <div style={{ marginRight: "10px", position: "relative", display: "inline-block" }}>
+    <img
+      src={URL.createObjectURL(file)}
+      alt="Preview"
+      style={{
+        width: "50px",
+        height: "50px",
+        borderRadius: "5px",
+        objectFit: "cover",
+        border: "1px solid #ddd",
+      }}
+    />
+    {/* Cross Icon */}
+    <button
+      onClick={() => setFile(null)}
+      style={{
+        position: "absolute",
+        top: "-5px",
+        right: "-5px",
+        background: "red",
+        color: "white",
+        border: "none",
+        borderRadius: "50%",
+        width: "20px",
+        height: "20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+      }}
+    >
+      ✕
+    </button>
+  </div>
+)}
+      
+              {/* Upload Input */}
+              <label className="upload-label" style={{ marginRight: "10px" }}>
+                <GrAttachment style={{ fontSize: "16px" }} />
+                <input
+                  type="file"
+                  name="file"
+                  style={{ display: "none" }}
+                  onChange={handleFileUpload}
+                />
+              </label>
+      
+              {/* Message Input */}
+              <input
+                type="text"
+                placeholder="Search"
+                name="message"
+                value={message}
+                onChange={handleInputChange}
+                style={{ flex: 1 }}
+              />
+      
+              {/* Send Button */}
+              <button
+                onClick={handleSendMessage}
+                style={{
+                  cursor: "pointer",
+                }}
+                disabled={isSending}
+              >
+                <BiSolidSend
+                  style={{
+                    fontSize: "16px",
+                    color: isSending ? "#cccccc" : "#000000",
+                    backgroundColor: "--var(--primary-btn-color)",
+                  }}
+                />
+              </button>
+            </div>
+            {/* {Errors.message && <p className="error">{Errors.message}</p>} */}
+          </div>
+        </div>
+      </div>
+      
         )}
       </div>
     </main>

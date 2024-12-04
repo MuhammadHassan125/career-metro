@@ -114,7 +114,8 @@ const AdminDashboard = () => {
     React.useEffect(()=> {
         const role = localStorage.getItem('user-role');
         setUserRole(role);
-    }, [])
+    }, []);
+    
     return (
         <main className='dashboard-section' id="chart">
             {userRole === "Super Admin" ? <h2>Super Admin Dashboard</h2> : <h2>Admin Dashboard</h2>}
@@ -169,7 +170,7 @@ export const DashboardCards = () => {
           {
             title: "Purchase Subscription",
             count: apiData.purchaseSubscription,
-            span: "1.3%", // Example data
+            span: "1.3%", 
             txt: "Up from past week",
             arrow: "/images/arrow-success.png",
             img: "/images/cards-icon (3).png",
