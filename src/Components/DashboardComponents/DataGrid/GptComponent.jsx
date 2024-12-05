@@ -137,8 +137,12 @@ const GPTComponent = ({ selectedPathId }) => {
       }else{
         alert(response?.statusText);
       }
+      setIsSending(false);
+
    }catch(err){
     console.log(err);
+    setIsSending(false);
+
    }
    
   };
@@ -237,6 +241,10 @@ const GPTComponent = ({ selectedPathId }) => {
                   </p>
                 </div>
               ))}
+
+{isSending && (
+        <div style={{textAlign: "center"}}>Generating response...</div>
+      )}
             <div className="innder-right__txt">
               <img src="/images/clear.png" alt="clear" />
               New dialog
