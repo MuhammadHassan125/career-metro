@@ -129,7 +129,8 @@ const Header = () => {
       endPoint: `/get-notifications`,
 
       onSuccess: (res) => {
-        setNotifications(res?.data?.data);
+        setNotifications(res?.data?.data?.data);
+        console.log(res?.data?.data?.data, 'notifications');
         setUnseenCount(res?.data?.data?.data?.totalUnseenNotifications);
       }
     });

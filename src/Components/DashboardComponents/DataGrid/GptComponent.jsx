@@ -100,6 +100,7 @@ const GPTComponent = ({ selectedPathId }) => {
   };
 
   const handleSendMessage = async () => {
+   try{
     if (!message && !file) {
       alert("Please enter a message or upload a file!");
       return;
@@ -119,7 +120,6 @@ const GPTComponent = ({ selectedPathId }) => {
     
     formData.append("step_id", selectedPathId);
 
-    try {
       const response = await fetch(`${baseURL}/send-message`, {
         method: "POST",
         body: formData,
@@ -128,21 +128,21 @@ const GPTComponent = ({ selectedPathId }) => {
         }
       });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      if (response.ok) {
+        const resData = await response.json();
+        handleGetMessage(selectedPathId);
+        setMessage(""); 
+        setFile(null); 
+        console.log(resData);
+      }else{
+        alert(response?.statusText);
       }
-
-      const resData = await response.json();
-      handleGetMessage(selectedPathId);
-      setMessage(""); 
-      setFile(null); 
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Only PDF files are allowed");
-    } finally {
-      setIsSending(false);
-    }
+   }catch(err){
+    console.log(err);
+   }
+   
   };
+
   const handleGetMessage = (stepId) => {
     get({
       endPoint: `/get-message/${stepId}`,

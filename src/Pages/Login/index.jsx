@@ -5,10 +5,12 @@ import Form from '../../Components/Auth/Form';
 import SocialLinkComponent from '../../Components/Auth/SocialLinks/SocialLinksComponent';
 import FormBtn from '../../Components/Auth/FormBtn';
 import useFetch from 'point-fetch-react';
+import { useContext } from 'react';
+import ProfileDetailsContext from '../../context/ProfileDetailContext';
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const {gettingProfileInfo} = useContext(ProfileDetailsContext);
   const { Data, setData, Errors, post, Processing, validate } = useFetch({
     state:{
       email: '', 
@@ -33,6 +35,7 @@ const Login = () => {
           const token = res.data.data.AuthToken;
           localStorage.setItem('user-visited-dashboard', token);
 
+          gettingProfileInfo();
           const userRole = res.data.data.roleName;
           localStorage.setItem('user-role', userRole);
           
