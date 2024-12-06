@@ -163,25 +163,25 @@ export const DashboardCards = () => {
           {
             title: "Remaining Prompts",
             count: apiData.RemainingPrompts,
-            span: "8.5%",
-            txt: "Up from yesterday",
-            arrow: "/images/arrow-success.png",
+            // span: "8.5%",
+            // txt: "Up from yesterday",
+            // arrow: "/images/arrow-success.png",
             img: "/images/cards-icon (1).png",
           },
           {
             title: "Remaining Training Plan",
             count: apiData.RemainingTrainingPlan,
-            span: "4.3%",
-            txt: "Down from yesterday",
-            arrow: "/images/arrow-danger.png",
+            // span: "4.3%",
+            // txt: "Down from yesterday",
+            // arrow: "/images/arrow-danger.png",
             img: "/images/cards-icon (4).png",
           },
           {
             title: "Subscription Plan",
             count: apiData.subscriptionPlan,
-            span: "1.8%",
-            txt: "Up from yesterday",
-            arrow: "/images/arrow-success.png",
+            // span: "1.8%",
+            // txt: "Up from yesterday",
+            // arrow: "/images/arrow-success.png",
             img: "/images/cards-icon (2).png",
           },
         ];
@@ -223,11 +223,11 @@ export const DashboardCards = () => {
                 </div>
               </div>
 
-              <div className="dashboard-card-bottom">
+              {/* <div className="dashboard-card-bottom">
                 <img src={item.arrow} alt="arrow" />
                 <span>{item.span}</span>
                 <p>{item.txt}</p>
-              </div>
+              </div> */}
             </div>
           ))
         ) : (

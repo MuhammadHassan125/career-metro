@@ -4,7 +4,7 @@ import SinglePathMap from "./SinglePathMap";
 import AddPathComponent from "../../Components/AddPathComponent";
 import GPTComponent from "../../Components/DashboardComponents/DataGrid/GptComponent";
 import "./index.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Dialog,
   DialogActions,
@@ -13,6 +13,8 @@ import {
 } from "@mui/material";
 import MapContext from "../../context/MapContext";
 import useFetch from "point-fetch-react";
+import PrimaryBtn from "../../Components/PrimaryBtn";
+
 
 const MapSinglePath = () => {
   const [selectedPathId, setSelectedPathId] = useState(null);
@@ -20,7 +22,9 @@ const MapSinglePath = () => {
   const [open, setOpen] = useState(false);
   const [trainingExceed, setTrainingExceed] = useState(false);
   const { getTitle } = useContext(MapContext);
+
   const params = useParams();
+  const navigate = useNavigate();
 
   const { post, get, Data, setData, Errors, processing } = useFetch({
     state: {
@@ -39,7 +43,8 @@ const MapSinglePath = () => {
   };
 
   const handleNavigate = () => {
-    window.open(`/get-pdf/${params.id}`, "_blank");
+    setTrainingExceed(false);
+    navigate('/path');
   };
 
   const redirectToStripe = () => {
@@ -71,6 +76,7 @@ const MapSinglePath = () => {
       }
     });
   };
+  
 
 
   return (
@@ -166,7 +172,8 @@ const MapSinglePath = () => {
         </DialogTitle>
         <DialogContent>
           <p>
-            Your Training Plan Limit has been exceeded.
+            {/* Your Training Plan Limit has been exceeded. */}
+            You have used all your training plans. Buy another one to continue.
           </p>
         </DialogContent>
         <DialogActions sx={{ display: "flex", gap: "15px" }}>
@@ -177,12 +184,15 @@ const MapSinglePath = () => {
               fontSize: "14px",
               border: "none",
               cursor: "pointer",
-              padding: '5px 10px',
+              padding: '10px 15px',
               borderRadius: "8px",
             }}
           >
             Cancel
           </button>
+
+            <PrimaryBtn text={'Purchase Plan'} onClick={handleNavigate}/>
+          
         </DialogActions>
       </Dialog>
 

@@ -242,128 +242,128 @@ const GPTComponent = ({ selectedPathId }) => {
                 </div>
               ))}
 
-{isSending && (
-        <div style={{textAlign: "center"}}>Generating response...</div>
-      )}
-            <div className="innder-right__txt">
-              <img src="/images/clear.png" alt="clear" />
-              New dialog
-            </div>
-          </div>
-      
-          <div
-            className="search__box"
-            style={{
-              boxShadow:
-                "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center" }}>
-              {/* Preview Section */}
-              {file && (
-              <div style={{ marginRight: "10px", position: "relative", display: "inline-block" }}>
-                {file.type === "application/pdf" ? (
-                  // PDF ke liye
-                  <div
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: "#f4f4f4",
-                      border: "1px solid #ddd",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    <span style={{ fontSize: "12px", fontWeight: "bold", color: "#555" }}>PDF</span>
-                  </div>
-                ) : (
-                  // Images ke liye
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt="Preview"
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "5px",
-                      objectFit: "cover",
-                      border: "1px solid #ddd",
-                    }}
-                  />
-                )}
-                {/* Cross Icon */}
-                <button
-                  onClick={() => setFile(null)}
-                  style={{
-                    position: "absolute",
-                    top: "-5px",
-                    right: "-5px",
-                    background: "red",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "50%",
-                    width: "20px",
-                    height: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                  }}
-                >
-                  ✕
-                </button>
-              </div>
-            )}
+            {isSending && (
+                    <div style={{textAlign: "center"}}>Generating response...</div>
+                  )}
+                        <div className="innder-right__txt">
+                          <img src="/images/clear.png" alt="clear" />
+                          New dialog
+                        </div>
+                      </div>
+                  
+                      <div
+                        className="search__box"
+                        style={{
+                          boxShadow:
+                            "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          {/* Preview Section */}
+                          {file && (
+                          <div style={{ marginRight: "10px", position: "relative", display: "inline-block" }}>
+                            {file.type === "application/pdf" ? (
+                              // PDF ke liye
+                              <div
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  backgroundColor: "#f4f4f4",
+                                  border: "1px solid #ddd",
+                                  borderRadius: "5px",
+                                }}
+                              >
+                                <span style={{ fontSize: "12px", fontWeight: "bold", color: "#555" }}>PDF</span>
+                              </div>
+                            ) : (
+                              // Images ke liye
+                              <img
+                                src={URL.createObjectURL(file)}
+                                alt="Preview"
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  borderRadius: "5px",
+                                  objectFit: "cover",
+                                  border: "1px solid #ddd",
+                                }}
+                              />
+                            )}
+                            {/* Cross Icon */}
+                            <button
+                              onClick={() => setFile(null)}
+                              style={{
+                                position: "absolute",
+                                top: "-5px",
+                                right: "-5px",
+                                background: "red",
+                                color: "white",
+                                border: "none",
+                                borderRadius: "50%",
+                                width: "20px",
+                                height: "20px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                cursor: "pointer",
+                              }}
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        )}
 
-      
-              {/* Upload Input */}
-              <label className="upload-label" style={{ marginRight: "10px" }}>
-                <GrAttachment style={{ fontSize: "16px" }} />
-                <input
-                  type="file"
-                  name="file"
-                  style={{ display: "none" }}
-                  onChange={handleFileUpload}
-                />
-              </label>
-      
-              {/* Message Input */}
-              <input
-                type="text"
-                placeholder="Search"
-                name="message"
-                value={message}
-                onChange={handleInputChange}
-                style={{ flex: 1 }}
-              />
-      
-              {/* Send Button */}
-              <button
-                onClick={handleSendMessage}
-                style={{
-                  cursor: "pointer",
-                }}
-                disabled={isSending}
-              >
-                <BiSolidSend
-                  style={{
-                    fontSize: "16px",
-                    color: isSending ? "#cccccc" : "#000000",
-                    backgroundColor: "--var(--primary-btn-color)",
-                  }}
-                />
-              </button>
-            </div>
-            {/* {Errors.message && <p className="error">{Errors.message}</p>} */}
-          </div>
-        </div>
-      </div>
-      
-        )}
-      </div>
-    </main>
-  );
-};
+                  
+                          {/* Upload Input */}
+                          <label className="upload-label" style={{ marginRight: "10px" }}>
+                            <GrAttachment style={{ fontSize: "16px" }} />
+                            <input
+                              type="file"
+                              name="file"
+                              style={{ display: "none" }}
+                              onChange={handleFileUpload}
+                            />
+                          </label>
+                  
+                          {/* Message Input */}
+                          <input
+                            type="text"
+                            placeholder="Ask Me"
+                            name="message"
+                            value={message}
+                            onChange={handleInputChange}
+                            style={{ flex: 1 }}
+                          />
+                  
+                          {/* Send Button */}
+                          <button
+                            onClick={handleSendMessage}
+                            style={{
+                              cursor: "pointer",
+                            }}
+                            disabled={isSending}
+                          >
+                            <BiSolidSend
+                              style={{
+                                fontSize: "16px",
+                                color: isSending ? "#cccccc" : "#000000",
+                                backgroundColor: "--var(--primary-btn-color)",
+                              }}
+                            />
+                          </button>
+                        </div>
+                        {/* {Errors.message && <p className="error">{Errors.message}</p>} */}
+                      </div>
+                    </div>
+                  </div>
+                  
+                    )}
+                  </div>
+                </main>
+              );
+            };
 
 export default GPTComponent;
