@@ -65,7 +65,9 @@ const PaymentCheckout = () => {
                     {subscriptionPlans?.map((plan) => (
                         <div key={plan?.id} className="plan-card">
                             <h3>{plan?.name}</h3>
-                            <h2 style={{ color: "var(--primary-btn-color)", }}>{plan?.price}$</h2>
+                            <h2 style={{ color: "var(--primary-btn-color)", display:'flex', alignItems:'baseline' }}>{plan?.price} 
+                                <h4 style={{fontSize:'1rem'}}>£</h4>
+                            </h2>
 
                             <h5>{plan?.points}</h5>
 

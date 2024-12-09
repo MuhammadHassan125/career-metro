@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { BiExport } from "react-icons/bi";
 import SinglePathMap from "./SinglePathMap";
-import AddPathComponent from "../../Components/AddPathComponent";
+import AddPathFromSinglePath from "../../Components/AddPathFromSinglePath";
 import GPTComponent from "../../Components/DashboardComponents/DataGrid/GptComponent";
 import "./index.scss";
 import { useNavigate, useParams } from "react-router-dom";
@@ -95,11 +95,12 @@ const MapSinglePath = () => {
                 className="map-section__btn"
                 onClick={checkTrainingPlanSubscription}
                 disabled={processing}
+                style={{backgroundColor: '#eb814b', color:"white"}}
               >
                 <BiExport style={{ fontSize: "18px" }} />
                 Export your Training PDF
               </button>
-            <AddPathComponent />
+            <AddPathFromSinglePath />
           </div>
         </div>
 

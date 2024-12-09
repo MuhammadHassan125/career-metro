@@ -6,7 +6,7 @@ import Loading from '../Components/Loading';
 import PremiumModel from './PremiumModel';
 import MapContext from '../context/MapContext';
 
-const AddPathComponent = () => {
+const AddPathFromSinglePath = () => {
 
   const navigate = useNavigate();
 
@@ -30,8 +30,8 @@ const AddPathComponent = () => {
   return (
     <>
       <Loading />
-      {/* <PrimaryBtn text={"Add Path"} icon={<FiPlus />} onClick={handleNavigate} color={'#eb814b'}/> */}
-      <button  
+      <PrimaryBtn text={"Add Path"} icon={<FiPlus />} onClick={handleNavigate} />
+      {/* <button  
       className="primary-btn"
      type='submit'
      onClick={handleNavigate} 
@@ -39,7 +39,7 @@ const AddPathComponent = () => {
      >
       <FiPlus />
       Add Path
-     </button>
+     </button> */}
       <PremiumModel open={open} handleClose={handleClose} />
 
     
@@ -47,4 +47,4 @@ const AddPathComponent = () => {
   );
 };
 
-export default AddPathComponent;
+export default AddPathFromSinglePath;

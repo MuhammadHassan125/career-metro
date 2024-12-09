@@ -30,7 +30,7 @@ const processSteps = (steps, width, height, color, branchIndex = 0, parent = nul
     const links = [];
     const branches = [];
 
-    const positionedSteps = calculatePositions(steps, height / 2, depth, branchIndex, parentIndex, parentX);
+    const positionedSteps = calculatePositions(steps, height / 2.5, depth, branchIndex, parentIndex, parentX);
 
     positionedSteps.forEach((step, index) => {
         nodes.push({
@@ -159,6 +159,7 @@ const DrawBranch = (svg, branch, width, height, setGetTitle, setGetDescription, 
         }
     };
 
+    
     svg.selectAll('path.connection')
         .data(links)
         .enter().append('path')
@@ -451,25 +452,18 @@ const DrawBranch = (svg, branch, width, height, setGetTitle, setGetDescription, 
                         .text(text);
                 });
 
-            } else if (isLastNode || isBranchEndNode) {
-                const textY = d.y - 10;
-
-                wrapText(g, 
-                    d.title.split(' ').length > 3 
-                        ? d.title.split(' ').slice(0, 3).join(' ') + "..." 
-                        : d.title, 
-                    d.x + margin, 
-                    textY, 
-                    fontSize, 
-                    Color, 
-                    Bold, 
-                    splitText, 
-                    null, 
-                    lineValue, 
-                    RightShift, 
-                    LeftShift
-                );
+            }
+            else if (isLastNode || isBranchEndNode) {
+            const textY = d.y - 10;
+        
+            const words = d.title.split(' ');
+            if (words.length > 2) {
+                wrapText(g, d.title, d.x + 110, textY + 18, fontSize, Color, Bold, true, null, lineValue, RightShift, LeftShift);
             } else {
+                wrapText(g, d.title, d.x + margin, textY, fontSize, Color, Bold, false, null, lineValue, RightShift, LeftShift);
+            }
+            }
+            else {
                 const currentIndex = nodes.indexOf(d);
                 const isUp = d.y <= height / 2;
                 let textY;
@@ -501,7 +495,8 @@ const DrawBranch = (svg, branch, width, height, setGetTitle, setGetDescription, 
                     lineValue, 
                     RightShift, 
                     LeftShift
-                );            }
+                );            
+            }
         });
 
 };
