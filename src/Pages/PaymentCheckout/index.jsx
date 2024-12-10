@@ -65,8 +65,9 @@ const PaymentCheckout = () => {
                     {subscriptionPlans?.map((plan) => (
                         <div key={plan?.id} className="plan-card">
                             <h3>{plan?.name}</h3>
-                            <h2 style={{ color: "var(--primary-btn-color)", display:'flex', alignItems:'baseline' }}>{plan?.price} 
-                                <h4 style={{fontSize:'1rem'}}>£</h4>
+                            <h2 style={{ color: "var(--primary-btn-color)", display:'flex', alignItems:'baseline' }}>
+                            <h4 style={{fontSize:'1rem'}}>£</h4> 
+                                {plan?.price} 
                             </h2>
 
                             <h5>{plan?.points}</h5>
@@ -75,7 +76,9 @@ const PaymentCheckout = () => {
                                 <li style={{ marginTop: '10px' }}>{plan?.description} </li>
                             </ul>
 
-                            <button onClick={() => handlePlanSelection(plan?.id)}>Proceed to Checkout</button>
+                            <button onClick={() => handlePlanSelection(plan?.id)}
+                             style={{backgroundColor: '#eb814b'}}
+                            >Proceed to Checkout</button>
                         </div>
                     ))}
                 </div>

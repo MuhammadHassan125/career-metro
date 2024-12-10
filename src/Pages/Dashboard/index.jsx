@@ -205,7 +205,7 @@ export const DashboardCards = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 4500,
   };
   return (
     <>
@@ -238,44 +238,47 @@ export const DashboardCards = () => {
       <main className="dashboard-slider nunito-sans">
         <Slider {...settings}>
           <div className="slider-div">
-            <p>September 12-24</p>
-            <h2>
-              Lorem ipsum dolor sit <br /> amet consectetur
-            </h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Aenean adipiscing <br />
-              risus aliquet nunc fames porttitor ullamcorper morbi.
-            </p>
+            {/* <p>September 12-24</p> */}
+            <h2>Track and Expand Your Skills </h2>
+            <p>Open any role to view and track the skills required for success. </p>
+           
+            <div style={{display:"flex", alignItems:"center", gap:"10px", marginTop:"10px"}}>
+              <img src="/images/banner-check.png" style={{width:"20px", }}/>
+              <p>Check off the skills you have already mastered. </p>
+            </div>
+
+            <div style={{display:"flex", alignItems:"center", gap:"10px", marginTop:"10px"}}>
+              <img src="/images/banner-check.png" style={{width:"20px", }}/>
+              <p>Add new skills to focus on for your growth.  </p>
+            </div>
+
+            <div style={{display:"flex", alignItems:"center", gap:"10px", marginTop:"10px"}}>
+              <img src="/images/banner-check.png" style={{width:"20px", }}/>
+              <p>Stay organised with a personalised progress tracker for each role. </p>
+            </div>
+
+            <p style={{marginTop:"20px"}}>Take actionable steps towards building the expertise you need for your dream role. </p>
             <Link to="/add-path">
               <button>Get Started</button>
             </Link>
           </div>
+
+
           <div className="slider-div">
-            <p>September 12-24</p>
-            <h2>
-              Lorem ipsum dolor sit <br /> amet consectetur
-            </h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Aenean adipiscing <br />
-              risus aliquet nunc fames porttitor ullamcorper morbi.
-            </p>
+            <h2>Join the 8% of people <br/> who achieve their goals. </h2>
+
+              <div style={{display:"flex", flexDirection:"column",gap:"10px", marginTop:"10px"}}>
+                <p>1. Create your first prompt. </p>
+                <p>2. Select the path on the Career Maps Tab.  </p>
+                <p>3. Export your training plan</p>
+                <p>4. Receive a structured roadmap tailored to your career
+                aspirations.  </p>
+              </div>
             <Link to="/add-path">
               <button>Get Started</button>
             </Link>
           </div>
-          <div className="slider-div">
-            <p>September 12-24</p>
-            <h2>
-              Lorem ipsum dolor sit <br /> amet consectetur
-            </h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. Aenean adipiscing <br />
-              risus aliquet nunc fames porttitor ullamcorper morbi.
-            </p>
-            <Link to="/add-path">
-              <button>Get Started</button>
-            </Link>
-          </div>
+          
         </Slider>
       </main>
     </>
