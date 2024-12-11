@@ -207,6 +207,7 @@ export const DashboardCards = () => {
     autoplay: true,
     autoplaySpeed: 4500,
   };
+  
   return (
     <>
       <main className="dashboard-cards">

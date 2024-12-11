@@ -7,19 +7,6 @@ import PremiumModel from '../../Components/PremiumModel';
 
 const MapCareer = () => {
 
-    // const {checkSubscription} = useContext(MapContext);
-    // const [open, setOpen] = useState(false);
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => setOpen(false);
-  
-    // useEffect(() => {
-    //     if (checkSubscription === false) {
-    //         handleOpen();
-    //     } else {
-    //         handleClose();
-    //     }
-    // }, [checkSubscription]);
-
     return (
         <React.Fragment>
             <main className='map-section'>

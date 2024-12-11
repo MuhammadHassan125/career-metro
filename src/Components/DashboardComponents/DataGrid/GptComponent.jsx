@@ -182,7 +182,7 @@ const GPTComponent = ({ selectedPathId }) => {
           <div>
             <button
               className="gpt-section__btn"
-              style={{ backgroundColor: 'var(--primary-btn-color)', color: 'white' }}
+              style={{ backgroundColor: '#1572e9', color: 'white' }}
               onClick={() => navigate(`/list-career-path/${skillsId}`)}
             >
               Get Started
@@ -362,7 +362,7 @@ const GPTComponent = ({ selectedPathId }) => {
                   
                     )}
                   </div>
-                </main>
+    </main>
               );
             };
 
