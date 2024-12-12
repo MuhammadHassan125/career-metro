@@ -195,8 +195,8 @@ const GPTComponent = ({ selectedPathId }) => {
       <div className={`gpt-section__right ${isMinimized ? "minimized" : ""}`}>
         <div className="gpt-section__heading">
           <div>
-            <img src="/images/gpt.png" alt="gpt" />
-            <h2>Chat GPT</h2>
+            <img src="/images/career-chat.png" alt="gpt" style={{width:'150px', height:'40px'}}/>
+            {/* <h2>Chat GPT</h2> */}
           </div>
 
           <div className="gpt-section__close" onClick={handleToggle}>
@@ -245,10 +245,10 @@ const GPTComponent = ({ selectedPathId }) => {
             {isSending && (
                     <div style={{textAlign: "center"}}>Generating response...</div>
                   )}
-                        <div className="innder-right__txt">
+                        {/* <div className="innder-right__txt">
                           <img src="/images/clear.png" alt="clear" />
                           New dialog
-                        </div>
+                        </div> */}
                       </div>
                   
                       <div

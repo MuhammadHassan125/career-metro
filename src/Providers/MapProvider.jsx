@@ -10,6 +10,8 @@ const MapProvider = ({children}) => {
 
     const [checkSubscription, setCheckSubscription] = useState(null);
 
+    const [checkingPlanStatus, setCheckingPlanStatus] = useState(true);
+
   return (
 
     <MapContext.Provider
@@ -23,7 +25,9 @@ const MapProvider = ({children}) => {
         setNextRole,
         nextRole,
         checkSubscription, 
-        setCheckSubscription
+        setCheckSubscription,
+        setCheckingPlanStatus,
+        checkingPlanStatus
       }}
     >
         {children}

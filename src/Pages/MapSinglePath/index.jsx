@@ -25,12 +25,14 @@ const MapSinglePath = () => {
 
   const params = useParams();
   const navigate = useNavigate();
+  const {checkingPlanStatus, setCheckingPlanStatus} = useContext(MapContext);
 
   const { post, get, Data, setData, Errors, processing } = useFetch({
     state: {
       branchId: params.id || "",
     },
   });
+  
 
   useEffect(() => {
     if (params.id && Data.branchId !== params.id) {
@@ -69,9 +71,13 @@ const MapSinglePath = () => {
       endPoint: `/check-training-plan-subscription-limit`,
       onSuccess: (res) => {
         if (res?.data?.Subscription_Status === false) {
+          // localStorage.setItem('subscription', false);
+          setCheckingPlanStatus(false);
           setTrainingExceed(true);
         } else {
           redirectToStripe();
+          // localStorage.setItem('subscription', true);
+          setCheckingPlanStatus(true);
         }
       }
     });

@@ -287,8 +287,10 @@ const ListCareerPath = () => {
       <div className={`gpt-section__right ${isMinimized ? "minimized" : ""}`}>
         <div className="gpt-section__heading">
           <div>
-            <img src="/images/gpt.png" alt="gpt" />
-            <h2>Chat GPT</h2>
+            {/* <img src="/images/gpt.png" alt="gpt" />
+            <h2>Chat GPT</h2> */}
+           <img src="/images/career-chat.png" alt="gpt" style={{width:'130px', height:'32px'}}/>
+
           </div>
 
           <div className="gpt-section__close" onClick={handleToggle}>
