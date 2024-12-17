@@ -204,11 +204,11 @@ export const DashboardCards = () => {
               </div>
             </div>
 
-            <div className="dashboard-card-bottom">
+            {/* <div className="dashboard-card-bottom">
               <img src={item.arrow} alt="arrow" />
               <span>{item.span}</span>
               <p>{item.txt}</p>
-            </div>
+            </div> */}
           </div>
         ))}
       </main>

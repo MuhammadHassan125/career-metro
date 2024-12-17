@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../Components/Loading";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Box } from "@mui/material";
 import useFetch from "point-fetch-react";
 import DrawBranch from "../../Utils/DrawBranch";
 import { Snackbar } from "../../Utils/SnackbarUtils";
@@ -40,7 +40,7 @@ const AdminPathMap = () => {
   }, []);
 
   useEffect(() => {
-    if (pathDetailsArray.length > 0) {
+    if (pathDetailsArray.length > 0 && pathInfo.status === "analysed") {
       const width = 1000;
       const height = 600;
 
@@ -56,111 +56,164 @@ const AdminPathMap = () => {
         DrawBranch(svg, branch, width, height, navigate);
       }
     }
-  }, [pathDetailsArray, navigate]);
+  }, [pathDetailsArray, navigate, pathInfo.status]);
+
+  // Render pending status UI
+  const renderPendingUI = () => (
+    <Box 
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: 'calc(100vh - 200px)',
+        textAlign: 'center',
+        padding: '20px',
+        backgroundColor: '#f0f0f0'
+      }}
+    >
+      <Typography 
+        variant="h4" 
+        sx={{ 
+          color: '#333', 
+          marginBottom: '20px',
+          fontWeight: 'bold'
+        }}
+      >
+        User Path is Pending
+      </Typography>
+      <Typography 
+        variant="subtitle1" 
+        sx={{ 
+          color: '#666', 
+          maxWidth: '500px',
+          marginBottom: '20px'
+        }}
+      >
+        The path for this user is currently being processed. 
+        Please check back later for the complete analysis.
+      </Typography>
+      {/* <img 
+        src="/waiting-illustration.svg" 
+        alt="Pending Analysis" 
+        style={{ 
+          maxWidth: '300px', 
+          marginTop: '20px' 
+        }}
+      /> */}
+    </Box>
+  );
 
   return (
     <>
       {Processing ? <Loading processing={Processing} /> : null}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-          padding: "20px",
-          minHeight: "calc(100vh - 100px)",
-          justifyContent: "center",
-        }}
-      >
-        {/* Path Info Card */}
-        {pathInfo.title && (
-          <Card
-            sx={{
-              maxWidth: "100%",
-              marginBottom: "5px",
-              padding: "5px 20px",
-              boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-              backgroundColor: "#f9f9f9",
-              fontFamily: "Poppins, sans-serif",
-              borderRadius: "30px",
-            }}
-          >
-            <CardContent>
-              <Typography variant="subtitle1" gutterBottom>
-                <span style={{ fontWeight: "bold" }}>Username:</span> {pathInfo.username}
-              </Typography>
-              <Typography variant="subtitle1" gutterBottom>
-                <span style={{ fontWeight: "bold" }}>Title:</span> {pathInfo.title}
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  color: pathInfo.status === "analysed" ? "#1976d2" : null,
-                }}
-              >
-                <span style={{ fontWeight: "bold" }}>Status:</span> {pathInfo.status}
-              </Typography>
-              <Typography variant="body1" sx={{ marginTop: "5px" }}>
-                <span style={{ fontWeight: "bold" }}>Prompt:</span> {pathInfo.prompt}
-              </Typography>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Path Map */}
-        {pathDetailsArray.length > 0 ? (
-          pathDetailsArray.map((item, i) => (
-            <div
-              key={i}
-              style={{
-                backgroundColor: "white",
-                borderRadius: "10px",
-                padding: "20px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
+      
+      {pathInfo.status === "pending" ? (
+        renderPendingUI()
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
+            padding: "20px",
+            minHeight: "calc(100vh - 100px)",
+            justifyContent: "center",
+          }}
+        >
+          {/* Path Info Card */}
+          {pathInfo.title && (
+            <Card
+              sx={{
+                maxWidth: "100%",
+                marginBottom: "5px",
+                padding: "5px 20px",
                 boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                width: "100%",
-                height: "430px",
-                overflow: "hidden",
+                backgroundColor: "#f9f9f9",
+                fontFamily: "Poppins, sans-serif",
+                borderRadius: "30px",
               }}
             >
-              <h4
+              <CardContent>
+                <Typography variant="subtitle1" gutterBottom>
+                  <span style={{ fontWeight: "bold" }}>Username:</span> {pathInfo.username}
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  <span style={{ fontWeight: "bold" }}>Title:</span> {pathInfo.title}
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    color: pathInfo.status === "analysed" ? "#1976d2" : null,
+                  }}
+                >
+                  <span style={{ fontWeight: "bold" }}>Status:</span> {pathInfo.status}
+                </Typography>
+                <Typography variant="body1" sx={{ marginTop: "5px" }}>
+                  <span style={{ fontWeight: "bold" }}>Prompt:</span> {pathInfo.prompt}
+                </Typography>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Path Map */}
+          {pathDetailsArray.length > 0 && pathInfo.status === "analysed" ? (
+            pathDetailsArray.map((item, i) => (
+              <div
+                key={i}
                 style={{
-                  position: "absolute",
-                  top: "12px",
-                  left: "20px",
-                  backgroundColor: "rgba(255, 255, 255, 0.8)",
-                  borderRadius: "5px",
-                  padding: "5px 10px",
-                  zIndex: 1,
+                  backgroundColor: "white",
+                  borderRadius: "10px",
+                  padding: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "relative",
+                  boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                  width: "100%",
+                  height: "430px",
+                  overflow: "hidden",
                 }}
               >
-                {item.Title}
-              </h4>
+                <h4
+                  style={{
+                    position: "absolute",
+                    top: "12px",
+                    left: "20px",
+                    backgroundColor: "rgba(255, 255, 255, 0.8)",
+                    borderRadius: "5px",
+                    padding: "5px 10px",
+                    zIndex: 1,
+                  }}
+                >
+                  {item.Title}
+                </h4>
 
-              <svg
-                ref={(el) => (svgRefs.current[i] = el)}
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
+                <svg
+                  ref={(el) => (svgRefs.current[i] = el)}
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "100%",
+                  }}
+                ></svg>
+              </div>
+            ))
+          ) : (
+            pathInfo.status === "analysed" && (
+              <Typography
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "20px 0",
                 }}
-              ></svg>
-            </div>
-          ))
-        ) : (
-          <Typography
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: "20px 0",
-            }}
-          >
-            No paths found for this user.
-          </Typography>
-        )}
-      </div>
+              >
+                No paths found for this user.
+              </Typography>
+            )
+          )}
+        </div>
+      )}
     </>
   );
 };
