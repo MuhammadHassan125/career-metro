@@ -7,6 +7,7 @@ import UpdatePath from "../../Components/AdminDashboard/UpdatePath";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsFillEyeFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { IoEyeOffSharp } from "react-icons/io5";
 
 const AdminPaths = () => {
   const [path, setPath] = useState([]);
@@ -26,7 +27,7 @@ const AdminPaths = () => {
       endPoint: "/get-all-paths-for-admin-panel",
       onSuccess: (res) => {
         setPath(res?.data?.paths);
-      }
+      },
     });
   };
 
@@ -37,8 +38,8 @@ const AdminPaths = () => {
   const handleUpdatePath = (id, prompt) => {
     handleOpen();
     setPathId(id);
-    setPrompt(prompt)
-  }
+    setPrompt(prompt);
+  };
 
   const columns = [
     { Header: "Id", accessor: "id" },
@@ -72,7 +73,7 @@ const AdminPaths = () => {
       Header: "Edit",
       accessor: "edit",
       Cell: ({ row }) => {
-        const { id, prompt } = row;
+        const { id, prompt, status } = row;
         return (
           <div
             style={{
@@ -80,21 +81,32 @@ const AdminPaths = () => {
               gap: "8px",
             }}
           >
-
-            <BsFillEyeFill
-              onClick={() => navigate(`/admin-paths/${id}`)}
-              style={{
+            {status === "analysed" ? (
+                <BsFillEyeFill
+                  onClick={() => navigate(`/admin-paths/${id}`)}
+                  style={{
+                    backgroundColor: "#E8E8E8",
+                    width: "22px",
+                    height: "22px",
+                    fontSize: "10px",
+                    padding: "4px",
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                  }}
+                  onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+                  onMouseLeave={(e) => (e.target.style.opacity = "1")}
+                />
+            ) : (
+              <IoEyeOffSharp   
+               style={{
                 backgroundColor: "#E8E8E8",
                 width: "22px",
                 height: "22px",
                 fontSize: "10px",
                 padding: "4px",
                 borderRadius: "50%",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
-              onMouseLeave={(e) => (e.target.style.opacity = "1")}
-            />
+              }}/>
+            )}
             <AiOutlineEdit
               onClick={() => handleUpdatePath(id, prompt)}
               style={{
@@ -113,7 +125,6 @@ const AdminPaths = () => {
         );
       },
     },
-
   ];
 
   const handlePageChange = (event, newPage) => {
@@ -162,8 +173,8 @@ const AdminPaths = () => {
                           {col.Cell
                             ? col.Cell({ value: row[col.accessor], row })
                             : row[col.accessor] !== null
-                              ? row[col.accessor]
-                              : "No Data"}
+                            ? row[col.accessor]
+                            : "No Data"}
                         </td>
                       ))}
                     </tr>
