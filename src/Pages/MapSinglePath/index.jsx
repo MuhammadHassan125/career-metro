@@ -82,8 +82,6 @@ const MapSinglePath = () => {
       }
     });
   };
-  
-
 
   return (
     <React.Fragment>

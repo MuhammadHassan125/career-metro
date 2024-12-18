@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { IoCheckmarkSharp } from "react-icons/io5";
 import './index.scss';
 import { useParams } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { MdOutlineClose } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
 import { GrAttachment } from "react-icons/gr";
 import { BiSolidSend } from "react-icons/bi";
+import MapContext from '../../context/MapContext';
 
 const ListCareerPath = () => {
   const [selectedId, setSelectedId] = React.useState(null);
@@ -25,8 +26,8 @@ const ListCareerPath = () => {
 
 
   const params = useParams();
-  console.log(params.id)
   const { get, destroy, Processing } = useFetch({ state: {} });
+  const { getTitle } = useContext(MapContext);
 
 
   const [open, setOpen] = React.useState(false);
@@ -186,6 +187,7 @@ const ListCareerPath = () => {
       <div className="list-section">
         <div className="main__heading">
           <div>
+            <p style={{ fontSize: "13px" }}>{getTitle}</p>
             <h2>
               Skill Tracker
             </h2>

@@ -19,10 +19,12 @@ const AdminPathMap = () => {
     get({
       endPoint: `/get-single-path-detail/${id}`,
       onSuccess: (res) => {
+        if(res?.data?.data?.Status === "analysed"){ 
         Snackbar(res.data.message, {
           variant: "success",
           style: { backgroundColor: "var(--primary-btn-color)" },
-        });
+        }); 
+        }
         const pathData = res.data.data[0];
         setPathInfo({
           username: pathData?.Username,
@@ -58,58 +60,16 @@ const AdminPathMap = () => {
     }
   }, [pathDetailsArray, navigate, pathInfo.status]);
 
-  // Render pending status UI
-  const renderPendingUI = () => (
-    <Box 
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: 'calc(100vh - 200px)',
-        textAlign: 'center',
-        padding: '20px',
-        backgroundColor: '#f0f0f0'
-      }}
-    >
-      <Typography 
-        variant="h4" 
-        sx={{ 
-          color: '#333', 
-          marginBottom: '20px',
-          fontWeight: 'bold'
-        }}
-      >
-        User Path is Pending
-      </Typography>
-      <Typography 
-        variant="subtitle1" 
-        sx={{ 
-          color: '#666', 
-          maxWidth: '500px',
-          marginBottom: '20px'
-        }}
-      >
-        The path for this user is currently being processed. 
-        Please check back later for the complete analysis.
-      </Typography>
-      {/* <img 
-        src="/waiting-illustration.svg" 
-        alt="Pending Analysis" 
-        style={{ 
-          maxWidth: '300px', 
-          marginTop: '20px' 
-        }}
-      /> */}
-    </Box>
-  );
-
+  const handleReNavigate = () => {
+    navigate(-1);
+    Snackbar("Path is not yet analysed", { variant: "error" });
+  }
   return (
     <>
       {Processing ? <Loading processing={Processing} /> : null}
       
       {pathInfo.status === "pending" ? (
-        renderPendingUI()
+        handleReNavigate()
       ) : (
         <div
           style={{

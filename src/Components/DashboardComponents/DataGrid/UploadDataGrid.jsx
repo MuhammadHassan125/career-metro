@@ -37,7 +37,6 @@ const UploadDataGrid = ({ heading, dropdown }) => {
     Fire.post({
       url: `${AnalyzeURL}/${status === 'pending' ? "generate_roadmap" : "regenerate_roadmap"}?id=${id}`,
       onSuccess: (res) => {
-        setLoading(false);
         getUploadDataList();
       }
     });
