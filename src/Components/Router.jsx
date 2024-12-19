@@ -93,6 +93,7 @@ const Router = () => {
       <Route path="/admin-paths/:id" element={<AdminPathMap />} />
       <Route path="/permissions" element={<AdminPermissions />} />
       <Route path="/edit-role/:id" element={<AdminEditPermission />} />
+      <Route path="map-career/:id" element={<MapSinglePath />} />
     </>
   );
 

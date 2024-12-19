@@ -109,7 +109,11 @@ const MapSinglePath = () => {
         </div>
 
         <div className="map-section__map-div">
-          <SinglePathMap onSelectId={handleIdFromChild} />
+          <SinglePathMap onSelectId={handleIdFromChild}  
+           onEditTitle={(node) => {
+    // Handle editing the title here
+    console.log('Edit title for node:', node);
+  }}/>
         </div>
 
         <GPTComponent selectedPathId={selectedPathId} />

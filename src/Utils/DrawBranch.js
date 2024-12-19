@@ -102,6 +102,9 @@ const DrawBranch = (svg, branch, width, height, setGetTitle, setGetDescription, 
     const { nodes, links, branches } = processSteps(branch.steps, width, height, branch.color);
 
     const wrapText = (svg, text, x, y, fontSize, Color, Bold, splitText, movingRight, lineValue, RightShift, LeftShift) => {
+
+        const userCheck = localStorage.getItem('user-role');
+        // console.log(userCheck, 'ffffffffffffffffffffff')
         const lineHeight = 12;
     
         if (!splitText) {
@@ -184,6 +187,7 @@ const DrawBranch = (svg, branch, width, height, setGetTitle, setGetDescription, 
         .on('click', function (event, d) {
                 const sourceNode = nodes.find(n => n.id === d.source);
                 const targetNode = nodes.find(n => n.id === d.target);
+                const userCheck = localStorage.getItem('user-role');
 
                 const relevantBranch = branches.find(branch => {
 
@@ -199,7 +203,9 @@ const DrawBranch = (svg, branch, width, height, setGetTitle, setGetDescription, 
                     branch_id: branch.id,
                     steps: branch.steps
                 };
-                setGetTitle(`/map-career/${mainBranch.branch_id}`);
+                {userCheck === 'User' &&
+                    setGetTitle(`/map-career/${mainBranch.branch_id}`);
+                }
             }
         });
 
@@ -362,7 +368,10 @@ const DrawBranch = (svg, branch, width, height, setGetTitle, setGetDescription, 
         .attr('fill', 'none')
         .style('cursor', 'pointer')
         .on('click', function (event, d) {
-            setGetTitle(`/map-career/${d.branch_id}`);
+            const userCheck = localStorage.getItem('user-role');
+            {userCheck === 'User' &&    
+                setGetTitle(`/map-career/${d.branch_id}`);
+            }
         });
 
     svg.selectAll('text')

@@ -187,10 +187,8 @@ const ListCareerPath = () => {
       <div className="list-section">
         <div className="main__heading">
           <div>
-            <p style={{ fontSize: "13px" }}>{getTitle}</p>
-            <h2>
-              Skill Tracker
-            </h2>
+            <p style={{ fontSize: "13px" }}>Skill Tracker</p>
+            <h2>{getTitle} </h2>
           </div>
 
           <div className="map-section__btn-div">

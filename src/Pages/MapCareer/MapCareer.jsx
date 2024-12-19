@@ -13,7 +13,7 @@ const MapCareer = () => {
                 {/* heading div  */}
                 <div className='main__heading'>
                     <div>
-                        <h2>Map Career Path</h2>
+                        <h2>My Career Map's</h2>
                     </div>
                     <div className='map-section__btn-div'>
                         {/* <p>19 Paths</p> */}
