@@ -120,7 +120,7 @@ const AdminDashboard = () => {
         <main className='dashboard-section' id="chart">
             {userRole === "Super Admin" ? <h2>Super Admin Dashboard</h2> : <h2>Admin Dashboard</h2>}
             <DashboardCards />
-            <UploadDataGrid columns={columns} heading={"Path Details"} dropdown={"October"} />
+            <UploadDataGrid columns={columns} heading={"Path Details"} dropdown={""} />
 
         </main>
     )

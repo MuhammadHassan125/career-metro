@@ -216,10 +216,11 @@ const Header = () => {
     <>
       <main className="header-section">
         {/* search box div  */}
-        <div className="search-bar">
+        {/* <div className="search-bar">
           <IoSearchOutline style={{ color: "1px solid #202224" }} />
           <input type="text" placeholder="Search" />
-        </div>
+        </div> */}
+        <div></div>
 
         <div className="header-icons-right">
           <Badge

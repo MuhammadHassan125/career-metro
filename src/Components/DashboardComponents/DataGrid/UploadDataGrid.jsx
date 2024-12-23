@@ -143,10 +143,10 @@ const UploadDataGrid = ({ heading, dropdown }) => {
       <section className="data-grid">
         <div className='data-grid__heading'>
           <h3>{heading}</h3>
-          <button>
+          {/* <button>
             {dropdown}
             <MdKeyboardArrowDown />
-          </button>
+          </button> */}
         </div>
 
         {data.length === 0 ? (

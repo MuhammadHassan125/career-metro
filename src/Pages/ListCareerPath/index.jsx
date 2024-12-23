@@ -121,6 +121,9 @@ const ListCareerPath = () => {
     }
 
     setIsSending(true);
+    setMessage(""); 
+    setFile(null); 
+
     const token = localStorage.getItem("user-visited-dashboard");
     const formData = new FormData();
     

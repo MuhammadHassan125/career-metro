@@ -46,7 +46,7 @@ const RevenueChart = ({ heading, dropdown }) => {
     colors: ['#1976d2'],
     series: chartData,
     xaxis: {
-      categories: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'],
+      // categories: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'],
       axisBorder: { show: false },
       axisTicks: { show: false },
       labels: {
@@ -84,10 +84,10 @@ const RevenueChart = ({ heading, dropdown }) => {
     <div style={{ width: '100%' }}>
       <div className="data-grid__heading" style={{ padding: '20px' }}>
         <h3>{heading}</h3>
-        <button>
+        {/* <button>
           {dropdown}
           <MdKeyboardArrowDown />
-        </button>
+        </button> */}
       </div>
 
       <div style={{ padding: '20px' }}>

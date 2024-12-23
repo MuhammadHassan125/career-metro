@@ -10,68 +10,6 @@ import { baseURL } from "../../../Utils/contants";
 
 
 const GPTComponent = ({ selectedPathId }) => {
-  // const navigate = useNavigate();
-  // const [isMinimized, setIsMinimized] = useState(false);
-  // const [isSending, setIsSending] = useState(false);
-  // const [getGPTResponse, setGetGPTResponse] = useState([]);
-  // const { gettingSkillsData, getTitle, getDescription } = useContext(MapContext);
-  // const skillsId = localStorage.getItem("singlePathId");
-
-  // const { post, get, Data, setData, Errors, validate } = useFetch({
-  //   state: {
-  //     message: "",
-  //     step_id: null,
-  //   },
-  //   rules: {
-  //     message: ["required"],
-  //   },
-  //   message: {
-  //     message: {
-  //       required: "Message field is required*",
-  //     },
-  //   },
-  // });
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setData(name, value);
-  // };
-
-  // useEffect(() => {
-  //   setData({ step_id: selectedPathId, message: "" });
-  // }, [selectedPathId]);
-
-  // const handleSendMessage = () => {
-  //   setIsSending(true);
-  //   post({
-  //     endPoint: `/send-message`,
-  //     onSuccess: (res) => {
-  //       handleGetMessage(selectedPathId);
-  //       setData("message", "");
-  //       setIsSending(false);
-  //     },
-  //     onError: (err) => {
-  //       setIsSending(false);
-  //     },
-  //   });
-  // };
-
-  // const handleGetMessage = (stepId) => {
-  //   get({
-  //     endPoint: `/get-message/${stepId}`,
-  //     onSuccess: (res) => {
-  //       setGetGPTResponse(res?.data?.data);
-  //     }
-  //   });
-  // };
-
-  // const handleToggle = () => {
-  //   setIsMinimized(!isMinimized);
-  // };
-
-  // const handleFileUpload = () => {
-
-  // }
 
   const navigate = useNavigate();
   const [isMinimized, setIsMinimized] = useState(false);
@@ -107,6 +45,9 @@ const GPTComponent = ({ selectedPathId }) => {
     }
 
     setIsSending(true);
+    setMessage(""); 
+    setFile(null); 
+
     const token = localStorage.getItem("user-visited-dashboard");
     const formData = new FormData();
     
@@ -144,7 +85,6 @@ const GPTComponent = ({ selectedPathId }) => {
     setIsSending(false);
 
    }
-   
   };
 
   const handleGetMessage = (stepId) => {
@@ -195,7 +135,7 @@ const GPTComponent = ({ selectedPathId }) => {
       <div className={`gpt-section__right ${isMinimized ? "minimized" : ""}`}>
         <div className="gpt-section__heading">
           <div>
-            <img src="/images/career-chat.png" alt="gpt" style={{width:'150px', height:'40px'}}/>
+            <img src="/images/career-chat.png" alt="gpt" style={{width:'120px', height:'30px'}}/>
             {/* <h2>Chat GPT</h2> */}
           </div>
 
@@ -242,14 +182,10 @@ const GPTComponent = ({ selectedPathId }) => {
                 </div>
               ))}
 
-            {isSending && (
+                   {isSending && (
                     <div style={{textAlign: "center"}}>Generating response...</div>
                   )}
-                        {/* <div className="innder-right__txt">
-                          <img src="/images/clear.png" alt="clear" />
-                          New dialog
-                        </div> */}
-                      </div>
+                    </div>
                   
                       <div
                         className="search__box"
