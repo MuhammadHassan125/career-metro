@@ -88,7 +88,7 @@ const Router = () => {
       <Route path="/users" element={<AdminUsers />} />
       <Route path="/roles" element={<AdminRoles />} />
       <Route path="/admin-activities" element={<AdminActivity />} />
-      <Route path="/admin-skills" element={<AdminSkills />} />
+      <Route path="/admin-skills/:id" element={<AdminSkills />} />
       <Route path="/admin-paths" element={<AdminPaths />} />
       <Route path="/admin-paths/:id" element={<AdminPathMap />} />
       <Route path="/permissions" element={<AdminPermissions />} />

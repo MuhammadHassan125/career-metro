@@ -11,8 +11,10 @@ import { Snackbar } from "../../Utils/SnackbarUtils";
 import Fire from "../../Fire/Fire";
 import { baseURL } from "../../Utils/contants";
 import { hasSlugAction } from "../../Utils/SlugPermission";
+import { useNavigate } from "react-router-dom";
 
 const AdminUsers = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const { get, destroy, Processing } = useFetch({ state: "" });
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +35,11 @@ const AdminUsers = () => {
   const canEdit = hasSlugAction(roleName, "update");
   const canDelete = hasSlugAction(roleName, "delete");
 
+  
+  
+  const showSkillToAdmin = 
+  hasSlugAction(roleName, "skills-delete") || 
+  hasSlugAction(roleName, "skills-update");
 
   const handleUpdateUser = (id) => {
     setUserId(id);
@@ -148,6 +155,22 @@ const AdminUsers = () => {
               gap: "8px",
             }}
           >
+            {showSkillToAdmin ? 
+            <button    
+            style={{
+                  backgroundColor: "#E8E8E8",
+                  height: "22px",
+                  fontSize: "10px",
+                  padding: "4px 8px",
+                  borderRadius: "15px",
+                  cursor: "pointer",
+                  border: "none",
+                  outline: "none",
+                }}
+                onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+                onMouseLeave={(e) => (e.target.style.opacity = "1")}
+                onClick={() => navigate(`/admin-skills/${id}`)}
+              >Skills</button> : null}
 
             {canEdit ? (
               <AiOutlineEdit
@@ -182,6 +205,7 @@ const AdminUsers = () => {
                 onMouseLeave={(e) => (e.target.style.opacity = "1")}
               />
             ) : null}
+            
           </div>
         );
       },

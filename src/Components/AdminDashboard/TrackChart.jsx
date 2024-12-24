@@ -104,3 +104,30 @@ const RevenueChart = ({ heading, dropdown }) => {
 };
 
 export default RevenueChart;
+
+
+
+
+
+
+
+// const fetchApiFunc = async () => {
+//   const getApi = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+//   const data = await getApi.json();
+//   console.log(data);
+// }
+
+const fetchApi = async () => {
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/todos/1', {
+        method: 'GET',
+        headers:{
+          'Content-Type': 'application/json',          
+        },
+        body: JSON.stringify
+      });
+    } catch (error) {
+      return error
+      alert(error);
+    }
+}

@@ -31,7 +31,7 @@ const Sidebar = () => {
     { id: 5, name: "Dashboard", link: "/" },
     { id: 6, name: "Users", link: "/users" },
     { id: 7, name: "User Tracking", link: "/admin-activities" },
-    ...(showSkillToAdmin ? [{ id: 8, name: "Skills", link: "/admin-skills" }] : []),
+    // ...(showSkillToAdmin ? [{ id: 8, name: "Skills", link: "/admin-skills" }] : []),
     ...(showPathToAdmin ? [{ id: 9, name: "Paths", link: "/admin-paths" }] : []),
     { id: 10, name: "Roles", link: "/roles" },
     // { id: 11, name: "Permissions", link: "/permissions" },
@@ -42,7 +42,7 @@ const Sidebar = () => {
     { id: 6, name: "Users", link: "/users" },
     { id: 7, name: "Roles", link: "/roles" },
     { id: 8, name: "User Tracking", link: "/admin-activities" },
-    { id: 9, name: "Skills", link: "/admin-skills" },
+    // { id: 9, name: "Skills", link: "/admin-skills" },
     { id: 10, name: "Paths", link: "/admin-paths" },
     // { id: 11, name: "Permissions", link: "/permissions" },
   ];

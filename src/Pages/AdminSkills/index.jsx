@@ -9,6 +9,7 @@ import Fire from "../../Fire/Fire";
 import { baseURL } from "../../Utils/contants";
 import { Snackbar } from "../../Utils/SnackbarUtils";
 import UpdateSkills from "../../Components/AdminDashboard/UpdateSkills";
+import { useParams } from "react-router-dom";
 
 const AdminSkills = () => {
   const [skillsData, setSkillsData] = useState([]);
@@ -24,10 +25,11 @@ const AdminSkills = () => {
   const [itemsPerPage] = useState(4);
 
   const { get, Processing } = useFetch({ state: {} });
-
+  const params = useParams();
+  const userID = params.id;
   const gettingSkillsList = () => {
     get({
-      endPoint: `/get-all-skills-for-admin-panel?page=${currentPage}&limit=${itemsPerPage}`,
+      endPoint: `/get-all-skills-with-userid/${userID}?page=${currentPage}&limit=${itemsPerPage}`,
       onSuccess: (res) => {
         setSkillsData(res?.data?.skills || []);
         setTotalPages(res?.data?.totalPages || 1);
@@ -60,9 +62,9 @@ const AdminSkills = () => {
     });
   };
 
+
   const columns = [
-    { Header: "Id", accessor: "id" },
-    { Header: "UserName", accessor: "username" },
+    { Header: "Id", accessor: "skill_id" },
     { Header: "Title", accessor: "title" },
     {
       Header: "Status",
@@ -118,7 +120,7 @@ const AdminSkills = () => {
             />
 
             <AiOutlineDelete
-              onClick={() => handleDeleteSkill(row?.id)}
+              onClick={() => handleDeleteSkill(row?.skill_id)}
               style={{
                 backgroundColor: "#E8E8E8",
                 width: "22px",
@@ -159,7 +161,7 @@ const AdminSkills = () => {
                 padding: "20px 0",
               }}
             >
-              No data available
+              No Skills found for this user
             </Typography>
           </div>
         ) : (

@@ -56,19 +56,19 @@ const UpdateSkills = ({ open, handleClose, gettingSkillsList, skillRow }) => {
   const updatePathPrompt = () => {
     if (validate()) {
       post({
-        endPoint: `/update-skill-for-admin-panel/${skillRow?.id}`,
+        endPoint: `/update-skill-for-admin-panel/${skillRow?.skill_id}`,
         onSuccess: (res) => {
           Snackbar(res?.data?.message, {
             variant: 'success',
             style: { backgroundColor: "var(--primary-btn-color)" },
           });
           handleClose();
+          gettingSkillsList();
           setData({
             title: "",
             status: "",
             step_id: null
           })
-          gettingSkillsList();
         },
       });
     }
