@@ -27,7 +27,7 @@ const AssignUserModal = ({ open, handleClose, subAdminId }) => {
   const { setData, Data, post, get, Errors, validate } = useFetch({
     state: {
       userIds: [], 
-      subAdminId: subAdminId
+      subAdminId: null
     },
     rules: {
       userIds: ["required"],
@@ -41,7 +41,7 @@ const AssignUserModal = ({ open, handleClose, subAdminId }) => {
     setData({
       subAdminId: subAdminId
     })
-  }, [])
+  }, [subAdminId])
   const handleAutocompleteChange = (event, value) => {
     const userIds = value.map((user) => user.id);
     setData("userIds", userIds);
@@ -80,7 +80,7 @@ const AssignUserModal = ({ open, handleClose, subAdminId }) => {
           });
         },
         onError: (err) => {
-          Snackbar(err, { variant: "error" });
+          Snackbar(err.error, { variant: "error" });
         },
       });
   };
@@ -138,7 +138,7 @@ const AssignUserModal = ({ open, handleClose, subAdminId }) => {
                 />
               )}
               sx={{ width: "100%", mb: 2, mt: 3 }}
-            />
+            />  
 
             <Button
               onClick={handleAssignUserToSubAdmin}

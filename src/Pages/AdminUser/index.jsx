@@ -89,7 +89,7 @@ const AdminUsers = () => {
   const handleAssignUserOpen = (id) => {
     setSubAdminOpen(true);
     setSubAdminId(id);
-  }
+  };
 
   const handleAssignUserClose = () => {
     setSubAdminOpen(false);
