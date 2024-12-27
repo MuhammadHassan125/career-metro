@@ -47,10 +47,21 @@ const Sidebar = () => {
     // { id: 11, name: "Permissions", link: "/permissions" },
   ];
 
+  const subAdminItems = [
+    { id: 5, name: "Dashboard", link: "/" },
+    { id: 6, name: "Users", link: "/users" },
+    // { id: 7, name: "Roles", link: "/roles" },
+    { id: 8, name: "User Tracking", link: "/admin-activities" },
+    // { id: 9, name: "Skills", link: "/admin-skills" },
+    { id: 10, name: "Paths", link: "/admin-paths" },
+    // { id: 11, name: "Permissions", link: "/permissions" },
+  ];
+
   const sidebarItems =
   userRole === 'User' ? clientItems :
   userRole === 'Admin' ? adminItems :
   userRole === 'Super Admin' ? superAdminItems :
+  userRole === 'Sub Admin' ? subAdminItems :
   [];
 
   const handleLogout = () => {
