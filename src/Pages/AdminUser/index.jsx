@@ -256,7 +256,7 @@ const AdminUsers = () => {
         <div className="data-grid__heading">
           <h3>Users List</h3>
 
-          {canCreate ? (
+          {canCreate && roleName === 'Super Admin' ? (
             <button
               onClick={handleOpen}
               style={{

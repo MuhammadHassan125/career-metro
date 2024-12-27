@@ -118,7 +118,11 @@ const AdminDashboard = () => {
     
     return (
         <main className='dashboard-section' id="chart">
-            {userRole === "Super Admin" ? <h2>Super Admin Dashboard</h2> : <h2>Admin Dashboard</h2>}
+            {/* {userRole === "Super Admin" ? <h2>Super Admin Dashboard</h2> : <h2>Admin Dashboard</h2>} */}
+            {userRole === "Super Admin" ? <h2>Super Admin Dashboard</h2>:
+            userRole === "Admin" ? <h2>Admin Dashboard</h2> : 
+            userRole === "Sub Admin" ? <h2>Sub Admin Dashboard</h2>: null
+            }
             <DashboardCards />
             <UploadDataGrid columns={columns} heading={"Path Details"} dropdown={""} />
 

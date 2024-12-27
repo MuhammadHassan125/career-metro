@@ -31,6 +31,7 @@ const AdminPaths = () => {
     const roleName = localStorage.getItem("user-role");
     const canUpdate = hasSlugAction(roleName, "paths-update");
     const canView = hasSlugAction(roleName, "paths-view");
+    const canDelete = hasSlugAction(roleName, "paths-delete");
   
   const gettingAdminPaths = () => {
     get({
@@ -133,6 +134,8 @@ const AdminPaths = () => {
                 borderRadius: "50%",
               }}/>
             ) ) : null}
+
+            {canDelete &&
             <AiOutlineDelete  
             onClick={() => handleDeletePath(id)}
             style={{
@@ -146,7 +149,7 @@ const AdminPaths = () => {
               }}
               onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
               onMouseLeave={(e) => (e.target.style.opacity = "1")}/>
-
+}
               {canUpdate && 
             <AiOutlineEdit
               onClick={() => handleUpdatePath(id, prompt)}
