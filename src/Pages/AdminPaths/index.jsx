@@ -28,11 +28,11 @@ const AdminPaths = () => {
   const { get, Processing } = useFetch({ state: {} });
   const navigate = useNavigate();
 
-    const roleName = localStorage.getItem("user-role");
-    const canUpdate = hasSlugAction(roleName, "paths-update");
-    const canView = hasSlugAction(roleName, "paths-view");
-    const canDelete = hasSlugAction(roleName, "paths-delete");
-  
+  const roleName = localStorage.getItem("user-role");
+  const canUpdate = hasSlugAction(roleName, "paths-update");
+  const canView = hasSlugAction(roleName, "paths-view");
+  const canDelete = hasSlugAction(roleName, "paths-delete");
+
   const gettingAdminPaths = () => {
     get({
       endPoint: "/get-all-paths-for-admin-panel",
@@ -56,15 +56,18 @@ const AdminPaths = () => {
     Fire.delete({
       url: `${baseURL}/delete-path-related-data/${id}`,
       onSuccess: (res) => {
-        console.log(res, 'path delete successfully');
-        Snackbar(res.data.message, { variant: "success" });
+        console.log(res, "path delete successfully");
+        Snackbar(res.data.message, {
+          variant: "success",
+          style: { backgroundColor: "var(--primary-btn-color)" },
+        });
         gettingAdminPaths();
       },
       onError: (err) => {
         Snackbar(err, { variant: "error" });
-      }
-    })
-  }
+      },
+    });
+  };
 
   const columns = [
     { Header: "Id", accessor: "id" },
@@ -106,9 +109,8 @@ const AdminPaths = () => {
               gap: "8px",
             }}
           >
-            
-            {canView ? (status === "analysed" ? (
-              
+            {canView ? (
+              status === "analysed" ? (
                 <BsFillEyeFill
                   onClick={() => navigate(`/admin-paths/${id}`)}
                   style={{
@@ -123,48 +125,52 @@ const AdminPaths = () => {
                   onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
                   onMouseLeave={(e) => (e.target.style.opacity = "1")}
                 />
-            ) : (
-              <IoEyeOffSharp   
-               style={{
-                backgroundColor: "#E8E8E8",
-                width: "22px",
-                height: "22px",
-                fontSize: "10px",
-                padding: "4px",
-                borderRadius: "50%",
-              }}/>
-            ) ) : null}
+              ) : (
+                <IoEyeOffSharp
+                  style={{
+                    backgroundColor: "#E8E8E8",
+                    width: "22px",
+                    height: "22px",
+                    fontSize: "10px",
+                    padding: "4px",
+                    borderRadius: "50%",
+                  }}
+                />
+              )
+            ) : null}
 
-            {canDelete &&
-            <AiOutlineDelete  
-            onClick={() => handleDeletePath(id)}
-            style={{
-                backgroundColor: "#E8E8E8",
-                width: "22px",
-                height: "22px",
-                fontSize: "10px",
-                padding: "4px",
-                borderRadius: "50%",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
-              onMouseLeave={(e) => (e.target.style.opacity = "1")}/>
-}
-              {canUpdate && 
-            <AiOutlineEdit
-              onClick={() => handleUpdatePath(id, prompt)}
-              style={{
-                backgroundColor: "#E8E8E8",
-                width: "22px",
-                height: "22px",
-                fontSize: "10px",
-                padding: "4px",
-                borderRadius: "50%",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
-              onMouseLeave={(e) => (e.target.style.opacity = "1")}
-            />}
+            {canDelete && (
+              <AiOutlineDelete
+                onClick={() => handleDeletePath(id)}
+                style={{
+                  backgroundColor: "#E8E8E8",
+                  width: "22px",
+                  height: "22px",
+                  fontSize: "10px",
+                  padding: "4px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+                onMouseLeave={(e) => (e.target.style.opacity = "1")}
+              />
+            )}
+            {canUpdate && (
+              <AiOutlineEdit
+                onClick={() => handleUpdatePath(id, prompt)}
+                style={{
+                  backgroundColor: "#E8E8E8",
+                  width: "22px",
+                  height: "22px",
+                  fontSize: "10px",
+                  padding: "4px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+                onMouseLeave={(e) => (e.target.style.opacity = "1")}
+              />
+            )}
           </div>
         );
       },
