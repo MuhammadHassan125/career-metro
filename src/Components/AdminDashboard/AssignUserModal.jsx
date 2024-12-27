@@ -8,8 +8,7 @@ import { IoMdClose } from "react-icons/io";
 import { Button, TextField, Autocomplete } from "@mui/material";
 import useFetch from "point-fetch-react";
 import { Snackbar } from "../../Utils/SnackbarUtils";
-import axios from "axios";
-import { baseURL } from "../../Utils/contants";
+
 
 const style = {
   position: "absolute",
@@ -25,7 +24,6 @@ const style = {
 };
 
 const AssignUserModal = ({ open, handleClose, subAdminId }) => {
-  console.log(subAdminId ,'falknfdoiasdsaklnd')
   const { setData, Data, post, get, Errors, validate } = useFetch({
     state: {
       userIds: [], 
@@ -43,7 +41,7 @@ const AssignUserModal = ({ open, handleClose, subAdminId }) => {
     setData({
       subAdminId: subAdminId
     })
-  })
+  }, [])
   const handleAutocompleteChange = (event, value) => {
     const userIds = value.map((user) => user.id);
     setData("userIds", userIds);
