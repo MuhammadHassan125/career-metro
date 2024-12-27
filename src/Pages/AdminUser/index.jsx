@@ -12,6 +12,7 @@ import Fire from "../../Fire/Fire";
 import { baseURL } from "../../Utils/contants";
 import { hasSlugAction } from "../../Utils/SlugPermission";
 import { useNavigate } from "react-router-dom";
+import AssignUserModal from "../../Components/AdminDashboard/AssignUserModal";
 
 const AdminUsers = () => {
   const navigate = useNavigate();
@@ -30,16 +31,17 @@ const AdminUsers = () => {
   const [userId, setUserId] = React.useState(null);
   const [editOpen, setEditOpen] = React.useState(false);
 
+  const [subAdminId, setSubAdminId] = React.useState(null);
+  const [subAdminOpen, setSubAdminOpen] = React.useState(false);
+
   const roleName = localStorage.getItem("user-role");
   const canCreate = hasSlugAction(roleName, "create");
   const canEdit = hasSlugAction(roleName, "update");
   const canDelete = hasSlugAction(roleName, "delete");
 
-  
-  
-  const showSkillToAdmin = 
-  hasSlugAction(roleName, "skills-delete") || 
-  hasSlugAction(roleName, "skills-update");
+  const showSkillToAdmin =
+    hasSlugAction(roleName, "skills-delete") ||
+    hasSlugAction(roleName, "skills-update");
 
   const handleUpdateUser = (id) => {
     setUserId(id);
@@ -69,17 +71,29 @@ const AdminUsers = () => {
         getAllUser();
         Snackbar(res.data.message, {
           style: { backgroundColor: "var(--primary-btn-color)" },
-          variant: "success"
+          variant: "success",
         });
       },
       onError: (err) => {
-        Snackbar(err, { variant: "error" });
+        Snackbar(err || "Access Denied - Super Admin only have access", {
+          variant: "error",
+        });
       },
     });
   };
 
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
+  };
+
+  const handleAssignUserOpen = (id) => {
+    setSubAdminOpen(true);
+    setSubAdminId(id);
+  }
+
+  const handleAssignUserClose = () => {
+    setSubAdminOpen(false);
+    setSubAdminId(null);
   };
 
   useEffect(() => {
@@ -148,6 +162,7 @@ const AdminUsers = () => {
       accessor: "edit",
       Cell: ({ row }) => {
         const { id } = row;
+        // console.log(row,'fffffffffffff')
         return (
           <div
             style={{
@@ -155,9 +170,9 @@ const AdminUsers = () => {
               gap: "8px",
             }}
           >
-            {showSkillToAdmin ? 
-            <button    
-            style={{
+            {showSkillToAdmin ? (
+              <button
+                style={{
                   backgroundColor: "#E8E8E8",
                   height: "22px",
                   fontSize: "10px",
@@ -170,7 +185,10 @@ const AdminUsers = () => {
                 onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
                 onMouseLeave={(e) => (e.target.style.opacity = "1")}
                 onClick={() => navigate(`/admin-skills/${id}`)}
-              >Skills</button> : null}
+              >
+                Skills
+              </button>
+            ) : null}
 
             {canEdit ? (
               <AiOutlineEdit
@@ -205,7 +223,26 @@ const AdminUsers = () => {
                 onMouseLeave={(e) => (e.target.style.opacity = "1")}
               />
             ) : null}
-            
+           {row.role !== "User" && row.role !== "Super Admin" && roleName === 'Super Admin' ? (
+              <button
+                style={{
+                  backgroundColor: "#E8E8E8",
+                  height: "22px",
+                  fontSize: "10px",
+                  padding: "4px 8px",
+                  borderRadius: "15px",
+                  cursor: "pointer",
+                  border: "none",
+                  outline: "none",
+                  width: "80px",
+                }}
+                onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+                onMouseLeave={(e) => (e.target.style.opacity = "1")}
+                onClick={() => handleAssignUserOpen(id)}
+              >
+                Assign Role
+              </button>
+            ) : null}
           </div>
         );
       },
@@ -272,8 +309,8 @@ const AdminUsers = () => {
                             {col.Cell
                               ? col.Cell({ value: row[col.accessor], row })
                               : row[col.accessor] !== null
-                                ? row[col.accessor]
-                                : "No Data"}
+                              ? row[col.accessor]
+                              : "No Data"}
                           </td>
                         ))}
                       </tr>
@@ -313,6 +350,12 @@ const AdminUsers = () => {
         userId={userId}
         getAllUser={getAllUser}
         UserPassword
+      />
+
+      <AssignUserModal
+        open={subAdminOpen}
+        handleClose={handleAssignUserClose}
+        subAdminId={subAdminId}
       />
     </>
   );

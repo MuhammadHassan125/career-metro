@@ -8,6 +8,11 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsFillEyeFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { IoEyeOffSharp } from "react-icons/io5";
+import { AiOutlineDelete } from "react-icons/ai";
+import Fire from "../../Fire/Fire";
+import { baseURL } from "../../Utils/contants";
+import { Snackbar } from "../../Utils/SnackbarUtils";
+import { hasSlugAction } from "../../Utils/SlugPermission";
 
 const AdminPaths = () => {
   const [path, setPath] = useState([]);
@@ -22,6 +27,11 @@ const AdminPaths = () => {
 
   const { get, Processing } = useFetch({ state: {} });
   const navigate = useNavigate();
+
+    const roleName = localStorage.getItem("user-role");
+    const canUpdate = hasSlugAction(roleName, "paths-update");
+    const canView = hasSlugAction(roleName, "paths-view");
+  
   const gettingAdminPaths = () => {
     get({
       endPoint: "/get-all-paths-for-admin-panel",
@@ -40,6 +50,20 @@ const AdminPaths = () => {
     setPathId(id);
     setPrompt(prompt);
   };
+
+  const handleDeletePath = (id) => {
+    Fire.delete({
+      url: `${baseURL}/delete-path-related-data/${id}`,
+      onSuccess: (res) => {
+        console.log(res, 'path delete successfully');
+        Snackbar(res.data.message, { variant: "success" });
+        gettingAdminPaths();
+      },
+      onError: (err) => {
+        Snackbar(err, { variant: "error" });
+      }
+    })
+  }
 
   const columns = [
     { Header: "Id", accessor: "id" },
@@ -81,7 +105,9 @@ const AdminPaths = () => {
               gap: "8px",
             }}
           >
-            {status === "analysed" ? (
+            
+            {canView ? (status === "analysed" ? (
+              
                 <BsFillEyeFill
                   onClick={() => navigate(`/admin-paths/${id}`)}
                   style={{
@@ -106,7 +132,22 @@ const AdminPaths = () => {
                 padding: "4px",
                 borderRadius: "50%",
               }}/>
-            )}
+            ) ) : null}
+            <AiOutlineDelete  
+            onClick={() => handleDeletePath(id)}
+            style={{
+                backgroundColor: "#E8E8E8",
+                width: "22px",
+                height: "22px",
+                fontSize: "10px",
+                padding: "4px",
+                borderRadius: "50%",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
+              onMouseLeave={(e) => (e.target.style.opacity = "1")}/>
+
+              {canUpdate && 
             <AiOutlineEdit
               onClick={() => handleUpdatePath(id, prompt)}
               style={{
@@ -120,7 +161,7 @@ const AdminPaths = () => {
               }}
               onMouseEnter={(e) => (e.target.style.opacity = "0.8")}
               onMouseLeave={(e) => (e.target.style.opacity = "1")}
-            />
+            />}
           </div>
         );
       },

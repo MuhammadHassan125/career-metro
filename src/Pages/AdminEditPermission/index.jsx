@@ -105,7 +105,7 @@ const AdminEditPermission = () => {
                   key={permission.permissionId}
                   control={
                     <Checkbox
-                      checked={permission.status} // Check based on the permission's status
+                      checked={permission.status}
                       onChange={() => handleCheckboxChange(moduleIndex, permissionIndex)}
                       color="primary"
                     />
