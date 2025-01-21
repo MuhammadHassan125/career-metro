@@ -2,7 +2,7 @@
 // export const baseURL = "http://192.168.18.196:8001/api";
 
 // server ip
-export const baseURL = "http://64.23.166.88:4000/api";
-export const AnalyzeURL = "http://64.23.166.88:3500";
+export const baseURL = "http://87.106.188.142:3008/api";
+export const AnalyzeURL = "http://87.106.188.142:5000";
 
 export const token = localStorage.getItem('user-visited-dashboard');
