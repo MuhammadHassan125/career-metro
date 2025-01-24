@@ -1,4 +1,4 @@
-import React, { lazy, useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import MainLayout from "../Layouts/MainLayout";
 import FullPageFormLayout from "../Layouts/FullPageFormLayout";
