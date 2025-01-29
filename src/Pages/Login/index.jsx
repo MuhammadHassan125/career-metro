@@ -55,7 +55,7 @@ const Login = () => {
 
 
   return (
-    <>
+    <div style={{padding:'20px 0'}}>
           <Form onSubmit={handleLogin} processing={Processing}>
             <div className="login-form-heading">
               <img src="/images/logo.png" alt="logo" className="login-logo" />
@@ -64,7 +64,7 @@ const Login = () => {
             </div>
 
             <div className="email-div">
-              <p>Email address:</p>
+              <p style={{fontSize:"13px"}}>Email address:</p>
               <PrimaryInput
                 type="email"
                 placeholder="Enter Email"
@@ -77,7 +77,7 @@ const Login = () => {
 
             <div className="email-div">
               <div>
-                <p>Password:</p>
+                <p style={{fontSize:"13px"}}>Password:</p>
                 <Link className='link-class' to="/forget-password"><span>Forget Password?</span></Link>
               </div>
               <PrimaryInput
@@ -114,7 +114,7 @@ const Login = () => {
               </Link>
             </p>
           </div>
-    </>
+    </div>
   );
 };
 

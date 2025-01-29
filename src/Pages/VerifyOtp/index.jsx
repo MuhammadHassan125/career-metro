@@ -1,100 +1,145 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Snackbar } from '../../Utils/SnackbarUtils';
-import { MuiOtpInput } from 'mui-one-time-password-input';
-import FormBtn from '../../Components/Auth/FormBtn';
-import Form from '../../Components/Auth/Form'
-import useFetch from 'point-fetch-react';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Snackbar } from "../../Utils/SnackbarUtils";
+import { MuiOtpInput } from "mui-one-time-password-input";
+import FormBtn from "../../Components/Auth/FormBtn";
+import Form from "../../Components/Auth/Form";
+import useFetch from "point-fetch-react";
+import "../Login/index.scss";
 
 const VerifyOtp = () => {
   const navigate = useNavigate();
-
-  const [timer, setTimer] = useState(600);
+  const [timer, setTimer] = useState(60);
   const [showResend, setShowResend] = useState(false);
+
   const { Data, setData, post, processing } = useFetch({
     state: {
-      otp: ''
+      otp: "",
     },
     rules: {
-      otp: ['required']
+      otp: ["required"],
     },
     message: {
       otp: {
-        required: 'Please provide OTP is required'
-      }
-    }
+        required: "Please provide OTP is required",
+      },
+    },
   });
 
   useEffect(() => {
+    let intervalId;
+
     if (timer > 0) {
-      const countdown = setTimeout(() => {
-        setTimer(timer - 1);
+      intervalId = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer <= 1) {
+            setShowResend(true);
+            return 0;
+          }
+          return prevTimer - 1;
+        });
       }, 1000);
-
-      return () => clearTimeout(countdown);
-    } else {
-      setShowResend(true);
     }
-  }, [timer]);
 
-  const handleChange = (value) => {
-    setData('otp', value);
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, []);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
   };
 
+  const handleChange = (value) => {
+    setData("otp", value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     post({
       endPoint: `/verify-otp`,
-
       onSuccess: (res) => {
         alert(res.data.message);
-        localStorage.setItem('reset-token', true)
-        navigate('/reset-password');
-      }
+        localStorage.setItem("reset-token", true);
+        navigate("/reset-password");
+      },
     });
   };
 
-
   const handleResendOtp = () => {
-    Snackbar("Resent your OTP", { variant: 'warning' });
+    Snackbar("Resent your OTP", { variant: "error" });
     setTimer(60);
     setShowResend(false);
-    navigate('/forget-password')
+    navigate("/forget-password");
   };
 
   return (
-    <>
-      <Form onSubmit={handleSubmit} >
-        <div style={{ padding: '30px 0' }}>
-          <div className="login-form-heading">
-            <h2>Verify OTP</h2>
-            <p>Verify your OTP to reset your password</p>
+    <Form onSubmit={handleSubmit}>
+      <div style={{ padding: "20px 0" }}>
+        <div className="login-form-heading">
+          <h2>Verify OTP</h2>
+          <p>Verify your OTP to reset your password</p>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "25px",
+            marginTop: "20px",
+          }}
+        >
+          <div className="register-fields-div">
+            <p style={{ marginBottom: "12px" }}>Enter OTP:</p>
+            <MuiOtpInput
+              value={Data.otp}
+              onChange={handleChange}
+              length={6}
+              sx={{
+                "& input": {
+                  fontSize: "20px",
+                  color: "black",
+                  textAlign: "center",
+                  padding: "10px",
+                  "@media (max-width: 600px)": {
+                    fontSize: "15px", // Mobile per aur bara text
+                    padding: "12px",
+                  },
+                },
+              }}
+            />
           </div>
 
-          <div className="register-fields-div" style={{ marginBottom: '20px' }}>
-            <p>Enter OTP:</p>
-            <MuiOtpInput value={Data.otp} onChange={handleChange} length={6} />
-          </div>
-
-          <FormBtn text={"Verify OTP"} processing={processing} />
+          <FormBtn text="Verify OTP" processing={processing} />
 
           {showResend ? (
-            <div className="login-account">
-              <p>Didn't receive an OTP?
-                <span className='link-class' onClick={handleResendOtp}> Resend OTP</span>
+            <div className="create-account">
+              <p>
+                Didn&apos;t receive an OTP?
+                <span
+                  className="link-class cursor-pointer "
+                  onClick={handleResendOtp}
+                >
+                  {" "}
+                  Resend OTP
+                </span>
               </p>
             </div>
           ) : (
-            <div className="login-account">
-              <p>OTP will expire in: <span>{timer} seconds</span></p>
-
+            <div className="login-account" style={{ textAlign: "center" }}>
+              <p>
+                Otp will expire in: <span>{formatTime(timer)}</span>
+              </p>
             </div>
-
           )}
         </div>
-      </Form>
-    </>
+      </div>
+    </Form>
   );
 };
 

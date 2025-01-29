@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Form = ({processing, onSubmit, children}) => {
   
     const handleSubmit= (e)=>{

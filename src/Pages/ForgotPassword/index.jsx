@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Form from '../../Components/Auth/Form';
 import FormBtn from '../../Components/Auth/FormBtn';
 import useFetch from 'point-fetch-react';
+import '../Login/index.scss';
 
 const ForgotPassword = () => {
 
@@ -39,15 +40,15 @@ const ForgotPassword = () => {
   return (
     <>
       <Form onSubmit={handleSubmit} processing={processing}>
-        <div style={{ padding: '30px 0' }}>
+        <div style={{ padding: '20px 0' }}>
           <div className="login-form-heading">
             <h2>Forget Password</h2>
             <p>Get OTP to reset your password</p>
           </div>
 
           {/* email  */}
-          <div className="register-fields-div" style={{ marginBottom: '20px' }}>
-            <p>Email address:</p>
+          <div className="register-fields-div" style={{ margin: '20px 0' }}>
+            <p style={{ margin: '10px 0', fontSize:'14px' }}>Email address:</p>
             <PrimaryInput
               type="email"
               placeholder="Enter Email"
@@ -60,7 +61,7 @@ const ForgotPassword = () => {
 
           <FormBtn processing={processing} text={'GET OTP'} />
 
-          <div className='login-account'>
+          <div className='create-account' style={{marginTop:'20px'}}>
             <p>Dont wont to forget password
               <Link to="/login" className='link-class'>
                 <span> Login</span>

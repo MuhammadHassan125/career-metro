@@ -1,7 +1,6 @@
 import './index.scss'
 import PrimaryInput from '../../Components/PrimaryInput';
 import { Link, useNavigate } from 'react-router-dom';
-import { Snackbar } from '../../Utils/SnackbarUtils';
 import Form from '../../Components/Auth/Form';
 import FormBtn from '../../Components/Auth/FormBtn';
 import SocialLinkComponent from '../../Components/Auth/SocialLinks/SocialLinksComponent';
@@ -53,7 +52,7 @@ const Register = () => {
 
 
   return (
-    <>
+    <div style={{padding:'20px 0'}}>
       <Form onSubmit={handleSubmit} processing={Processing}>
 
         <div className="login-form-heading">
@@ -132,7 +131,7 @@ const Register = () => {
         </div>
 
       </Form>
-    </>
+    </div>
   )
 }
 
