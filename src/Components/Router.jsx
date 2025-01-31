@@ -6,7 +6,6 @@ import GuestRoute from "./GuestRoute";
 import AuthRoute from "./AuthRoute";
 import { Snackbar } from "../Utils/SnackbarUtils";
 
-
 const Login = lazy(() => import("../Pages/Login"));
 const Register = lazy(() => import("../Pages/Register"));
 const ForgetPassword = lazy(() => import("../Pages/ForgotPassword"));
@@ -22,22 +21,24 @@ const AdminSkills = lazy(() => import("../Pages/AdminSkills"));
 const AdminActivity = lazy(() => import("../Pages/AdminActivity"));
 const AdminPermissions = lazy(() => import("../Pages/AdminPermissions"));
 const NotFound = lazy(() => import("../Pages/NotFound"));
-const Documents = lazy(() => import('../Pages/Documents'));
-const UploadDocuments = lazy(() => import('../Pages/UploadDocuments'));
-const Recommendations = lazy(() => import('../Pages/Recommendations'));
-const MapSinglePath = lazy(() => import('../Pages/MapSinglePath'));
-const MapZoom = lazy(() => import('../Pages/MapZoom'));
-const MapSelectedPath = lazy(() => import('../Pages/MapSelectedPath'));
-const Path = lazy(() => import('../Pages/Path'));
-const ListCareerPath = lazy(() => import('../Pages/ListCareerPath'));
+const Documents = lazy(() => import("../Pages/Documents"));
+const UploadDocuments = lazy(() => import("../Pages/UploadDocuments"));
+const Recommendations = lazy(() => import("../Pages/Recommendations"));
+const MapSinglePath = lazy(() => import("../Pages/MapSinglePath"));
+const MapZoom = lazy(() => import("../Pages/MapZoom"));
+const MapSelectedPath = lazy(() => import("../Pages/MapSelectedPath"));
+const Path = lazy(() => import("../Pages/Path"));
+const ListCareerPath = lazy(() => import("../Pages/ListCareerPath"));
 const PaymentCheckout = lazy(() => import("../Pages/PaymentCheckout"));
-const CancelCheckout = lazy(() => import("../Pages/PaymentCheckout/CancelCheckout"));
+const CancelCheckout = lazy(() =>
+  import("../Pages/PaymentCheckout/CancelCheckout")
+);
 const Success = lazy(() => import("../Pages/PaymentCheckout/SuccessCheckout"));
 const EditPath = lazy(() => import("../Pages/UploadDocuments/EditPath"));
-const AdminEditPermission = lazy(() => import("../Pages/AdminEditPermission"))
+const AdminEditPermission = lazy(() => import("../Pages/AdminEditPermission"));
 const AdminPaths = lazy(() => import("../Pages/AdminPaths"));
 const AdminPathMap = lazy(() => import("../Pages/AdminPathMap"));
-const ExportPdf = lazy(() => import('../Pages/ExportPdf'));
+const ExportPdf = lazy(() => import("../Pages/ExportPdf"));
 
 const guestRoutes = [
   "/login",
@@ -78,11 +79,26 @@ const Router = () => {
       <Route path="payment-checkout" element={<PaymentCheckout />} />
       <Route path="/cancel" element={<CancelCheckout />} />
       <Route path="/success" element={<Success />} />
-      <Route path='get-pdf/:id' element={<ExportPdf />} target='_blank' />
+      <Route path="get-pdf/:id" element={<ExportPdf />} target="_blank" />
     </>
   );
 
   const adminRoutes = (
+    <>
+      <Route path="/" element={<AdminDashboard />} />
+      <Route path="/users" element={<AdminUsers />} />
+      <Route path="/roles" element={<AdminRoles />} />
+      <Route path="/admin-activities" element={<AdminActivity />} />
+      <Route path="/admin-skills/:id" element={<AdminSkills />} />
+      <Route path="/admin-paths" element={<AdminPaths />} />
+      <Route path="/admin-paths/:id" element={<AdminPathMap />} />
+      <Route path="/permissions" element={<AdminPermissions />} />
+      <Route path="/edit-role/:id" element={<AdminEditPermission />} />
+      <Route path="map-career/:id" element={<MapSinglePath />} />
+    </>
+  );
+
+  const otherRole = (
     <>
       <Route path="/" element={<AdminDashboard />} />
       <Route path="/users" element={<AdminUsers />} />
@@ -117,7 +133,11 @@ const Router = () => {
 
       <Route element={<AuthRoute />}>
         <Route element={<MainLayout onLogout={handleLogout} />}>
-          {userRole === "User" ? clientRoutes : adminRoutes}
+          {userRole === "User"
+            ? clientRoutes
+            : userRole === "admin"
+            ? adminRoutes
+            : otherRole}{" "}
         </Route>
       </Route>
 
