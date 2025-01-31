@@ -3,12 +3,18 @@
     width: 100%;
     height: 40%;
     background-repeat: no-repeat !important;
-    background-size: contain;
+    background-size: cover;
+    object-fit: cover;
+    background-position: center;
     border-radius: 20px;
     padding: 30px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    background: url('/images/image-cover.png');
-
+    background-image: url('/images/profile-cover.webp');
+    object-fit: cover;
+   
+    &__heading{
+        color: black;
+    }
 
     .details-box{
         background-color: white;
@@ -49,5 +55,6 @@
     .profile-details .details-box{
         width: 90%;
         padding: 20px;
+        margin-top: -2%;
     }
 }
