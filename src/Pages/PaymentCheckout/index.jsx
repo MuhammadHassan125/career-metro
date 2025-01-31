@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { baseURL, stripKey } from '../../Utils/contants';
+import { baseURL } from '../../Utils/contants';
 import { Snackbar } from '../../Utils/SnackbarUtils';
 import { GoNorthStar } from "react-icons/go";
 import { loadStripe } from '@stripe/stripe-js';
@@ -8,7 +8,9 @@ import useFetch from 'point-fetch-react';
 
 const PaymentCheckout = () => {
     const [subscriptionPlans, setSubscriptionPlans] = useState([]);
-    const stripePromise = loadStripe(stripKey);
+
+    // stripe payment id 
+    const stripePromise = loadStripe('pk_test_51Qmg47Kfdytjzbm44aqgGr1GBZeM8FFvp5SyXf4irrrzBqKgHu4OmeoNw2Ik7ExhvbdQqxeNf9rkY4gGKWVJ1TbO00wb1RtqJU');
 
     const { get } = useFetch({ state: {} })
 
