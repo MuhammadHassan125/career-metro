@@ -98,7 +98,7 @@ const Login = () => {
             <FormBtn text={"Login"} processing={Processing}/>
           </Form>
 
-          <div className="or-div">
+          <div className="or-div" style={{marginTop:"18px"}}>
             <img src='/images/line.png' />
             <span>or</span>
             <img src='/images/line.png' />

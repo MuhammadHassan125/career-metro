@@ -1,13 +1,10 @@
 import React from "react";
-import FacebookBtn from "./Login/FacebookBtn";
 import GoogleBtn from "./Login/GoogleBtn";
-import InstagramBtn from "./Login/InstagramBtn";
 import LinkedinBtn from "./Login/LinkedinBtn";
-import OutlookBtn from "./Login/OutlookBtn";
-
+import '../../../Pages/Register/index.scss';
 const SocialLinkComponent = () => {
     const SocialComponents = [
-      { btn: [<OutlookBtn />, <LinkedinBtn />, <FacebookBtn />, <GoogleBtn />, <InstagramBtn />] },
+      { btn: [<GoogleBtn />, <LinkedinBtn /> ] },
     ];
   
     return (

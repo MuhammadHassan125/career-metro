@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Fire from "../Fire/Fire";
 import { baseURL } from "../Utils/contants";
 import ProfileDetailsContext from "../context/ProfileDetailContext";
+import { Snackbar } from "../Utils/SnackbarUtils";
 
 const ProfileDetailsProvider = ({ children }) => {
     const [user, setUser] = React.useState();
@@ -14,7 +15,7 @@ const ProfileDetailsProvider = ({ children }) => {
           },
           onError: (err) => {
             console.log(err);
-            Snackbar(err.message, { variant: 'error' });
+            // Snackbar(err, { variant: 'error' });
           },
         });
       };

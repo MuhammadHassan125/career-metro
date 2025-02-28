@@ -62,6 +62,7 @@ const Router = () => {
     }
   }, [navigate]);
 
+
   const clientRoutes = (
     <>
       <Route path="/" element={<Dashboard />} />
