@@ -15,7 +15,6 @@ import MapContext from "../../context/MapContext";
 import useFetch from "point-fetch-react";
 import PrimaryBtn from "../../Components/PrimaryBtn";
 
-
 const MapSinglePath = () => {
   const [selectedPathId, setSelectedPathId] = useState(null);
   const [checkoutUrl, setCheckoutUrl] = useState(null);
@@ -25,14 +24,13 @@ const MapSinglePath = () => {
 
   const params = useParams();
   const navigate = useNavigate();
-  const {checkingPlanStatus, setCheckingPlanStatus} = useContext(MapContext);
+  const { checkingPlanStatus, setCheckingPlanStatus } = useContext(MapContext);
 
   const { post, get, Data, setData, Errors, processing } = useFetch({
     state: {
       branchId: params.id || "",
     },
   });
-  
 
   useEffect(() => {
     if (params.id && Data.branchId !== params.id) {
@@ -46,7 +44,7 @@ const MapSinglePath = () => {
 
   const handleNavigate = () => {
     setTrainingExceed(false);
-    navigate('/path');
+    navigate("/path");
   };
 
   const redirectToStripe = () => {
@@ -61,10 +59,9 @@ const MapSinglePath = () => {
       onSuccess: (res) => {
         setCheckoutUrl(res?.data?.data?.url);
         setOpen(true);
-      }
+      },
     });
   };
-
 
   const checkTrainingPlanSubscription = () => {
     get({
@@ -75,11 +72,12 @@ const MapSinglePath = () => {
           setCheckingPlanStatus(false);
           setTrainingExceed(true);
         } else {
+          // setOpen(true);
           redirectToStripe();
           // localStorage.setItem('subscription', true);
           setCheckingPlanStatus(true);
         }
-      }
+      },
     });
   };
 
@@ -95,25 +93,27 @@ const MapSinglePath = () => {
             <p>
               <strong>{getTitle} </strong>
             </p>
-              <button
-                className="map-section__btn"
-                onClick={checkTrainingPlanSubscription}
-                disabled={processing}
-                style={{backgroundColor: '#eb814b', color:"white"}}
-              >
-                <BiExport style={{ fontSize: "18px" }} />
-                Export your Training PDF
-              </button>
+            <button
+              className="map-section__btn"
+              onClick={checkTrainingPlanSubscription}
+              disabled={processing}
+              style={{ backgroundColor: "#eb814b", color: "white" }}
+            >
+              <BiExport style={{ fontSize: "18px" }} />
+              Export your Training PDF
+            </button>
             <AddPathFromSinglePath />
           </div>
         </div>
 
         <div className="map-section__map-div">
-          <SinglePathMap onSelectId={handleIdFromChild}  
-           onEditTitle={(node) => {
-    // Handle editing the title here
-    console.log('Edit title for node:', node);
-  }}/>
+          <SinglePathMap
+            onSelectId={handleIdFromChild}
+            onEditTitle={(node) => {
+              // Handle editing the title here
+              console.log("Edit title for node:", node);
+            }}
+          />
         </div>
 
         <GPTComponent selectedPathId={selectedPathId} />
@@ -127,7 +127,7 @@ const MapSinglePath = () => {
         fullWidth
       >
         <DialogTitle sx={{ color: "var(--primary-btn-color)" }}>
-          Proceed to Checkout
+          Proceed to Checkout for plan
         </DialogTitle>
         <DialogContent>
           <p>
@@ -143,8 +143,8 @@ const MapSinglePath = () => {
               fontSize: "13px",
               border: "none",
               cursor: "pointer",
-              padding: '10px 15px',
-              borderRadius: '10px'
+              padding: "10px 15px",
+              borderRadius: "10px",
             }}
           >
             Cancel
@@ -193,18 +193,16 @@ const MapSinglePath = () => {
               fontSize: "14px",
               border: "none",
               cursor: "pointer",
-              padding: '10px 15px',
+              padding: "10px 15px",
               borderRadius: "8px",
             }}
           >
             Cancel
           </button>
 
-            <PrimaryBtn text={'Purchase Plan'} onClick={handleNavigate}/>
-          
+          <PrimaryBtn text={"Purchase Plan"} onClick={handleNavigate} />
         </DialogActions>
       </Dialog>
-
     </React.Fragment>
   );
 };

@@ -272,6 +272,11 @@ const GPTComponent = ({ selectedPathId }) => {
                             value={message}
                             onChange={handleInputChange}
                             style={{ flex: 1 }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {  
+                                handleSendMessage();
+                            }
+                            }}
                           />
                   
                           {/* Send Button */}

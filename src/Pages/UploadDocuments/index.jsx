@@ -1,27 +1,27 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './index.scss';
-import { TextField, InputAdornment } from '@mui/material';
+import React, { useState, useEffect, useContext } from "react";
+import "./index.scss";
+import { TextField, InputAdornment } from "@mui/material";
 import { MdOutlineClose } from "react-icons/md";
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Typography from '@mui/material/Typography';
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Typography from "@mui/material/Typography";
 import { IoMdClose } from "react-icons/io";
-import { Button } from '@mui/material';
+import { Button } from "@mui/material";
 import { IoCheckmarkSharp } from "react-icons/io5";
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import { baseURL } from '../../Utils/contants';
-import UploadDataGrid from '../../Components/DashboardComponents/DataGrid/UploadDataGrid';
-import Loading from '../../Components/Loading';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { Snackbar } from '../../Utils/SnackbarUtils';
-import axios from 'axios';
-import useFetch from 'point-fetch-react';
-import MapContext from '../../context/MapContext';
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import { baseURL } from "../../Utils/contants";
+import UploadDataGrid from "../../Components/DashboardComponents/DataGrid/UploadDataGrid";
+import Loading from "../../Components/Loading";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { Snackbar } from "../../Utils/SnackbarUtils";
+import axios from "axios";
+import useFetch from "point-fetch-react";
+import MapContext from "../../context/MapContext";
 
 const columns = [
   { Header: "Id", accessor: "id" },
@@ -32,46 +32,47 @@ const columns = [
     Header: "Status",
     accessor: "status",
     Cell: ({ value }) => (
-      <button style={{
-        backgroundColor: value === 'analyzed' ? '#00B69B' : 'grey',
-        border: 'none',
-        outline: 'none',
-        color: 'white',
-        borderRadius: '10px',
-        padding: '3px 10px',
-        cursor: 'pointer',
-      }}
-        onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
-        onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+      <button
+        style={{
+          backgroundColor: value === "analyzed" ? "#00B69B" : "grey",
+          border: "none",
+          outline: "none",
+          color: "white",
+          borderRadius: "10px",
+          padding: "3px 10px",
+          cursor: "pointer",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
+        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
       >
         {value.charAt(0).toUpperCase() + value.slice(1)}
       </button>
-    )
-  }, { Header: "", accessor: "Btn" },
+    ),
+  },
+  { Header: "", accessor: "Btn" },
 ];
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 450,
-  bgcolor: 'background.paper',
-  border: 'none',
-  outline: 'none',
-  borderRadius: '8px',
+  bgcolor: "background.paper",
+  border: "none",
+  outline: "none",
+  borderRadius: "8px",
   boxShadow: 24,
   p: 4,
 };
 
 const UploadDocuments = () => {
-
   const location = useLocation();
   const params = useParams();
 
   const [success, setSuccess] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = React.useState("1");
   const [prompt, setPrompt] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleCloseModal = () => setOpen(false);
@@ -82,21 +83,21 @@ const UploadDocuments = () => {
 
   const { Data, setData, Errors, post, get, validate, Processing } = useFetch({
     state: {
-      title: '',
-      prompt: ''
+      title: "",
+      prompt: "",
     },
     rules: {
-      title: ['required'],
-      prompt: ['required']
+      title: ["required"],
+      prompt: ["required"],
     },
     message: {
       title: {
-        required: 'Title field is required'
+        required: "Title field is required",
       },
       prompt: {
-        required: 'Prompt field is required'
+        required: "Prompt field is required",
       },
-    }
+    },
   });
 
   const handleChange = (event, newValue) => {
@@ -118,16 +119,15 @@ const UploadDocuments = () => {
         if (res?.data?.Subscription_Status === false) {
           // localStorage.setItem('subscription-status', false);
           setCheckSubscription(false);
-          navigate('/path');
-          localStorage.setItem('subscription', false);
+          navigate("/path");
+          localStorage.setItem("subscription", false);
         } else {
-          localStorage.removeItem('subscription');
+          localStorage.removeItem("subscription");
           // localStorage.setItem('subscription-status', true);
-
         }
         return;
-      }
-    })
+      },
+    });
   };
 
   const handleFileChange = (e) => {
@@ -135,52 +135,52 @@ const UploadDocuments = () => {
   };
 
   const handleFileUpload = async () => {
-    const token = localStorage.getItem('user-visited-dashboard');
-    if (!file) return alert('Please select a file');
-    if (!token) return alert('Please upload a token');
+    const token = localStorage.getItem("user-visited-dashboard");
+    if (!file) return alert("Please select a file");
+    if (!token) return alert("Please upload a token");
 
     if (file) {
       const formData = new FormData();
-      formData.append('file', file);
-      formData.append('title', Data.title);
+      formData.append("file", file);
+      formData.append("title", Data.title);
       try {
         const response = await axios.post(`${baseURL}/create-path`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         });
-        Snackbar(`File upload complete! ID: ${response.data.message}`, { variant: 'success' });
+        Snackbar(`File upload complete! ID: ${response.data.message}`, {
+          variant: "success",
+        });
         handleSuccess();
         setFile(null);
-
       } catch (error) {
-        Snackbar(`Error uploading file: ${error.error || error.message}`, { variant: 'error' });
+        Snackbar(`Error uploading file: ${error.error || error.message}`, {
+          variant: "error",
+        });
       }
     }
   };
 
-
   const handleInput = (e) => {
     const { name, value } = e.target;
     setData(name, value);
-  }
+  };
 
   const handleCreatePath = (e) => {
     e.preventDefault();
     if (validate()) {
-
       post({
         endPoint: `/create-path`,
         onSuccess: (res) => {
-          setData({ title: '', prompt: '' });
+          setData({ title: "", prompt: "" });
           handleClose();
-          navigate('/path')
-        }
+          navigate("/path");
+        },
       });
-    };
+    }
   };
-
 
   useEffect(() => {
     if (success) {
@@ -211,32 +211,62 @@ const UploadDocuments = () => {
   return (
     <React.Fragment>
       {Processing ? <Loading processing={Processing} /> : null}
-      <main className='documents-upload__section'>
+      <main className="documents-upload__section">
         {success && (
-          <div className='success__message'>
+          <div className="success__message">
             <p>Resume file uploaded successfully!</p>
             <MdOutlineClose
               onClick={handleClose}
-              style={{ cursor: 'pointer', fontSize: '18px' }}
+              style={{ cursor: "pointer", fontSize: "18px" }}
             />
           </div>
         )}
-        <Box sx={{ width: '100%', typography: 'body1' }}>
-          <TextField id="standard-basic" label="Enter title" variant="standard"
-            sx={{ width: '40%', height: '100%', position: 'relative', marginBottom: "30px", marginLeft: "25px" }}
+        <Box sx={{ width: "100%", typography: "body1" }}>
+          <TextField
+            id="standard-basic"
+            label="Enter title"
+            variant="standard"
+            sx={{
+              width: "40%",
+              height: "100%",
+              position: "relative",
+              marginBottom: "30px",
+              marginLeft: "25px",
+            }}
             onChange={handleInput}
             name="title"
             value={Data.title}
           />
-          {Errors.title && <p className="error" style={{ marginLeft: "25px" }}>{Errors.title}</p>}
+          {Errors.title && (
+            <p className="error" style={{ marginLeft: "25px" }}>
+              {Errors.title}
+            </p>
+          )}
           <TabContext value={value}>
             <Box>
-
-              <TabList onChange={handleChange} aria-label="lab API tabs example" sx={{ padding: '0 25px' }}>
-
-                <Tab label="Add Path" value="1" sx={{ fontWeight: 700, fontFamily: "Nunito Sans, sans-serif", color: '#879aad' }} />
-                <Tab label="Upload CV" value="2" sx={{ fontWeight: 700, fontFamily: "Nunito Sans, sans-serif", color: '#879aad' }} />
-
+              <TabList
+                onChange={handleChange}
+                aria-label="lab API tabs example"
+                sx={{ padding: "0 25px" }}
+              >
+                <Tab
+                  label="Add Path"
+                  value="1"
+                  sx={{
+                    fontWeight: 700,
+                    fontFamily: "Nunito Sans, sans-serif",
+                    color: "#879aad",
+                  }}
+                />
+                <Tab
+                  label="Upload CV"
+                  value="2"
+                  sx={{
+                    fontWeight: 700,
+                    fontFamily: "Nunito Sans, sans-serif",
+                    color: "#879aad",
+                  }}
+                />
               </TabList>
             </Box>
 
@@ -250,60 +280,81 @@ const UploadDocuments = () => {
                 multiline
                 rows={6}
                 defaultValue=""
-                sx={{ width: '100%', height: '100%', position: 'relative', mb:1 }}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  position: "relative",
+                  mb: 1,
+                }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
+                     
 
-                      <Button variant="contained"
+                      <Button
+                        variant="contained"
                         sx={{
                           cursor: "pointer",
-                          position: 'absolute',
-                          bottom: -32,
-                          right: 5,
-                          fontSize: '10px',
+                          position: "absolute", // Fixed on mobile, absolute on larger screens
+                          bottom: { xs: 16, sm: -32 }, // Adjust bottom position for mobile
+                          right: { xs: 16, sm: 5 }, // Adjust right position for mobile
+                          fontSize: "10px",
                           padding: "3px 5px",
-                          backgroundColor: "#879aad"
+                          backgroundColor: "#879aad",
+                          zIndex: 1000, // Ensure the button stays on top of other elements
                         }}
                         onClick={handleCreatePath}
-                      >Submit</Button>
+                      >
+                        Submit
+                      </Button>
                     </InputAdornment>
                   ),
                 }}
               />
-              <p style={{fontSize:"14px"}}><span style={{fontWeight: 700}}>Hint:</span> Include your country/location, industry/field, current job title, and career level for more tailored guidance.</p>
+              <p style={{ fontSize: "14px" }}>
+                <span style={{ fontWeight: 700 }}>Hint:</span> Include your
+                country/location, industry/field, current job title, and career
+                level for more tailored guidance.
+              </p>
               {Errors.prompt && <p className="error">{Errors.prompt}</p>}
             </TabPanel>
 
             <TabPanel value="2" sx={{ position: "relative" }}>
               {/* <FileUpload onUploadSuccess={handleSuccess}/> */}
-              <div className='file-upload__section'>
-                <img src='/images/upload.png' alt='upload' />
-                <label style={{ padding: '5px 10px', borderBottom: '1px solid #3749A6', cursor: 'pointer', color: '#879aad' }}>
+              <div className="file-upload__section">
+                <img src="/images/upload.png" alt="upload" />
+                <label
+                  style={{
+                    padding: "5px 10px",
+                    borderBottom: "1px solid #3749A6",
+                    cursor: "pointer",
+                    color: "#879aad",
+                  }}
+                >
                   <input
                     type="file"
                     onChange={handleFileChange}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                   Click here to Browse.
                 </label>
                 {file && <p>{file.name}</p>}
               </div>
-              <Button variant="contained"
+              <Button
+                variant="contained"
                 sx={{
                   cursor: "pointer",
-                  fontSize: '10px',
+                  fontSize: "10px",
                   padding: "3px 5px",
                   position: "absolute",
                   bottom: 20,
                   right: 25,
-                  backgroundColor: "#879aad"
+                  backgroundColor: "#879aad",
                 }}
                 onClick={handleFileUpload}
               >
                 Submit
               </Button>
-
 
               <Modal
                 aria-labelledby="transition-modal-title"
@@ -322,13 +373,21 @@ const UploadDocuments = () => {
                   <Box sx={style}>
                     <IoMdClose
                       onClick={handleCloseModal}
-                      style={{ float: "right", cursor: "pointer", fontSize: "20px", marginTop: "-20px" }} />
-                    <Box sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                    }}>
+                      style={{
+                        float: "right",
+                        cursor: "pointer",
+                        fontSize: "20px",
+                        marginTop: "-20px",
+                      }}
+                    />
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        textAlign: "center",
+                      }}
+                    >
                       <Box
                         sx={{
                           padding: "18px 20px ",
@@ -337,37 +396,54 @@ const UploadDocuments = () => {
                           marginBottom: "10px",
                           color: "#1E5EFF",
                           fontWeight: "800",
-                          fontSize: "18px"
-                        }}>
+                          fontSize: "18px",
+                        }}
+                      >
                         <IoCheckmarkSharp />
                       </Box>
-                      <Typography id="transition-modal-title" variant="h5" component="h2" sx={{ fontWeight: "600" }}>
+                      <Typography
+                        id="transition-modal-title"
+                        variant="h5"
+                        component="h2"
+                        sx={{ fontWeight: "600" }}
+                      >
                         Import Successfull
                       </Typography>
-                      <Typography id="transition-modal-description" sx={{ fontSize: "15px" }}>
+                      <Typography
+                        id="transition-modal-description"
+                        sx={{ fontSize: "15px" }}
+                      >
                         Added 5 new skills to your path
                       </Typography>
 
                       <Button
                         onClick={handleCloseModal}
                         sx={{
-                          backgroundColor: "#3749A6", color: 'white', fontSize: "12px", mt: 2, padding: "8px 25px",
-                          '&:hover': {
+                          backgroundColor: "#3749A6",
+                          color: "white",
+                          fontSize: "12px",
+                          mt: 2,
+                          padding: "8px 25px",
+                          "&:hover": {
                             backgroundColor: "#2e3a8c",
                           },
                         }}
-                      >Continue</Button>
+                      >
+                        Continue
+                      </Button>
                     </Box>
                   </Box>
                 </Fade>
               </Modal>
             </TabPanel>
-
           </TabContext>
         </Box>
 
-        <UploadDataGrid columns={columns} heading={"Path Details"} dropdown={"October"} />
-
+        <UploadDataGrid
+          columns={columns}
+          heading={"Path Details"}
+          dropdown={"October"}
+        />
       </main>
     </React.Fragment>
   );

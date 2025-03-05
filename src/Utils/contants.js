@@ -1,5 +1,6 @@
 // local ip
-// export const baseURL = "http://localhost:8001/api";
+// export const baseURL = "http://192.168.56.1:8001/api";
+
 // export const AnalyzeURL = "http://87.106.188.142:80/ai";
 
 // server ip
