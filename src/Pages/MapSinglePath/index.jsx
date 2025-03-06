@@ -68,14 +68,13 @@ const MapSinglePath = () => {
       endPoint: `/check-training-plan-subscription-limit`,
       onSuccess: (res) => {
         if (res?.data?.Subscription_Status === false) {
-          // localStorage.setItem('subscription', false);
           setCheckingPlanStatus(false);
           setTrainingExceed(true);
         } else {
           // setOpen(true);
           redirectToStripe();
-          // localStorage.setItem('subscription', true);
           setCheckingPlanStatus(true);
+          setTrainingExceed(false);
         }
       },
     });
@@ -127,7 +126,7 @@ const MapSinglePath = () => {
         fullWidth
       >
         <DialogTitle sx={{ color: "var(--primary-btn-color)" }}>
-          Proceed to Checkout for plan
+          Proceed to Checkout for generate plan
         </DialogTitle>
         <DialogContent>
           <p>

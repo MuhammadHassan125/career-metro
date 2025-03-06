@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import {baseURL, AnalyzeURL} from '../../Utils/contants';
 import "./index.scss";
-import { AnalyzeURL, baseURL } from "../../Fire/useFire";
 import Fire from "../../Fire/Fire";
 import { useParams, useLocation } from "react-router-dom";
 import { Snackbar } from "../../Utils/SnackbarUtils";
 import PaymentSuccessModal from "../../Components/DashboardComponents/DataGrid/PaymentSuccessModal";
+import Loading from "../../Components/Loading";
 const ExportPdf = () => {
   const [branchId, setBranchId] = useState(null);
   const [open, setOpen] = useState(false);
@@ -71,10 +72,10 @@ const ExportPdf = () => {
   }, [sessionId, branchId]);
 
   return (
-    <div style={{ backgroundColor: '#f5f6fa', display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ backgroundColor: '#f5f6fa', display: 'flex', height: 'auto', alignItems: 'center', justifyContent: 'center' }}>
       {generate === true ?
         <PaymentSuccessModal />
-        : <p>Loading....</p>
+        : <Loading processing={true} />
       }
 
     </div>
