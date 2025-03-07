@@ -271,6 +271,7 @@ const UploadDocuments = () => {
             </Box>
 
             <TabPanel value="1" sx={{ position: "relative", mb: 5 }}>
+              {/* TextField */}
               <TextField
                 id="outlined-multiline-static"
                 label="Enter Your Prompt"
@@ -286,36 +287,33 @@ const UploadDocuments = () => {
                   position: "relative",
                   mb: 1,
                 }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                     
-
-                      <Button
-                        variant="contained"
-                        sx={{
-                          cursor: "pointer",
-                          position: "absolute", // Fixed on mobile, absolute on larger screens
-                          bottom: { xs: 16, sm: -32 }, // Adjust bottom position for mobile
-                          right: { xs: 16, sm: 5 }, // Adjust right position for mobile
-                          fontSize: "10px",
-                          padding: "3px 5px",
-                          backgroundColor: "#879aad",
-                          zIndex: 1000, // Ensure the button stays on top of other elements
-                        }}
-                        onClick={handleCreatePath}
-                      >
-                        Submit
-                      </Button>
-                    </InputAdornment>
-                  ),
-                }}
               />
-              <p style={{ fontSize: "14px" }}>
+              {/* Submit Button */}
+              <Button
+                variant="contained"
+                sx={{
+                  position: "absolute",
+                  right: 0, 
+                  bottom: 0,
+                  mr: 2,
+                  mt: 2,
+                  cursor: "pointer",
+                  fontSize: "10px",
+                  padding: "3px 5px",
+                  backgroundColor: "#879aad",
+                  zIndex: 1000, // Ensure the button stays on top of other elements
+                }}
+                onClick={handleCreatePath}
+              >
+                Submit
+              </Button>
+              {/* Hint Text */}
+              <p style={{ fontSize: "14px", marginBottom: "8px" }}>
                 <span style={{ fontWeight: 700 }}>Hint:</span> Include your
                 country/location, industry/field, current job title, and career
                 level for more tailored guidance.
               </p>
+              {/* Error Message */}
               {Errors.prompt && <p className="error">{Errors.prompt}</p>}
             </TabPanel>
 

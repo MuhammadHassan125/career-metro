@@ -66,15 +66,18 @@ const MapSinglePath = () => {
   const checkTrainingPlanSubscription = () => {
     get({
       endPoint: `/check-training-plan-subscription-limit`,
+
       onSuccess: (res) => {
         if (res?.data?.Subscription_Status === false) {
           setCheckingPlanStatus(false);
           setTrainingExceed(true);
         } else {
           // setOpen(true);
-          redirectToStripe();
-          setCheckingPlanStatus(true);
-          setTrainingExceed(false);
+          // redirectToStripe();
+          // setCheckingPlanStatus(true);
+          // setTrainingExceed(false);
+          console.log('export pdf ')
+          navigate(`/get-pdf/${params.id}`);
         }
       },
     });

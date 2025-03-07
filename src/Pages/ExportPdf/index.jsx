@@ -20,18 +20,19 @@ const ExportPdf = () => {
   }, [params.id]);
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const sessionParam = queryParams.get("session_id");
+    // const queryParams = new URLSearchParams(location.search);
+    // const sessionParam = queryParams.get("session_id");
 
-    setSessionId(sessionParam);
+    // setSessionId(sessionParam);
 
-    // Only set open to true if session_id is not present
-    if (!sessionParam) {
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
-  }, [location.search]);
+    // // Only set open to true if session_id is not present
+    // if (!sessionParam) {
+    //   setOpen(true);
+    // } else {
+    //   setOpen(false);
+    // }
+    setOpen(true)
+  }, []);
 
   const confirmSubscription = () => {
     Fire.post({
@@ -64,12 +65,11 @@ const ExportPdf = () => {
 
   // calling confirm subscription api
   useEffect(() => {
-    if (sessionId && branchId) {
+    if (branchId) {
       setOpen(false);
-      confirmSubscription();
       generateTrainingSteps();
     }
-  }, [sessionId, branchId]);
+  }, [branchId]);
 
   return (
     <div style={{ backgroundColor: '#f5f6fa', display: 'flex', height: 'auto', alignItems: 'center', justifyContent: 'center' }}>
