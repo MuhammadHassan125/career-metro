@@ -10,7 +10,7 @@ const PaymentCheckout = () => {
     const [subscriptionPlans, setSubscriptionPlans] = useState([]);
 
     // stripe payment id 
-    const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+    const stripePromise = loadStripe("pk_test_51R1N87D5HtmbtCzuDzCpymaMkkcPgWSY362IjaJ9vjX4NrscIgVy4Xf24nILCAKE2ftUfD6JvBIREg2iDoIXsmWD009wsUrL33");
 
     const { get } = useFetch({ state: {} })
 
