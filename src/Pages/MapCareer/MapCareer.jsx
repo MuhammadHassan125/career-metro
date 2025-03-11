@@ -16,8 +16,6 @@ const MapCareer = () => {
                         <h2>My Career Map's</h2>
                     </div>
                     <div className='map-section__btn-div'>
-                        {/* <p>19 Paths</p> */}
-                       
                         <AddPathComponent />
                     </div>
                 </div>

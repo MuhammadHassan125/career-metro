@@ -5,6 +5,8 @@ import { FiPlus } from "react-icons/fi";
 import Loading from '../Components/Loading';
 import PremiumModel from './PremiumModel';
 import MapContext from '../context/MapContext';
+import Fire from '../Fire/Fire';
+import { baseURL } from '../Utils/contants';
 
 const AddPathComponent = () => {
 
@@ -15,17 +17,33 @@ const AddPathComponent = () => {
   const handleClose = () => setOpen(false);
 
   const {checkSubscription} = useContext(MapContext);
-  
-  const handleNavigate = () => {
-    navigate('/add-path');
-  };
+  const authToken = localStorage.getItem("user-visited-dashboard");
 
-  useEffect(() => {
-      if (checkSubscription === false) {
-      } else {
-          null;
-      }
-  }, [checkSubscription]);
+  const checkRemainingPlans = () => {
+      if (!authToken) return;
+      Fire.get({
+        url: `${baseURL}/check-remaining-plans`,
+        onSuccess: (res) => {
+          console.log(res?.data?.RemainingPrompts, 'fffffffffff res')
+          // setCheckData(res?.data || []);
+        },
+        onError: (err) => {
+          setCheckData([]);
+          console.log(err)
+        },
+      });
+    };
+  
+    const handleNavigate = () => {
+      return checkRemainingPlans();
+    }
+
+  // useEffect(() => {
+  //     if (checkSubscription === false) {
+  //     } else {
+  //         null;
+  //     }
+  // }, [checkSubscription]);
 
   return (
     <>

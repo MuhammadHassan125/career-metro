@@ -72,10 +72,6 @@ const MapSinglePath = () => {
           setCheckingPlanStatus(false);
           setTrainingExceed(true);
         } else {
-          // setOpen(true);
-          // redirectToStripe();
-          // setCheckingPlanStatus(true);
-          // setTrainingExceed(false);
           console.log('export pdf ')
           navigate(`/get-pdf/${params.id}`);
         }
