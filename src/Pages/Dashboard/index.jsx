@@ -162,7 +162,7 @@ export const DashboardCards = () => {
         const transformedData = [
           {
             title: "Remaining Prompts",
-            count: apiData.RemainingPrompts,
+            count: apiData.remainingPaths,
             // span: "8.5%",
             // txt: "Up from yesterday",
             // arrow: "/images/arrow-success.png",
@@ -170,7 +170,7 @@ export const DashboardCards = () => {
           },
           {
             title: "Remaining Training Plan",
-            count: apiData.RemainingTrainingPlan,
+            count: apiData.remainingTrainingPlans,
             // span: "4.3%",
             // txt: "Down from yesterday",
             // arrow: "/images/arrow-danger.png",
