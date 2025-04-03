@@ -10,7 +10,7 @@ const PaymentCheckout = () => {
     const [subscriptionPlans, setSubscriptionPlans] = useState([]);
 
     // stripe payment id 
-    const stripePromise = loadStripe("pk_test_51R1N87D5HtmbtCzuDzCpymaMkkcPgWSY362IjaJ9vjX4NrscIgVy4Xf24nILCAKE2ftUfD6JvBIREg2iDoIXsmWD009wsUrL33");
+    const stripePromise = loadStripe("pk_live_51Qmg47Kfdytjzbm4p1F0xtsqP738cxAZTpdzc2GR9zptULOMNYGH97vJn8K98gG1ZecHfR2qhmfjvNYawJVSDa9W00QO2BdfNi");
 
     const { get } = useFetch({ state: {} })
 
