@@ -35,26 +35,33 @@ const PaymentCheckout = () => {
                 body: JSON.stringify({ subscriptionId: planId }),
             });
     
-            const data = await response.json();
-            console.log('Backend Response:', data); 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to create checkout session');
+            }
     
+            const data = await response.json();
+            
             if (data.status && data.data?.sessionId) {
                 const stripe = await stripePromise;
-                console.log('Session ID:', data.data.sessionId); 
-    
-                const result = await stripe.redirectToCheckout({ sessionId: data.data.sessionId });
+                const result = await stripe.redirectToCheckout({ 
+                    sessionId: data.data.sessionId 
+                });
     
                 if (result.error) {
-                    console.error('Stripe Redirect Error:', result.error); // Log Stripe redirect error
-                    alert(result?.error?.message);
+                    Snackbar(result.error.message, { variant: 'error' });
                 }
             } else {
-                console.error('Failed to create checkout session:', data); // Log failure to create session
-                Snackbar('Failed to create checkout session', { variant: 'error' });
+                Snackbar(data.message || 'Failed to create checkout session', { 
+                    variant: 'error' 
+                });
             }
         } catch (error) {
-            console.error('Error during checkout:', error); // Log any unexpected errors
-            alert('Error occurred during checkout');
+            console.error('Checkout error:', error);
+            Snackbar(error.message || 'Error during checkout', { 
+                variant: 'error',
+                autoHideDuration: 5000 
+            });
         }
     };
 
