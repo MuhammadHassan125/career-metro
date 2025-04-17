@@ -21,6 +21,7 @@ const MapSinglePath = () => {
   const [open, setOpen] = useState(false);
   const [trainingExceed, setTrainingExceed] = useState(false);
   const { getTitle } = useContext(MapContext);
+  const [remainingTrainingPlans, setRemainingTrainingPlans] = useState(0);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -66,8 +67,8 @@ const MapSinglePath = () => {
   const checkTrainingPlanSubscription = () => {
     get({
       endPoint: `/check-training-plan-subscription-limit`,
-
       onSuccess: (res) => {
+        setRemainingTrainingPlans(res?.data?.remainingTrainingPlans || 0);
         if (res?.data?.TrainingPlan_Status === false) {
           setCheckingPlanStatus(false);
           setTrainingExceed(true);
@@ -91,15 +92,17 @@ const MapSinglePath = () => {
             <p>
               <strong>{getTitle} </strong>
             </p>
-            <button
-              className="map-section__btn"
-              onClick={checkTrainingPlanSubscription}
-              disabled={processing}
-              style={{ backgroundColor: "#eb814b", color: "white" }}
-            >
-              <BiExport style={{ fontSize: "18px" }} />
-              Export your Training PDF
-            </button>
+            {remainingTrainingPlans > 0 && (
+              <button
+                className="map-section__btn"
+                onClick={checkTrainingPlanSubscription}
+                disabled={processing}
+                style={{ backgroundColor: "#eb814b", color: "white" }}
+              >
+                <BiExport style={{ fontSize: "18px" }} />
+                Export your Training PDF
+              </button>
+            )}
             <AddPathFromSinglePath />
           </div>
         </div>
