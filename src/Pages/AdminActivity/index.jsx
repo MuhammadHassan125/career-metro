@@ -7,7 +7,7 @@ import "../../Components/DashboardComponents/DataGrid/index.scss";
 const AdminActivity = () => {
   const [activityData, setActivityData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(4);
+  const [itemsPerPage] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
   const [totalActivityLogs, setTotalActivityLogs] = useState(0);
 

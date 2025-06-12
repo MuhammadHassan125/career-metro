@@ -20,6 +20,7 @@ import useFetch from "point-fetch-react";
 import Fire from "../../Fire/Fire";
 import { baseURL } from "../../Utils/contants";
 import ProfileDetailsContext from "../../context/ProfileDetailContext";
+import { hasSlugAction } from "../../Utils/SlugPermission";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -73,7 +74,10 @@ const Header = () => {
     setDrawerOpen(open);
   };
   
-
+  const roleName = localStorage.getItem("user-role");
+  const showPathToAdmin = hasSlugAction(roleName, "paths-update");
+  
+  
   const clientItems = [
     { id: 1, name: "Dashboard", link: "/" },
     { id: 2, name: "Career Maps", link: "/map-career" },
@@ -84,11 +88,40 @@ const Header = () => {
   const adminItems = [
     { id: 5, name: "Dashboard", link: "/" },
     { id: 6, name: "Users", link: "/users" },
-    { id: 7, name: "Roles", link: "/roles" },
-    { id: 8, name: "Permissions", link: "/permissions" },
+    { id: 7, name: "User Tracking", link: "/admin-activities" },
+    // ...(showSkillToAdmin ? [{ id: 8, name: "Skills", link: "/admin-skills" }] : []),
+    ...(showPathToAdmin ? [{ id: 9, name: "Paths", link: "/admin-paths" }] : []),
+    { id: 10, name: "Roles", link: "/roles" },
+    // { id: 11, name: "Permissions", link: "/permissions" },
   ];
 
-  const sidebarItems = userRole === "User" ? clientItems : adminItems;
+  const superAdminItems = [
+    { id: 5, name: "Dashboard", link: "/" },
+    { id: 6, name: "Users", link: "/users" },
+    { id: 7, name: "Roles", link: "/roles" },
+    { id: 8, name: "User Tracking", link: "/admin-activities" },
+    // { id: 9, name: "Skills", link: "/admin-skills" },
+    { id: 10, name: "Paths", link: "/admin-paths" },
+    // { id: 11, name: "Permissions", link: "/permissions" },
+  ];
+
+  const subAdminItems = [
+    { id: 5, name: "Dashboard", link: "/" },
+    { id: 6, name: "Users", link: "/users" },
+    // { id: 7, name: "Roles", link: "/roles" },
+    { id: 8, name: "User Tracking", link: "/admin-activities" },
+    // { id: 9, name: "Skills", link: "/admin-skills" },
+    { id: 10, name: "Paths", link: "/admin-paths" },
+    // { id: 11, name: "Permissions", link: "/permissions" },
+  ];
+
+
+  const sidebarItems =
+  userRole === 'User' ? clientItems :
+  userRole === 'Admin' ? adminItems :
+  userRole === 'Super Admin' ? superAdminItems :
+  userRole === 'Sub Admin' ? subAdminItems :
+  [];
   const authToken = localStorage.getItem("user-visited-dashboard");
 
   const checkRemainingPlans = () => {

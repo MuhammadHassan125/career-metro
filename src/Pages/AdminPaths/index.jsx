@@ -24,6 +24,8 @@ const AdminPaths = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalPaths, setTotalPaths] = useState(0);
+  const [expandedRows, setExpandedRows] = React.useState({});
 
   const { get, Processing } = useFetch({ state: {} });
   const navigate = useNavigate();
@@ -33,17 +35,20 @@ const AdminPaths = () => {
   const canView = hasSlugAction(roleName, "paths-view");
   const canDelete = hasSlugAction(roleName, "paths-delete");
 
-  const gettingAdminPaths = () => {
+  const gettingAdminPaths = (page = 1) => {
     get({
-      endPoint: "/get-all-paths-for-admin-panel",
+      endPoint: `/get-all-paths-for-admin-panel?page=${page}`,
       onSuccess: (res) => {
         setPath(res?.data?.paths);
+        setTotalPages(res?.data?.totalPages);
+        setTotalPaths(res?.data?.totalPaths);
+        setCurrentPage(res?.data?.currentPage);
       },
     });
   };
 
   React.useEffect(() => {
-    gettingAdminPaths();
+    gettingAdminPaths(currentPage);
   }, []);
 
   const handleUpdatePath = (id, prompt) => {
@@ -61,7 +66,7 @@ const AdminPaths = () => {
           variant: "success",
           style: { backgroundColor: "var(--primary-btn-color)" },
         });
-        gettingAdminPaths();
+        gettingAdminPaths(currentPage);
       },
       onError: (err) => {
         Snackbar(err, { variant: "error" });
@@ -69,11 +74,74 @@ const AdminPaths = () => {
     });
   };
 
+  const handlePageChange = (event, newPage) => {
+    setCurrentPage(newPage);
+    gettingAdminPaths(newPage);
+  };
+
   const columns = [
     { Header: "Id", accessor: "id" },
     { Header: "UserName", accessor: "username" },
     { Header: "Title", accessor: "title" },
-    { Header: "Prompt", accessor: "prompt" },
+    // { Header: "Prompt", accessor: "prompt" },
+    {
+      Header: "Prompt",
+      accessor: "prompt",
+      Cell: ({ value, row }) => {
+        const maxLength = 40;
+        const isExpanded = expandedRows[row.id] || false;
+
+        if(!value) return <p>No prompt available</p>
+
+        return (
+          <div>
+            {isExpanded ? (
+              <div>
+                {value}
+                <button
+                  onClick={() =>
+                    setExpandedRows((prev) => ({ ...prev, [row.id]: false }))
+                  }
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "#8c9eb1",
+                    cursor: "pointer",
+                    marginLeft: "5px",
+                    fontSize: "12px",
+                  }}
+                >
+                  Show Less
+                </button>
+              </div>
+            ) : (
+              <div>
+                {value.length > maxLength
+                  ? `${value.substring(0, maxLength)}...`
+                  : value}
+                {value.length > maxLength && (
+                  <button
+                    onClick={() =>
+                      setExpandedRows((prev) => ({ ...prev, [row.id]: true }))
+                    }
+                    style={{
+                      background: "none",
+                      border: "none",
+                      color: "#68819b",
+                      cursor: "pointer",
+                      marginLeft: "5px",
+                      fontSize: "12px",
+                    }}
+                  >
+                    Show More
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      },
+    },
     {
       Header: "Status",
       accessor: "status",
@@ -177,10 +245,6 @@ const AdminPaths = () => {
     },
   ];
 
-  const handlePageChange = (event, newPage) => {
-    setCurrentPage(newPage);
-  };
-
   return (
     <>
       {Processing ? <Loading processing={Processing} /> : null}
@@ -245,7 +309,7 @@ const AdminPaths = () => {
       <UpdatePath
         open={open}
         handleClose={handleClose}
-        getPathList={gettingAdminPaths}
+        getPathList={() => gettingAdminPaths(currentPage)}
         pathId={pathId}
         prompt={prompt}
       />
